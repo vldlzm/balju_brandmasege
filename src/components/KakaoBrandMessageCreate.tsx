@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 type MessageType = 'wide-image' | 'wide-list' | 'carousel';
 
@@ -89,12 +90,12 @@ export default function KakaoBrandMessageCreate() {
       {/* 페이지 헤더 */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-[1440px] items-center gap-4 px-6 py-4">
-          <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors">
+          <Link href="/" className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors">
             <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
               <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
             목록으로
-          </button>
+          </Link>
           <div className="h-4 w-px bg-gray-300" />
           <h1 className="text-lg font-bold text-gray-900">브랜드메시지 등록</h1>
         </div>
