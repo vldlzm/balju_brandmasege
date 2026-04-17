@@ -994,6 +994,11 @@ export default function KakaoBrandMessageCreate() {
                         <div className="h-px flex-1 bg-[#99b5ca]/50" />
                       </div>
 
+                      {/* (광고) 발주모아 */}
+                      {(messageType === 'wide-image' || messageType === 'wide-list') && (
+                        <div className="mb-1.5 text-[7px] text-[#607d8b]">(광고) 발주모아</div>
+                      )}
+
                       {/* 메시지 버블 */}
                       <div className="flex items-start gap-1.5">
                         <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fee500] text-[7px] font-black text-gray-800 shadow-sm">K</div>
@@ -1110,14 +1115,14 @@ export default function KakaoBrandMessageCreate() {
                           </div>
                         </div>
                       </div>
+                      {/* 수신거부 / 채널차단 - 채팅 영역 내 메시지 아래 */}
+                      {(messageType === 'wide-image' || messageType === 'wide-list') && (
+                        <div className="mt-1.5 flex items-center justify-between px-0.5">
+                          <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
+                          <span className="text-[6px] text-[#607d8b]">오전 9:00</span>
+                        </div>
+                      )}
                     </div>
-                    {/* 수신거부 / 채널차단 - 메시지 행 아래 */}
-                    {(messageType === 'wide-image' || messageType === 'wide-list') && (
-                      <div className="mt-1.5 flex items-center justify-between px-1">
-                        <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
-                        <span className="text-[6px] text-[#607d8b]">오전 9:00</span>
-                      </div>
-                    )}
 
                     {/* 하단 입력바 */}
                     <div className="flex items-center gap-2 bg-white px-3 py-2">
