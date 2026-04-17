@@ -38,6 +38,19 @@ const DEMO_PRODUCT: Product = {
 
 const CURRENT_POINTS = 5250;
 
+const PRODUCT_LIST = [
+  { id: 1,  name: '나이키 에어맥스 270 React',   price: '139,000원' },
+  { id: 2,  name: '아디다스 울트라부스트 22',     price: '189,000원' },
+  { id: 3,  name: '뉴발란스 574 클래식',          price: '109,000원' },
+  { id: 4,  name: '컨버스 척테일러 올스타',        price: '79,000원'  },
+  { id: 5,  name: '반스 올드스쿨 스니커즈',        price: '89,000원'  },
+  { id: 6,  name: '살로몬 XT-6 트레일',           price: '219,000원' },
+  { id: 7,  name: '호카 클리프턴 9',              price: '169,000원' },
+  { id: 8,  name: '아식스 젤-카야노 30',           price: '179,000원' },
+  { id: 9,  name: '뉴발란스 990v6 메이드 인 USA', price: '289,000원' },
+  { id: 10, name: '나이키 에어포스 1 로우',         price: '119,000원' },
+];
+
 const SELLER_LIST = [
   { id: 1,  name: '나이키 공식스토어' },
   { id: 2,  name: '아디다스 코리아'   },
@@ -97,6 +110,10 @@ export default function KakaoBrandMessageCreate() {
   const [showSellerModal, setShowSellerModal] = useState(false);
   const [sellerSearch, setSellerSearch] = useState('');
   const [checkedSellers, setCheckedSellers] = useState<number[]>([]);
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [productSearch, setProductSearch] = useState('');
+  const [checkedProduct, setCheckedProduct] = useState<number | null>(null);
+  const [productModalTarget, setProductModalTarget] = useState<'wide-image' | 'wl-list1' | number>('wide-image');
   const [button1, setButton1] = useState('');
   const [button2, setButton2] = useState('');
   const [showButton2, setShowButton2] = useState(false);
@@ -153,6 +170,30 @@ export default function KakaoBrandMessageCreate() {
   };
 
   const handleProductRemove = () => setSelectedProduct(null);
+
+  const openProductModal = (target: 'wide-image' | 'wl-list1' | number) => {
+    setProductModalTarget(target);
+    setProductSearch('');
+    if (target === 'wide-image') setCheckedProduct(selectedProduct ? (PRODUCT_LIST.find(p => p.name === selectedProduct.name)?.id ?? null) : null);
+    else if (target === 'wl-list1') setCheckedProduct(wlList1Product ? (PRODUCT_LIST.find(p => p.name === wlList1Product.name)?.id ?? null) : null);
+    else { const item = wlExtraItems.find(i => i.id === target); setCheckedProduct(item?.product ? (PRODUCT_LIST.find(p => p.name === item.product!.name)?.id ?? null) : null); }
+    setShowProductModal(true);
+  };
+
+  const confirmProduct = () => {
+    const found = PRODUCT_LIST.find(p => p.id === checkedProduct);
+    if (!found) return;
+    const product: Product = { name: found.name, price: found.price };
+    if (productModalTarget === 'wide-image') {
+      setSelectedProduct(product);
+    } else if (productModalTarget === 'wl-list1') {
+      setWlList1Product(product);
+      if (!wlList1Text) setWlList1Text(product.name);
+    } else {
+      updateWlItemProduct(productModalTarget as number, product);
+    }
+    setShowProductModal(false);
+  };
 
   // 와이드 리스트 핸들러
   const addWlItem = () => {
@@ -279,6 +320,71 @@ export default function KakaoBrandMessageCreate() {
                 선택 완료
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* 상품 선택 모달 */}
+    {showProductModal && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div className="relative flex w-[560px] max-h-[80vh] flex-col rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200">
+          <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+            <div>
+              <h2 className="text-base font-bold text-gray-900">상품 선택</h2>
+              <p className="mt-0.5 text-xs text-gray-400">등록할 상품을 선택하세요</p>
+            </div>
+            <button onClick={() => setShowProductModal(false)} className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+            </button>
+          </div>
+          <div className="border-b border-gray-100 px-6 py-3">
+            <div className="relative">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+              <input type="text" value={productSearch} onChange={(e) => setProductSearch(e.target.value)}
+                placeholder="상품명으로 검색"
+                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+            </div>
+          </div>
+          <div className="flex-1 overflow-y-auto">
+            <table className="w-full text-sm">
+              <thead className="sticky top-0 bg-gray-50">
+                <tr className="border-b border-gray-100">
+                  <th className="w-10 px-4 py-3 text-center text-xs font-semibold text-gray-400">선택</th>
+                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-400">상품명</th>
+                  <th className="w-28 px-3 py-3 text-right text-xs font-semibold text-gray-400">가격</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {PRODUCT_LIST.filter(p => p.name.includes(productSearch)).length === 0 ? (
+                  <tr><td colSpan={3} className="py-10 text-center text-sm text-gray-400">검색 결과가 없습니다.</td></tr>
+                ) : (
+                  PRODUCT_LIST.filter(p => p.name.includes(productSearch)).map((product) => {
+                    const isChecked = checkedProduct === product.id;
+                    return (
+                      <tr key={product.id} onClick={() => setCheckedProduct(isChecked ? null : product.id)}
+                        className={`cursor-pointer transition-colors ${isChecked ? 'bg-[#f0f9f4]' : 'hover:bg-gray-50'}`}>
+                        <td className="px-4 py-3 text-center">
+                          <input type="checkbox" checked={isChecked} onChange={() => setCheckedProduct(isChecked ? null : product.id)}
+                            onClick={(e) => e.stopPropagation()} className="h-4 w-4 rounded accent-[#4DB87A]" />
+                        </td>
+                        <td className="px-3 py-3 font-medium text-gray-900">{product.name}</td>
+                        <td className="px-3 py-3 text-right tabular-nums text-gray-500">{product.price}</td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex items-center justify-end gap-2 border-t border-gray-100 px-6 py-4">
+            <button onClick={() => setShowProductModal(false)} className="rounded-xl border border-gray-200 px-5 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-50 active:scale-95 transition-all">취소</button>
+            <button onClick={confirmProduct} disabled={checkedProduct === null}
+              className="rounded-xl bg-[#4DB87A] px-5 py-2 text-sm font-bold text-white hover:bg-[#3da869] active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+              선택 완료
+            </button>
           </div>
         </div>
       </div>
@@ -421,7 +527,7 @@ export default function KakaoBrandMessageCreate() {
                       상품 불러오기 <span className="text-red-500">*</span>
                     </h2>
                     <button
-                      onClick={() => setSelectedProduct(DEMO_PRODUCT)}
+                      onClick={() => openProductModal('wide-image')}
                       className="rounded-lg border border-[#4DB87A] px-4 py-2 text-xs font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
                     >
                       상품 선택
@@ -572,7 +678,7 @@ export default function KakaoBrandMessageCreate() {
                         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-bold text-white">1</span>
                         <span className="text-xs font-semibold text-gray-600">리스트 1 (필수)</span>
                         <button
-                          onClick={() => { setWlList1Product(DEMO_PRODUCT); if (!wlList1Text) setWlList1Text(DEMO_PRODUCT.name); }}
+                          onClick={() => openProductModal('wl-list1')}
                           className="ml-auto rounded-lg border border-[#4DB87A] px-3 py-1 text-[10px] font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
                         >
                           상품 선택
@@ -612,7 +718,7 @@ export default function KakaoBrandMessageCreate() {
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-400 text-[10px] font-bold text-white">{idx + 2}</span>
                           <span className="text-xs font-semibold text-gray-600">리스트 {idx + 2}</span>
                           <button
-                            onClick={() => updateWlItemProduct(item.id, DEMO_PRODUCT)}
+                            onClick={() => openProductModal(item.id)}
                             className="ml-auto rounded-lg border border-[#4DB87A] px-3 py-1 text-[10px] font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
                           >
                             상품 선택
@@ -1002,15 +1108,15 @@ export default function KakaoBrandMessageCreate() {
                               </>
                             )}
 
-                            {/* 수신거부 / 채널차단 */}
-                            {(messageType === 'wide-image' || messageType === 'wide-list') && (
-                              <div className="flex items-center justify-between border-t border-gray-100 bg-gray-50 px-2.5 py-1">
-                                <span className="text-[6px] text-gray-400">수신거부 | 홈 &gt; 채널차단</span>
-                                <span className="text-[6px] text-gray-400">오전 9:00</span>
-                              </div>
-                            )}
                           </div>
                         </div>
+                        {/* 수신거부 / 채널차단 - 버블 외부 */}
+                        {(messageType === 'wide-image' || messageType === 'wide-list') && (
+                          <div className="mt-1 flex items-center justify-between px-0.5">
+                            <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
+                            <span className="text-[6px] text-[#607d8b]">오전 9:00</span>
+                          </div>
+                        )}
                       </div>
                     </div>
 
