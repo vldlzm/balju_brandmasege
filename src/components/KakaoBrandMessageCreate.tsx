@@ -104,6 +104,19 @@ export default function KakaoBrandMessageCreate() {
   const [scheduledDate, setScheduledDate] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
 
+  // 와이드 리스트 전용 state
+  const [wlHeader, setWlHeader] = useState('');
+  const [wlList1Text, setWlList1Text] = useState('');
+  const [wlList1Image, setWlList1Image] = useState<string | null>(null);
+  const [wlExtraItems, setWlExtraItems] = useState<{ id: number; text: string; image: string | null }[]>([
+    { id: 1, text: '', image: null },
+    { id: 2, text: '', image: null },
+  ]);
+  const [wlBtn1, setWlBtn1] = useState('');
+  const [wlBtn2, setWlBtn2] = useState('');
+  const [wlShowBtn2, setWlShowBtn2] = useState(false);
+  const [wlCoupon, setWlCoupon] = useState('');
+
   const filteredSellers = SELLER_LIST.filter((s) =>
     s.name.includes(sellerSearch)
   );
@@ -136,6 +149,28 @@ export default function KakaoBrandMessageCreate() {
   };
 
   const handleProductRemove = () => setSelectedProduct(null);
+
+  // 와이드 리스트 핸들러
+  const handleImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setter: (v: string | null) => void
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) setter(URL.createObjectURL(file));
+    e.target.value = '';
+  };
+  const addWlItem = () => {
+    if (wlExtraItems.length < 4)
+      setWlExtraItems(prev => [...prev, { id: Date.now(), text: '', image: null }]);
+  };
+  const removeWlItem = (id: number) => {
+    if (wlExtraItems.length > 2)
+      setWlExtraItems(prev => prev.filter(item => item.id !== id));
+  };
+  const updateWlItemText = (id: number, text: string) =>
+    setWlExtraItems(prev => prev.map(item => item.id === id ? { ...item, text: text.slice(0, 30) } : item));
+  const updateWlItemImage = (id: number, image: string | null) =>
+    setWlExtraItems(prev => prev.map(item => item.id === id ? { ...item, image } : item));
 
   const estimatedPoints = selectedSellers.length * 15;
 
@@ -378,160 +413,288 @@ export default function KakaoBrandMessageCreate() {
               </div>
             </section>
 
-            {/* 섹션 4: 상품 불러오기 */}
-            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
-                  상품 불러오기 <span className="text-red-500">*</span>
-                </h2>
-                <button
-                  onClick={() => setSelectedProduct(DEMO_PRODUCT)}
-                  className="rounded-lg border border-[#4DB87A] px-4 py-2 text-xs font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
-                >
-                  상품 선택
-                </button>
-              </div>
-              {selectedProduct ? (
-                <div className="flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gray-200 text-gray-400">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-7 w-7">
-                      <rect x="3" y="5" width="18" height="14" rx="2" />
-                      <path d="M3 15l4-4 4 4 3-3 4 4" />
-                      <circle cx="8.5" cy="9.5" r="1.5" />
-                    </svg>
+            {/* ── 와이드 이미지 전용 섹션 ── */}
+            {messageType === 'wide-image' && (
+              <>
+                {/* 섹션 4: 상품 불러오기 */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
+                      상품 불러오기 <span className="text-red-500">*</span>
+                    </h2>
+                    <button
+                      onClick={() => setSelectedProduct(DEMO_PRODUCT)}
+                      className="rounded-lg border border-[#4DB87A] px-4 py-2 text-xs font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
+                    >
+                      상품 선택
+                    </button>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="truncate text-sm font-semibold text-gray-900">{selectedProduct.name}</div>
-                    <div className="mt-0.5 text-sm font-bold text-[#4DB87A]">{selectedProduct.price}</div>
-                  </div>
-                  <button
-                    onClick={handleProductRemove}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors"
-                    aria-label="상품 삭제"
-                  >
-                    <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
-                      <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                    </svg>
-                  </button>
-                </div>
-              ) : (
-                <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center text-sm text-gray-400">
-                  선택된 상품이 없습니다.
-                </div>
-              )}
-            </section>
-
-            {/* 섹션 5: 내용 */}
-            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
-                내용 <span className="text-red-500">*</span>
-              </h2>
-
-              {/* 카테고리 선택 */}
-              <div className="mb-3 flex items-center gap-2">
-                <span className="text-xs text-gray-400 shrink-0">메시지 유형</span>
-                <div className="flex gap-2">
-                  {(['신상품', '이벤트', '가격할인'] as ContentCategory[]).map((cat) => {
-                    const isActive = contentCategory === cat;
-                    const styles = CATEGORY_STYLES[cat];
-                    return (
-                      <button
-                        key={cat}
-                        onClick={() => {
-                          setContentCategory(cat);
-                          setContent(CONTENT_TEMPLATES[cat]);
-                        }}
-                        className={`rounded-full border px-3 py-1 text-xs font-semibold transition-all active:scale-95 ${
-                          isActive ? styles.active : styles.default + ' hover:opacity-80'
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="relative">
-                <textarea
-                  value={content}
-                  onChange={(e) => setContent(e.target.value.slice(0, 76))}
-                  placeholder="메시지 유형을 선택하거나 직접 입력하세요"
-                  rows={4}
-                  className={`w-full resize-none rounded-xl border bg-gray-50 px-4 py-3 pb-9 text-sm text-gray-900 placeholder-gray-400 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
-                    content.length > 70
-                      ? 'border-red-400 focus:border-red-500 focus:ring-red-200'
-                      : 'border-gray-200 focus:border-[#4DB87A] focus:ring-[#4DB87A]/20'
-                  }`}
-                />
-                <span
-                  className={`absolute bottom-3 right-4 text-xs tabular-nums font-medium transition-colors ${
-                    content.length > 70 ? 'text-red-500' : 'text-gray-400'
-                  }`}
-                >
-                  {content.length}/76
-                </span>
-              </div>
-              {content.length > 70 && (
-                <p className="mt-2 flex items-center gap-1 text-xs text-red-500">
-                  <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5">
-                    <path fillRule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                  </svg>
-                  70자를 초과하였습니다. 메시지가 잘릴 수 있습니다.
-                </p>
-              )}
-            </section>
-
-            {/* 섹션 6: 버튼 */}
-            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
-                버튼
-              </h2>
-              <div className="space-y-3">
-                {/* 버튼 1 */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={button1}
-                    onChange={(e) => setButton1(e.target.value.slice(0, 8))}
-                    placeholder="버튼1 텍스트 입력"
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
-                  />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">
-                    {button1.length}/8
-                  </span>
-                </div>
-
-                {/* 버튼 2 */}
-                {showButton2 ? (
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={button2}
-                      onChange={(e) => setButton2(e.target.value.slice(0, 8))}
-                      placeholder="버튼2 텍스트 입력"
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-20 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
-                    />
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                      <span className="text-xs tabular-nums text-gray-400">{button2.length}/8</span>
-                      <button
-                        onClick={() => { setShowButton2(false); setButton2(''); }}
-                        className="text-xs text-gray-400 hover:text-red-500 transition-colors"
-                      >
-                        삭제
+                  {selectedProduct ? (
+                    <div className="flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gray-200 text-gray-400">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-7 w-7">
+                          <rect x="3" y="5" width="18" height="14" rx="2" />
+                          <path d="M3 15l4-4 4 4 3-3 4 4" />
+                          <circle cx="8.5" cy="9.5" r="1.5" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="truncate text-sm font-semibold text-gray-900">{selectedProduct.name}</div>
+                        <div className="mt-0.5 text-sm font-bold text-[#4DB87A]">{selectedProduct.price}</div>
+                      </div>
+                      <button onClick={handleProductRemove} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors">
+                        <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" /></svg>
                       </button>
                     </div>
+                  ) : (
+                    <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center text-sm text-gray-400">선택된 상품이 없습니다.</div>
+                  )}
+                </section>
+
+                {/* 섹션 5: 내용 */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
+                    내용 <span className="text-red-500">*</span>
+                  </h2>
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="text-xs text-gray-400 shrink-0">메시지 유형</span>
+                    <div className="flex gap-2">
+                      {(['신상품', '이벤트', '가격할인'] as ContentCategory[]).map((cat) => {
+                        const isActive = contentCategory === cat;
+                        const styles = CATEGORY_STYLES[cat];
+                        return (
+                          <button key={cat} onClick={() => { setContentCategory(cat); setContent(CONTENT_TEMPLATES[cat]); }}
+                            className={`rounded-full border px-3 py-1 text-xs font-semibold transition-all active:scale-95 ${isActive ? styles.active : styles.default + ' hover:opacity-80'}`}>
+                            {cat}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                ) : (
-                  <button
-                    onClick={() => setShowButton2(true)}
-                    className="flex items-center gap-1 text-sm font-medium text-[#4DB87A] hover:text-[#3da869] hover:underline transition-colors"
-                  >
-                    <span className="text-base font-bold">+</span> 버튼 추가
-                  </button>
-                )}
-              </div>
-            </section>
+                  <div className="relative">
+                    <textarea value={content} onChange={(e) => setContent(e.target.value.slice(0, 76))}
+                      placeholder="메시지 유형을 선택하거나 직접 입력하세요" rows={4}
+                      className={`w-full resize-none rounded-xl border bg-gray-50 px-4 py-3 pb-9 text-sm text-gray-900 placeholder-gray-400 focus:bg-white focus:outline-none focus:ring-2 transition-all ${content.length > 70 ? 'border-red-400 focus:border-red-500 focus:ring-red-200' : 'border-gray-200 focus:border-[#4DB87A] focus:ring-[#4DB87A]/20'}`} />
+                    <span className={`absolute bottom-3 right-4 text-xs tabular-nums font-medium transition-colors ${content.length > 70 ? 'text-red-500' : 'text-gray-400'}`}>{content.length}/76</span>
+                  </div>
+                  {content.length > 70 && (
+                    <p className="mt-2 flex items-center gap-1 text-xs text-red-500">
+                      <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path fillRule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" /></svg>
+                      70자를 초과하였습니다. 메시지가 잘릴 수 있습니다.
+                    </p>
+                  )}
+                </section>
+
+                {/* 섹션 6: 버튼 */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <input type="text" value={button1} onChange={(e) => setButton1(e.target.value.slice(0, 8))} placeholder="버튼1 텍스트 입력"
+                        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{button1.length}/8</span>
+                    </div>
+                    {showButton2 ? (
+                      <div className="relative">
+                        <input type="text" value={button2} onChange={(e) => setButton2(e.target.value.slice(0, 8))} placeholder="버튼2 텍스트 입력"
+                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-20 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                          <span className="text-xs tabular-nums text-gray-400">{button2.length}/8</span>
+                          <button onClick={() => { setShowButton2(false); setButton2(''); }} className="text-xs text-gray-400 hover:text-red-500 transition-colors">삭제</button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button onClick={() => setShowButton2(true)} className="flex items-center gap-1 text-sm font-medium text-[#4DB87A] hover:underline transition-colors">
+                        <span className="text-base font-bold">+</span> 버튼 추가
+                      </button>
+                    )}
+                  </div>
+                </section>
+              </>
+            )}
+
+            {/* ── 와이드 리스트 전용 섹션 ── */}
+            {messageType === 'wide-list' && (
+              <>
+                {/* WL-A: 헤더 */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <h2 className="mb-1 text-sm font-bold uppercase tracking-wide text-gray-400">
+                    헤더 <span className="text-red-500">*</span>
+                  </h2>
+                  <p className="mb-3 text-xs text-gray-400">띄어쓰기 포함 20자 제한 · 줄바꿈 불가</p>
+                  <div className="relative">
+                    <input type="text" value={wlHeader} onChange={(e) => setWlHeader(e.target.value.replace(/\n/g, '').slice(0, 20))}
+                      placeholder="헤더 문구를 입력하세요"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlHeader.length}/20</span>
+                  </div>
+                </section>
+
+                {/* WL-B: 리스트 구성 */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div>
+                      <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
+                        리스트 구성 <span className="text-red-500">*</span>
+                      </h2>
+                      <p className="mt-0.5 text-xs text-gray-400">최소 3개 · 최대 5개 (리스트1 포함)</p>
+                    </div>
+                    <span className="text-xs font-semibold text-gray-500">
+                      총 <span className="text-[#4DB87A]">{1 + wlExtraItems.length}</span> / 5개
+                    </span>
+                  </div>
+
+                  <div className="space-y-5">
+                    {/* 리스트 1 - 고정 */}
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                      <div className="mb-3 flex items-center gap-2">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-bold text-white">1</span>
+                        <span className="text-xs font-semibold text-gray-600">리스트 1 (필수)</span>
+                        <span className="ml-auto text-[10px] text-gray-400">권장 800×400 · 2:1 · jpg/png · 최대 5MB</span>
+                      </div>
+                      {/* 이미지 업로드 - 2:1 */}
+                      <label className="group relative mb-3 flex aspect-[2/1] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-white transition-colors hover:border-[#4DB87A] hover:bg-[#f0f9f4]">
+                        <input type="file" accept="image/jpeg,image/png" className="hidden"
+                          onChange={(e) => handleImageChange(e, setWlList1Image)} />
+                        {wlList1Image ? (
+                          <>
+                            <img src={wlList1Image} alt="리스트1" className="h-full w-full object-cover" />
+                            <button type="button" onClick={(e) => { e.preventDefault(); setWlList1Image(null); }}
+                              className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70">
+                              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-3 w-3"><path d="M2 2l8 8M10 2L2 10"/></svg>
+                            </button>
+                          </>
+                        ) : (
+                          <div className="flex flex-col items-center gap-1 text-gray-400 group-hover:text-[#4DB87A]">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8">
+                              <path d="M4 16l4-4 4 4 4-6 4 6" strokeLinecap="round" strokeLinejoin="round"/>
+                              <rect x="3" y="3" width="18" height="18" rx="2"/>
+                              <circle cx="8.5" cy="8.5" r="1.5"/>
+                            </svg>
+                            <span className="text-xs">클릭하여 이미지 업로드</span>
+                          </div>
+                        )}
+                      </label>
+                      {/* 텍스트 - 25자 */}
+                      <div className="relative">
+                        <input type="text" value={wlList1Text} onChange={(e) => setWlList1Text(e.target.value.slice(0, 25))}
+                          placeholder="리스트1 문구 입력 (최대 25자)"
+                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 pr-14 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlList1Text.length}/25</span>
+                      </div>
+                    </div>
+
+                    {/* 리스트 2~5 */}
+                    {wlExtraItems.map((item, idx) => (
+                      <div key={item.id} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                        <div className="mb-3 flex items-center gap-2">
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-400 text-[10px] font-bold text-white">{idx + 2}</span>
+                          <span className="text-xs font-semibold text-gray-600">리스트 {idx + 2}</span>
+                          <span className="ml-auto text-[10px] text-gray-400">권장 800×800 · 1:1 · jpg/png · 최대 5MB</span>
+                          {wlExtraItems.length > 2 && (
+                            <button onClick={() => removeWlItem(item.id)}
+                              className="ml-2 flex h-6 w-6 items-center justify-center rounded-full text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors">
+                              <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
+                            </button>
+                          )}
+                        </div>
+                        {/* 이미지 업로드 - 1:1 */}
+                        <label className="group relative mb-3 flex aspect-square w-32 cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-white transition-colors hover:border-[#4DB87A] hover:bg-[#f0f9f4]">
+                          <input type="file" accept="image/jpeg,image/png" className="hidden"
+                            onChange={(e) => handleImageChange(e, (v) => updateWlItemImage(item.id, v))} />
+                          {item.image ? (
+                            <>
+                              <img src={item.image} alt={`리스트${idx+2}`} className="h-full w-full object-cover" />
+                              <button type="button" onClick={(e) => { e.preventDefault(); updateWlItemImage(item.id, null); }}
+                                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70">
+                                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-2.5 w-2.5"><path d="M2 2l8 8M10 2L2 10"/></svg>
+                              </button>
+                            </>
+                          ) : (
+                            <div className="flex flex-col items-center gap-1 text-gray-400 group-hover:text-[#4DB87A]">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
+                                <path d="M4 16l4-4 4 4 4-6 4 6" strokeLinecap="round" strokeLinejoin="round"/>
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                              </svg>
+                              <span className="text-[10px]">이미지 업로드</span>
+                            </div>
+                          )}
+                        </label>
+                        {/* 텍스트 - 30자 */}
+                        <div className="relative">
+                          <input type="text" value={item.text} onChange={(e) => updateWlItemText(item.id, e.target.value)}
+                            placeholder={`리스트${idx+2} 문구 입력 (최대 30자)`}
+                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 pr-14 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.text.length}/30</span>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* 리스트 추가 버튼 */}
+                    {wlExtraItems.length < 4 && (
+                      <button onClick={addWlItem}
+                        className="flex w-full items-center justify-center gap-1.5 rounded-xl border-2 border-dashed border-gray-200 py-3 text-sm font-medium text-gray-400 hover:border-[#4DB87A] hover:text-[#4DB87A] transition-all">
+                        <span className="text-base font-bold">+</span> 리스트 추가
+                      </button>
+                    )}
+                  </div>
+                </section>
+
+                {/* WL-C: 버튼 (최대 2개, 가로 배열) */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <h2 className="mb-1 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
+                  <p className="mb-4 text-xs text-gray-400">띄어쓰기 포함 8자 제한 · 최대 2개 · 가로 배열</p>
+                  <div className="flex gap-3">
+                    <div className="relative flex-1">
+                      <input type="text" value={wlBtn1} onChange={(e) => setWlBtn1(e.target.value.slice(0, 8))}
+                        placeholder="버튼1 텍스트"
+                        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlBtn1.length}/8</span>
+                    </div>
+                    {wlShowBtn2 ? (
+                      <div className="relative flex-1">
+                        <input type="text" value={wlBtn2} onChange={(e) => setWlBtn2(e.target.value.slice(0, 8))}
+                          placeholder="버튼2 텍스트"
+                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-20 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                          <span className="text-xs tabular-nums text-gray-400">{wlBtn2.length}/8</span>
+                          <button onClick={() => { setWlShowBtn2(false); setWlBtn2(''); }} className="text-xs text-gray-400 hover:text-red-500 transition-colors">삭제</button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button onClick={() => setWlShowBtn2(true)}
+                        className="flex items-center gap-1 rounded-xl border-2 border-dashed border-gray-200 px-5 text-sm font-medium text-gray-400 hover:border-[#4DB87A] hover:text-[#4DB87A] transition-all">
+                        <span className="text-base font-bold">+</span> 버튼 추가
+                      </button>
+                    )}
+                  </div>
+                </section>
+
+                {/* WL-D: 쿠폰 강조 버튼 */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <h2 className="mb-1 text-sm font-bold uppercase tracking-wide text-gray-400">쿠폰 강조 버튼</h2>
+                  <p className="mb-4 text-xs text-gray-400">최대 1개</p>
+                  <div className="relative">
+                    <input type="text" value={wlCoupon} onChange={(e) => setWlCoupon(e.target.value.slice(0, 20))}
+                      placeholder="쿠폰 버튼 문구 입력 (예: 10% 할인 쿠폰)"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlCoupon.length}/20</span>
+                  </div>
+                  {wlCoupon && (
+                    <div className="mt-3 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-gray-800">{wlCoupon}</p>
+                      </div>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#fee500]">
+                        <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-gray-800">
+                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </section>
+              </>
+            )}
 
             {/* 섹션 7: 발송 설정 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
@@ -730,17 +893,15 @@ export default function KakaoBrandMessageCreate() {
                                     </>
                                   )}
                                   {messageType === 'wide-list' && (
-                                    <>
-                                      <div className="w-[80%] space-y-1">
-                                        {[1,2,3].map(i => (
-                                          <div key={i} className="flex items-center gap-1">
-                                            <div className="h-4 w-4 rounded bg-gray-300" />
-                                            <div className="h-1.5 flex-1 rounded bg-gray-300" />
-                                          </div>
-                                        ))}
-                                      </div>
-                                      <span className="text-[8px] text-gray-400 mt-1">와이드 리스트</span>
-                                    </>
+                                    <div className="h-full w-full overflow-hidden">
+                                      {wlList1Image ? (
+                                        <img src={wlList1Image} alt="" className="h-full w-full object-cover" />
+                                      ) : (
+                                        <div className="flex h-full items-center justify-center bg-gray-200">
+                                          <span className="text-[8px] text-gray-400">리스트1 이미지</span>
+                                        </div>
+                                      )}
+                                    </div>
                                   )}
                                   {messageType === 'carousel' && (
                                     <>
@@ -760,41 +921,76 @@ export default function KakaoBrandMessageCreate() {
                               )}
                             </div>
 
-                            {/* 상품 정보 */}
-                            {selectedProduct && (
-                              <div className="border-b border-gray-100 px-2.5 py-2">
-                                <div className="text-[8px] font-semibold leading-tight text-gray-900">
-                                  {selectedProduct.name}
+                            {/* ── 와이드 이미지 본문 ── */}
+                            {messageType !== 'wide-list' && (
+                              <>
+                                {selectedProduct && (
+                                  <div className="border-b border-gray-100 px-2.5 py-2">
+                                    <div className="text-[8px] font-semibold leading-tight text-gray-900">{selectedProduct.name}</div>
+                                    <div className="mt-0.5 text-[8px] font-bold text-[#4DB87A]">{selectedProduct.price}</div>
+                                  </div>
+                                )}
+                                <div className="px-2.5 py-2">
+                                  <p className="text-[8px] leading-snug text-gray-800 whitespace-pre-wrap break-words">
+                                    {content || <span className="text-gray-400">메시지 내용이 여기에 표시됩니다.</span>}
+                                  </p>
                                 </div>
-                                <div className="mt-0.5 text-[8px] font-bold text-[#4DB87A]">
-                                  {selectedProduct.price}
-                                </div>
-                              </div>
+                                {(button1 || button2) && (
+                                  <div className="border-t border-gray-100">
+                                    {button1 && <div className="bg-[#fee500] py-1.5 text-center text-[8px] font-bold text-gray-800">{button1}</div>}
+                                    {button2 && <div className="border-t border-gray-100 bg-white py-1.5 text-center text-[8px] font-medium text-gray-600">{button2}</div>}
+                                  </div>
+                                )}
+                              </>
                             )}
 
-                            {/* 본문 텍스트 */}
-                            <div className="px-2.5 py-2">
-                              <p className="text-[8px] leading-snug text-gray-800 whitespace-pre-wrap break-words">
-                                {content || (
-                                  <span className="text-gray-400">메시지 내용이 여기에 표시됩니다.</span>
-                                )}
-                              </p>
-                            </div>
-
-                            {/* 버튼 영역 */}
-                            {(button1 || button2) && (
-                              <div className="border-t border-gray-100">
-                                {button1 && (
-                                  <div className="bg-[#fee500] py-1.5 text-center text-[8px] font-bold text-gray-800">
-                                    {button1}
+                            {/* ── 와이드 리스트 본문 ── */}
+                            {messageType === 'wide-list' && (
+                              <>
+                                {/* 헤더 */}
+                                {wlHeader && (
+                                  <div className="border-b border-gray-100 px-2.5 py-1.5">
+                                    <p className="text-[8px] font-bold text-gray-900">{wlHeader}</p>
                                   </div>
                                 )}
-                                {button2 && (
-                                  <div className="border-t border-gray-100 bg-white py-1.5 text-center text-[8px] font-medium text-gray-600">
-                                    {button2}
+                                {/* 리스트1 문구 */}
+                                {wlList1Text && (
+                                  <div className="border-b border-gray-100 px-2.5 py-1">
+                                    <p className="text-[7px] text-gray-700 leading-snug">{wlList1Text}</p>
                                   </div>
                                 )}
-                              </div>
+                                {/* 리스트 2~5 */}
+                                <div className="divide-y divide-gray-50">
+                                  {wlExtraItems.map((item, idx) => (
+                                    <div key={item.id} className="flex items-center gap-1.5 px-2 py-1.5">
+                                      <div className="h-7 w-7 shrink-0 overflow-hidden rounded bg-gray-200">
+                                        {item.image && <img src={item.image} alt="" className="h-full w-full object-cover" />}
+                                      </div>
+                                      <p className="text-[7px] leading-snug text-gray-700 line-clamp-2">
+                                        {item.text || <span className="text-gray-400">리스트{idx+2} 문구</span>}
+                                      </p>
+                                    </div>
+                                  ))}
+                                </div>
+                                {/* 버튼 */}
+                                {(wlBtn1 || wlBtn2) && (
+                                  <div className="flex border-t border-gray-100">
+                                    {wlBtn1 && <div className={`flex-1 py-1.5 text-center text-[8px] font-bold text-gray-800 bg-[#fee500] ${wlBtn2 ? 'border-r border-gray-200' : ''}`}>{wlBtn1}</div>}
+                                    {wlBtn2 && <div className="flex-1 py-1.5 text-center text-[8px] font-medium text-gray-600 bg-white">{wlBtn2}</div>}
+                                  </div>
+                                )}
+                                {/* 쿠폰 */}
+                                {wlCoupon && (
+                                  <div className="flex items-center justify-between border-t border-gray-100 px-2.5 py-1.5">
+                                    <span className="text-[7px] font-medium text-gray-700">{wlCoupon}</span>
+                                    <div className="flex h-5 w-5 items-center justify-center rounded bg-[#fee500]">
+                                      <svg viewBox="0 0 12 12" fill="currentColor" className="h-3 w-3 text-gray-800">
+                                        <path d="M6 1v7M3.5 6L6 8.5 8.5 6M2 10h8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
+                                      </svg>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
                             )}
                           </div>
                         </div>
