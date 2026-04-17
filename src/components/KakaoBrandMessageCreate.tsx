@@ -1003,7 +1003,6 @@ export default function KakaoBrandMessageCreate() {
                       <div className="flex items-start gap-1.5">
                         <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fee500] text-[7px] font-black text-gray-800 shadow-sm">K</div>
                         <div className="flex-1 max-w-[88%]">
-                          <div className="mb-0.5 text-[8px] font-semibold text-gray-600">발주모아</div>
                           <div className="overflow-hidden rounded-2xl rounded-tl-none bg-white shadow-md">
 
                             {/* 와이드 리스트 헤더 (이미지 위) */}
@@ -1117,7 +1116,7 @@ export default function KakaoBrandMessageCreate() {
                       </div>
                       {/* 수신거부 / 채널차단 - 채팅 영역 내 메시지 아래 */}
                       {(messageType === 'wide-image' || messageType === 'wide-list') && (
-                        <div className="mt-1.5 flex items-center justify-between px-0.5">
+                        <div className="mt-1.5 flex flex-col gap-0.5 px-0.5">
                           <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
                           <span className="text-[6px] text-[#607d8b]">오전 9:00</span>
                         </div>
