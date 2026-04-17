@@ -332,7 +332,6 @@ export default function KakaoBrandMessageCreate() {
           <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
             <div>
               <h2 className="text-base font-bold text-gray-900">상품 선택</h2>
-              <p className="mt-0.5 text-xs text-gray-400">등록할 상품을 선택하세요</p>
             </div>
             <button onClick={() => setShowProductModal(false)} className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors">
               <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
@@ -1110,15 +1109,15 @@ export default function KakaoBrandMessageCreate() {
 
                           </div>
                         </div>
-                        {/* 수신거부 / 채널차단 - 버블 외부 */}
-                        {(messageType === 'wide-image' || messageType === 'wide-list') && (
-                          <div className="mt-1 flex items-center justify-between px-0.5">
-                            <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
-                            <span className="text-[6px] text-[#607d8b]">오전 9:00</span>
-                          </div>
-                        )}
                       </div>
                     </div>
+                    {/* 수신거부 / 채널차단 - 메시지 행 아래 */}
+                    {(messageType === 'wide-image' || messageType === 'wide-list') && (
+                      <div className="mt-1.5 flex items-center justify-between px-1">
+                        <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
+                        <span className="text-[6px] text-[#607d8b]">오전 9:00</span>
+                      </div>
+                    )}
 
                     {/* 하단 입력바 */}
                     <div className="flex items-center gap-2 bg-white px-3 py-2">
