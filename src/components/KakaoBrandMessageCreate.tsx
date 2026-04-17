@@ -4,6 +4,19 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 type MessageType = 'wide-image' | 'wide-list' | 'carousel';
+type ContentCategory = '신상품' | '이벤트' | '가격할인';
+
+const CONTENT_TEMPLATES: Record<ContentCategory, string> = {
+  '신상품': '신상품 입고 안내드립니다. 새로운 상품을 지금 바로 확인하고 빠르게 판매를 시작하세요!',
+  '이벤트': '특별 이벤트가 시작되었습니다. 기간 한정 혜택을 확인하고 지금 바로 참여해보세요!',
+  '가격할인': '가격 할인 행사 안내입니다. 한정 수량으로 진행되니 지금 바로 확인해보세요!',
+};
+
+const CATEGORY_STYLES: Record<ContentCategory, { default: string; active: string }> = {
+  '신상품':  { default: 'border-[#cce0f5] text-[#0C447C] bg-[#E6F1FB]', active: 'border-[#0C447C] bg-[#0C447C] text-white' },
+  '이벤트':  { default: 'border-[#d5d3fc] text-[#3C3489] bg-[#EEEDFE]', active: 'border-[#3C3489] bg-[#3C3489] text-white' },
+  '가격할인': { default: 'border-[#f5cfc4] text-[#712B13] bg-[#FAECE7]', active: 'border-[#712B13] bg-[#712B13] text-white' },
+};
 
 interface Product {
   name: string;
@@ -22,6 +35,21 @@ const DEMO_PRODUCT: Product = {
   name: '나이키 에어맥스 270 React',
   price: '139,000원',
 };
+
+const CURRENT_POINTS = 5250;
+
+const SELLER_LIST = [
+  { id: 1,  name: '나이키 공식스토어' },
+  { id: 2,  name: '아디다스 코리아'   },
+  { id: 3,  name: '유니클로'         },
+  { id: 4,  name: '자라 코리아'      },
+  { id: 5,  name: '무신사 스토어'    },
+  { id: 6,  name: '올리브영'         },
+  { id: 7,  name: '이니스프리'       },
+  { id: 8,  name: '다이소 공식'      },
+  { id: 9,  name: '이케아 코리아'    },
+  { id: 10, name: '쿠팡 파트너스'    },
+];
 
 const MESSAGE_TYPE_OPTIONS = [
   {
@@ -64,7 +92,11 @@ export default function KakaoBrandMessageCreate() {
   const [messageType, setMessageType] = useState<MessageType | null>(null);
   const [selectedSellers, setSelectedSellers] = useState<string[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [contentCategory, setContentCategory] = useState<ContentCategory | null>(null);
   const [content, setContent] = useState('');
+  const [showSellerModal, setShowSellerModal] = useState(false);
+  const [sellerSearch, setSellerSearch] = useState('');
+  const [checkedSellers, setCheckedSellers] = useState<number[]>([]);
   const [button1, setButton1] = useState('');
   const [button2, setButton2] = useState('');
   const [showButton2, setShowButton2] = useState(false);
@@ -72,13 +104,35 @@ export default function KakaoBrandMessageCreate() {
   const [scheduledDate, setScheduledDate] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
 
-  const handleSellerLoad = () => {
-    const next = DEMO_SELLERS.find((s) => !selectedSellers.includes(s));
-    if (next) setSelectedSellers((prev) => [...prev, next]);
+  const filteredSellers = SELLER_LIST.filter((s) =>
+    s.name.includes(sellerSearch)
+  );
+
+  const toggleSeller = (id: number) => {
+    setCheckedSellers((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const toggleAll = () => {
+    const allIds = filteredSellers.map((s) => s.id);
+    const allChecked = allIds.every((id) => checkedSellers.includes(id));
+    setCheckedSellers(allChecked
+      ? checkedSellers.filter((id) => !allIds.includes(id))
+      : Array.from(new Set([...checkedSellers, ...allIds]))
+    );
+  };
+
+  const confirmSellers = () => {
+    const names = SELLER_LIST.filter((s) => checkedSellers.includes(s.id)).map((s) => s.name);
+    setSelectedSellers(names);
+    setShowSellerModal(false);
   };
 
   const handleSellerRemove = (seller: string) => {
     setSelectedSellers((prev) => prev.filter((s) => s !== seller));
+    const found = SELLER_LIST.find((s) => s.name === seller);
+    if (found) setCheckedSellers((prev) => prev.filter((id) => id !== found.id));
   };
 
   const handleProductRemove = () => setSelectedProduct(null);
@@ -86,6 +140,117 @@ export default function KakaoBrandMessageCreate() {
   const estimatedPoints = selectedSellers.length * 15;
 
   return (
+    <>
+    {/* 셀러 선택 모달 */}
+    {showSellerModal && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div className="relative flex w-[680px] max-h-[80vh] flex-col rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200">
+          {/* 모달 헤더 */}
+          <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+            <div>
+              <h2 className="text-base font-bold text-gray-900">셀러 선택</h2>
+              <p className="mt-0.5 text-xs text-gray-400">발송할 수신 셀러를 선택하세요</p>
+            </div>
+            <button
+              onClick={() => setShowSellerModal(false)}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+            >
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+
+          {/* 검색 */}
+          <div className="border-b border-gray-100 px-6 py-3">
+            <div className="relative">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+              <input
+                type="text"
+                value={sellerSearch}
+                onChange={(e) => setSellerSearch(e.target.value)}
+                placeholder="셀러명 검색"
+                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all"
+              />
+            </div>
+          </div>
+
+          {/* 테이블 */}
+          <div className="flex-1 overflow-y-auto">
+            <table className="w-full text-sm">
+              <thead className="sticky top-0 bg-gray-50">
+                <tr className="border-b border-gray-100">
+                  <th className="w-10 px-4 py-3 text-center">
+                    <input
+                      type="checkbox"
+                      checked={filteredSellers.length > 0 && filteredSellers.every((s) => checkedSellers.includes(s.id))}
+                      onChange={toggleAll}
+                      className="h-4 w-4 rounded accent-[#4DB87A]"
+                    />
+                  </th>
+                  <th className="w-10 px-3 py-3 text-center text-xs font-semibold text-gray-400">NO</th>
+                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-400">셀러명</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {filteredSellers.length === 0 ? (
+                  <tr>
+                    <td colSpan={3} className="py-10 text-center text-sm text-gray-400">검색 결과가 없습니다.</td>
+                  </tr>
+                ) : (
+                  filteredSellers.map((seller) => {
+                    const isChecked = checkedSellers.includes(seller.id);
+                    return (
+                      <tr
+                        key={seller.id}
+                        onClick={() => toggleSeller(seller.id)}
+                        className={`cursor-pointer transition-colors ${isChecked ? 'bg-[#f0f9f4]' : 'hover:bg-gray-50'}`}
+                      >
+                        <td className="px-4 py-3 text-center">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => toggleSeller(seller.id)}
+                            onClick={(e) => e.stopPropagation()}
+                            className="h-4 w-4 rounded accent-[#4DB87A]"
+                          />
+                        </td>
+                        <td className="px-3 py-3 text-center text-xs tabular-nums text-gray-400">{seller.id}</td>
+                        <td className="px-3 py-3 font-medium text-gray-900">{seller.name}</td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 모달 하단 */}
+          <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4">
+            <span className="text-sm text-gray-500">
+              <span className="font-bold text-[#4DB87A]">{checkedSellers.length}</span>명 선택됨
+            </span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowSellerModal(false)}
+                className="rounded-xl border border-gray-200 px-5 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-50 active:scale-95 transition-all"
+              >
+                취소
+              </button>
+              <button
+                onClick={confirmSellers}
+                className="rounded-xl bg-[#4DB87A] px-5 py-2 text-sm font-bold text-white hover:bg-[#3da869] active:scale-95 transition-all"
+              >
+                선택 완료
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
     <div className="min-h-screen bg-[#f8f8f8]">
       {/* 페이지 헤더 */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -171,7 +336,7 @@ export default function KakaoBrandMessageCreate() {
                   수신 셀러 <span className="text-red-500">*</span>
                 </h2>
                 <button
-                  onClick={handleSellerLoad}
+                  onClick={() => setShowSellerModal(true)}
                   className="rounded-lg bg-[#4DB87A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#3da869] active:scale-95 transition-all"
                 >
                   + 셀러 불러오기
@@ -218,9 +383,6 @@ export default function KakaoBrandMessageCreate() {
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
                   상품 불러오기 <span className="text-red-500">*</span>
-                  <span className="flex h-4 w-4 items-center justify-center rounded bg-[#4DB87A] text-[10px] font-bold text-white">
-                    1
-                  </span>
                 </h2>
                 <button
                   onClick={() => setSelectedProduct(DEMO_PRODUCT)}
@@ -263,15 +425,38 @@ export default function KakaoBrandMessageCreate() {
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
                 내용 <span className="text-red-500">*</span>
-                <span className="flex h-4 w-4 items-center justify-center rounded bg-[#4DB87A] text-[10px] font-bold text-white">
-                  2
-                </span>
               </h2>
+
+              {/* 카테고리 선택 */}
+              <div className="mb-3 flex items-center gap-2">
+                <span className="text-xs text-gray-400 shrink-0">메시지 유형</span>
+                <div className="flex gap-2">
+                  {(['신상품', '이벤트', '가격할인'] as ContentCategory[]).map((cat) => {
+                    const isActive = contentCategory === cat;
+                    const styles = CATEGORY_STYLES[cat];
+                    return (
+                      <button
+                        key={cat}
+                        onClick={() => {
+                          setContentCategory(cat);
+                          setContent(CONTENT_TEMPLATES[cat]);
+                        }}
+                        className={`rounded-full border px-3 py-1 text-xs font-semibold transition-all active:scale-95 ${
+                          isActive ? styles.active : styles.default + ' hover:opacity-80'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               <div className="relative">
                 <textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value.slice(0, 76))}
-                  placeholder="메시지 내용을 입력하세요"
+                  placeholder="메시지 유형을 선택하거나 직접 입력하세요"
                   rows={4}
                   className={`w-full resize-none rounded-xl border bg-gray-50 px-4 py-3 pb-9 text-sm text-gray-900 placeholder-gray-400 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                     content.length > 70
@@ -301,9 +486,6 @@ export default function KakaoBrandMessageCreate() {
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
                 버튼
-                <span className="flex h-4 w-4 items-center justify-center rounded bg-[#4DB87A] text-[10px] font-bold text-white">
-                  3
-                </span>
               </h2>
               <div className="space-y-3">
                 {/* 버튼 1 */}
@@ -400,16 +582,40 @@ export default function KakaoBrandMessageCreate() {
             {/* 섹션 8: 예상 지출 포인트 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <div className="flex items-center justify-between gap-4">
-                <div>
-                  <div className="text-sm font-medium text-gray-500">예상 지출 포인트</div>
-                  <div className="mt-1 flex items-end gap-1">
-                    <span className="text-3xl font-black text-[#4DB87A] tabular-nums">
-                      {estimatedPoints.toLocaleString()}
-                    </span>
-                    <span className="mb-1 text-lg font-bold text-[#4DB87A]">P</span>
+                <div className="flex-1">
+                  {/* 보유 / 예상 지출 나란히 */}
+                  <div className="mb-4 flex items-stretch gap-3">
+                    <div className="flex-1 rounded-xl bg-gray-50 px-4 py-3">
+                      <div className="text-xs font-medium text-gray-400">보유 포인트</div>
+                      <div className="mt-1 flex items-end gap-0.5">
+                        <span className="text-2xl font-black tabular-nums text-gray-800">
+                          {CURRENT_POINTS.toLocaleString()}
+                        </span>
+                        <span className="mb-0.5 text-sm font-bold text-gray-500">P</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center text-gray-300">
+                      <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
+                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 rounded-xl bg-[#f0f9f4] px-4 py-3">
+                      <div className="text-xs font-medium text-[#4DB87A]">예상 지출 포인트</div>
+                      <div className="mt-1 flex items-end gap-0.5">
+                        <span className="text-2xl font-black tabular-nums text-[#4DB87A]">
+                          {estimatedPoints.toLocaleString()}
+                        </span>
+                        <span className="mb-0.5 text-sm font-bold text-[#4DB87A]">P</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="mt-1.5 text-xs text-gray-400">
-                    수신자 {selectedSellers.length}명 × 15P (VAT 별도)
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs text-gray-400">
+                      수신자 {selectedSellers.length}명 × 15P (VAT 별도)
+                      {CURRENT_POINTS < estimatedPoints && (
+                        <span className="ml-2 font-semibold text-red-500">포인트가 부족합니다.</span>
+                      )}
+                    </p>
                   </div>
                 </div>
                 <button className="shrink-0 rounded-xl border-2 border-[#4DB87A] px-6 py-2.5 text-sm font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all">
@@ -418,11 +624,19 @@ export default function KakaoBrandMessageCreate() {
               </div>
             </section>
 
-            {/* 하단 발송 버튼 */}
-            <div className="flex justify-end pb-10">
-              <button className="rounded-xl bg-[#4DB87A] px-12 py-3.5 text-base font-bold text-white shadow-md shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
-                발송하기
-              </button>
+            {/* 하단 버튼 */}
+            <div className="flex items-center justify-between pb-10">
+              <Link href="/" className="rounded-xl border-2 border-gray-200 px-8 py-3.5 text-base font-bold text-gray-500 hover:bg-gray-50 active:scale-95 transition-all">
+                취소
+              </Link>
+              <div className="flex items-center gap-3">
+                <button className="rounded-xl border-2 border-[#4DB87A] px-8 py-3.5 text-base font-bold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all">
+                  테스트 발송
+                </button>
+                <button className="rounded-xl bg-[#4DB87A] px-12 py-3.5 text-base font-bold text-white shadow-md shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
+                  발송하기
+                </button>
+              </div>
             </div>
           </div>
 
@@ -431,7 +645,7 @@ export default function KakaoBrandMessageCreate() {
             <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
               <div className="mb-4 flex items-center justify-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#4DB87A]" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">카카오톡 미리보기</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">미리보기</h3>
                 <div className="h-1.5 w-1.5 rounded-full bg-[#4DB87A]" />
               </div>
 
@@ -625,5 +839,6 @@ export default function KakaoBrandMessageCreate() {
         </div>
       </div>
     </div>
+    </>
   );
 }
