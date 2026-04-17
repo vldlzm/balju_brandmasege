@@ -107,17 +107,16 @@ export default function KakaoBrandMessageCreate() {
   // 와이드 리스트 전용 state
   const [wlHeader, setWlHeader] = useState('');
   const [wlList1Text, setWlList1Text] = useState('');
-  const [wlList1Image, setWlList1Image] = useState<string | null>(null);
-  const [wlExtraItems, setWlExtraItems] = useState<{ id: number; text: string; image: string | null }[]>([
-    { id: 1, text: '', image: null },
-    { id: 2, text: '', image: null },
+  const [wlList1Product, setWlList1Product] = useState<Product | null>(null);
+  const [wlExtraItems, setWlExtraItems] = useState<{ id: number; text: string; product: Product | null }[]>([
+    { id: 1, text: '', product: null },
+    { id: 2, text: '', product: null },
   ]);
   const [wlBtn1, setWlBtn1] = useState('');
   const [wlBtn1Link, setWlBtn1Link] = useState('');
   const [wlBtn2, setWlBtn2] = useState('');
   const [wlBtn2Link, setWlBtn2Link] = useState('');
   const [wlShowBtn2, setWlShowBtn2] = useState(false);
-  const [wlCoupon, setWlCoupon] = useState('');
   // 와이드 이미지 버튼 링크
   const [button1Link, setButton1Link] = useState('');
   const [button2Link, setButton2Link] = useState('');
@@ -156,17 +155,9 @@ export default function KakaoBrandMessageCreate() {
   const handleProductRemove = () => setSelectedProduct(null);
 
   // 와이드 리스트 핸들러
-  const handleImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setter: (v: string | null) => void
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) setter(URL.createObjectURL(file));
-    e.target.value = '';
-  };
   const addWlItem = () => {
     if (wlExtraItems.length < 4)
-      setWlExtraItems(prev => [...prev, { id: Date.now(), text: '', image: null }]);
+      setWlExtraItems(prev => [...prev, { id: Date.now(), text: '', product: null }]);
   };
   const removeWlItem = (id: number) => {
     if (wlExtraItems.length > 2)
@@ -174,8 +165,10 @@ export default function KakaoBrandMessageCreate() {
   };
   const updateWlItemText = (id: number, text: string) =>
     setWlExtraItems(prev => prev.map(item => item.id === id ? { ...item, text: text.slice(0, 30) } : item));
-  const updateWlItemImage = (id: number, image: string | null) =>
-    setWlExtraItems(prev => prev.map(item => item.id === id ? { ...item, image } : item));
+  const updateWlItemProduct = (id: number, product: Product | null) =>
+    setWlExtraItems(prev => prev.map(item =>
+      item.id === id ? { ...item, product, text: product ? (item.text || product.name) : item.text } : item
+    ));
 
   const estimatedPoints = selectedSellers.length * 15;
 
@@ -578,35 +571,35 @@ export default function KakaoBrandMessageCreate() {
                       <div className="mb-3 flex items-center gap-2">
                         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-bold text-white">1</span>
                         <span className="text-xs font-semibold text-gray-600">리스트 1 (필수)</span>
-                        <span className="ml-auto text-[10px] text-gray-400">권장 800×400 · 2:1 · jpg/png · 최대 5MB</span>
+                        <button
+                          onClick={() => { setWlList1Product(DEMO_PRODUCT); if (!wlList1Text) setWlList1Text(DEMO_PRODUCT.name); }}
+                          className="ml-auto rounded-lg border border-[#4DB87A] px-3 py-1 text-[10px] font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
+                        >
+                          상품 선택
+                        </button>
                       </div>
-                      {/* 이미지 업로드 - 2:1 */}
-                      <label className="group relative mb-3 flex aspect-[2/1] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-white transition-colors hover:border-[#4DB87A] hover:bg-[#f0f9f4]">
-                        <input type="file" accept="image/jpeg,image/png" className="hidden"
-                          onChange={(e) => handleImageChange(e, setWlList1Image)} />
-                        {wlList1Image ? (
-                          <>
-                            <img src={wlList1Image} alt="리스트1" className="h-full w-full object-cover" />
-                            <button type="button" onClick={(e) => { e.preventDefault(); setWlList1Image(null); }}
-                              className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70">
-                              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-3 w-3"><path d="M2 2l8 8M10 2L2 10"/></svg>
-                            </button>
-                          </>
-                        ) : (
-                          <div className="flex flex-col items-center gap-1 text-gray-400 group-hover:text-[#4DB87A]">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8">
-                              <path d="M4 16l4-4 4 4 4-6 4 6" strokeLinecap="round" strokeLinejoin="round"/>
-                              <rect x="3" y="3" width="18" height="18" rx="2"/>
-                              <circle cx="8.5" cy="8.5" r="1.5"/>
-                            </svg>
-                            <span className="text-xs">클릭하여 이미지 업로드</span>
+                      {wlList1Product ? (
+                        <div className="mb-3 flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-400">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
                           </div>
-                        )}
-                      </label>
+                          <div className="flex-1 min-w-0">
+                            <div className="truncate text-xs font-semibold text-gray-900">{wlList1Product.name}</div>
+                            <div className="text-xs font-bold text-[#4DB87A]">{wlList1Product.price}</div>
+                          </div>
+                          <button onClick={() => setWlList1Product(null)} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors">
+                            <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="mb-3 rounded-lg border-2 border-dashed border-gray-200 py-5 text-center text-xs text-gray-400">
+                          상품 선택 버튼을 눌러 상품을 추가하세요
+                        </div>
+                      )}
                       {/* 텍스트 - 25자 */}
                       <div className="relative">
                         <input type="text" value={wlList1Text} onChange={(e) => setWlList1Text(e.target.value.slice(0, 25))}
-                          placeholder="리스트1 문구 입력 (최대 25자)"
+                          placeholder={wlList1Product ? wlList1Product.name : '리스트1 문구 입력 (최대 25자)'}
                           className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 pr-14 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlList1Text.length}/25</span>
                       </div>
@@ -618,40 +611,41 @@ export default function KakaoBrandMessageCreate() {
                         <div className="mb-3 flex items-center gap-2">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-400 text-[10px] font-bold text-white">{idx + 2}</span>
                           <span className="text-xs font-semibold text-gray-600">리스트 {idx + 2}</span>
-                          <span className="ml-auto text-[10px] text-gray-400">권장 800×800 · 1:1 · jpg/png · 최대 5MB</span>
+                          <button
+                            onClick={() => updateWlItemProduct(item.id, DEMO_PRODUCT)}
+                            className="ml-auto rounded-lg border border-[#4DB87A] px-3 py-1 text-[10px] font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
+                          >
+                            상품 선택
+                          </button>
                           {wlExtraItems.length > 2 && (
                             <button onClick={() => removeWlItem(item.id)}
-                              className="ml-2 flex h-6 w-6 items-center justify-center rounded-full text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors">
+                              className="flex h-6 w-6 items-center justify-center rounded-full text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors">
                               <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
                             </button>
                           )}
                         </div>
-                        {/* 이미지 업로드 - 1:1 */}
-                        <label className="group relative mb-3 flex aspect-square w-32 cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-white transition-colors hover:border-[#4DB87A] hover:bg-[#f0f9f4]">
-                          <input type="file" accept="image/jpeg,image/png" className="hidden"
-                            onChange={(e) => handleImageChange(e, (v) => updateWlItemImage(item.id, v))} />
-                          {item.image ? (
-                            <>
-                              <img src={item.image} alt={`리스트${idx+2}`} className="h-full w-full object-cover" />
-                              <button type="button" onClick={(e) => { e.preventDefault(); updateWlItemImage(item.id, null); }}
-                                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70">
-                                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-2.5 w-2.5"><path d="M2 2l8 8M10 2L2 10"/></svg>
-                              </button>
-                            </>
-                          ) : (
-                            <div className="flex flex-col items-center gap-1 text-gray-400 group-hover:text-[#4DB87A]">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-                                <path d="M4 16l4-4 4 4 4-6 4 6" strokeLinecap="round" strokeLinejoin="round"/>
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                              </svg>
-                              <span className="text-[10px]">이미지 업로드</span>
+                        {item.product ? (
+                          <div className="mb-3 flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-400">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
                             </div>
-                          )}
-                        </label>
+                            <div className="flex-1 min-w-0">
+                              <div className="truncate text-xs font-semibold text-gray-900">{item.product.name}</div>
+                              <div className="text-xs font-bold text-[#4DB87A]">{item.product.price}</div>
+                            </div>
+                            <button onClick={() => updateWlItemProduct(item.id, null)} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors">
+                              <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/></svg>
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="mb-3 rounded-lg border-2 border-dashed border-gray-200 py-5 text-center text-xs text-gray-400">
+                            상품 선택 버튼을 눌러 상품을 추가하세요
+                          </div>
+                        )}
                         {/* 텍스트 - 30자 */}
                         <div className="relative">
                           <input type="text" value={item.text} onChange={(e) => updateWlItemText(item.id, e.target.value)}
-                            placeholder={`리스트${idx+2} 문구 입력 (최대 30자)`}
+                            placeholder={item.product ? item.product.name : `리스트${idx+2} 문구 입력 (최대 30자)`}
                             className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 pr-14 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.text.length}/30</span>
                         </div>
@@ -717,29 +711,6 @@ export default function KakaoBrandMessageCreate() {
                   </div>
                 </section>
 
-                {/* WL-D: 쿠폰 강조 버튼 */}
-                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <h2 className="mb-1 text-sm font-bold uppercase tracking-wide text-gray-400">쿠폰 강조 버튼</h2>
-                  <p className="mb-4 text-xs text-gray-400">최대 1개</p>
-                  <div className="relative">
-                    <input type="text" value={wlCoupon} onChange={(e) => setWlCoupon(e.target.value.slice(0, 20))}
-                      placeholder="쿠폰 버튼 문구 입력 (예: 10% 할인 쿠폰)"
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlCoupon.length}/20</span>
-                  </div>
-                  {wlCoupon && (
-                    <div className="mt-3 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
-                      <div className="flex-1">
-                        <p className="text-sm font-semibold text-gray-800">{wlCoupon}</p>
-                      </div>
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#fee500]">
-                        <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-gray-800">
-                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
-                </section>
               </>
             )}
 
@@ -925,6 +896,13 @@ export default function KakaoBrandMessageCreate() {
                           <div className="mb-0.5 text-[8px] font-semibold text-gray-600">발주모아</div>
                           <div className="overflow-hidden rounded-2xl rounded-tl-none bg-white shadow-md">
 
+                            {/* 와이드 리스트 헤더 (이미지 위) */}
+                            {messageType === 'wide-list' && wlHeader && (
+                              <div className="border-b border-gray-100 px-2.5 py-1.5">
+                                <p className="text-[8px] font-bold text-gray-900">{wlHeader}</p>
+                              </div>
+                            )}
+
                             {/* 이미지 영역 (2:1 비율) */}
                             <div className="aspect-[2/1] relative overflow-hidden bg-gray-100">
                               {messageType ? (
@@ -940,13 +918,14 @@ export default function KakaoBrandMessageCreate() {
                                     </>
                                   )}
                                   {messageType === 'wide-list' && (
-                                    <div className="h-full w-full overflow-hidden">
-                                      {wlList1Image ? (
-                                        <img src={wlList1Image} alt="" className="h-full w-full object-cover" />
-                                      ) : (
-                                        <div className="flex h-full items-center justify-center bg-gray-200">
-                                          <span className="text-[8px] text-gray-400">리스트1 이미지</span>
+                                    <div className="flex h-full w-full items-center justify-center bg-gray-200">
+                                      {wlList1Product ? (
+                                        <div className="flex flex-col items-center gap-0.5">
+                                          <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-6 w-6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
+                                          <span className="text-[7px] text-gray-400 text-center px-2 leading-tight">{wlList1Product.name}</span>
                                         </div>
+                                      ) : (
+                                        <span className="text-[8px] text-gray-400">리스트1 상품 이미지</span>
                                       )}
                                     </div>
                                   )}
@@ -994,12 +973,6 @@ export default function KakaoBrandMessageCreate() {
                             {/* ── 와이드 리스트 본문 ── */}
                             {messageType === 'wide-list' && (
                               <>
-                                {/* 헤더 */}
-                                {wlHeader && (
-                                  <div className="border-b border-gray-100 px-2.5 py-1.5">
-                                    <p className="text-[8px] font-bold text-gray-900">{wlHeader}</p>
-                                  </div>
-                                )}
                                 {/* 리스트1 문구 */}
                                 {wlList1Text && (
                                   <div className="border-b border-gray-100 px-2.5 py-1">
@@ -1010,11 +983,11 @@ export default function KakaoBrandMessageCreate() {
                                 <div className="divide-y divide-gray-50">
                                   {wlExtraItems.map((item, idx) => (
                                     <div key={item.id} className="flex items-center gap-1.5 px-2 py-1.5">
-                                      <div className="h-7 w-7 shrink-0 overflow-hidden rounded bg-gray-200">
-                                        {item.image && <img src={item.image} alt="" className="h-full w-full object-cover" />}
+                                      <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded bg-gray-200 text-gray-400">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>
                                       </div>
                                       <p className="text-[7px] leading-snug text-gray-700 line-clamp-2">
-                                        {item.text || <span className="text-gray-400">리스트{idx+2} 문구</span>}
+                                        {item.text || (item.product ? item.product.name : <span className="text-gray-400">리스트{idx+2} 문구</span>)}
                                       </p>
                                     </div>
                                   ))}
@@ -1024,17 +997,6 @@ export default function KakaoBrandMessageCreate() {
                                   <div className="flex border-t border-gray-100">
                                     {wlBtn1 && <div className={`flex-1 py-1.5 text-center text-[8px] font-bold text-gray-800 bg-[#fee500] ${wlBtn2 ? 'border-r border-gray-200' : ''}`}>{wlBtn1}</div>}
                                     {wlBtn2 && <div className="flex-1 py-1.5 text-center text-[8px] font-medium text-gray-600 bg-white">{wlBtn2}</div>}
-                                  </div>
-                                )}
-                                {/* 쿠폰 */}
-                                {wlCoupon && (
-                                  <div className="flex items-center justify-between border-t border-gray-100 px-2.5 py-1.5">
-                                    <span className="text-[7px] font-medium text-gray-700">{wlCoupon}</span>
-                                    <div className="flex h-5 w-5 items-center justify-center rounded bg-[#fee500]">
-                                      <svg viewBox="0 0 12 12" fill="currentColor" className="h-3 w-3 text-gray-800">
-                                        <path d="M6 1v7M3.5 6L6 8.5 8.5 6M2 10h8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
-                                      </svg>
-                                    </div>
                                   </div>
                                 )}
                               </>
