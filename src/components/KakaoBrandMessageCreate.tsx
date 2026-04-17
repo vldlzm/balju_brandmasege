@@ -1001,6 +1001,14 @@ export default function KakaoBrandMessageCreate() {
                                 )}
                               </>
                             )}
+
+                            {/* 수신거부 / 채널차단 */}
+                            {(messageType === 'wide-image' || messageType === 'wide-list') && (
+                              <div className="flex items-center justify-between border-t border-gray-100 bg-gray-50 px-2.5 py-1">
+                                <span className="text-[6px] text-gray-400">수신거부 | 홈 &gt; 채널차단</span>
+                                <span className="text-[6px] text-gray-400">오전 9:00</span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
