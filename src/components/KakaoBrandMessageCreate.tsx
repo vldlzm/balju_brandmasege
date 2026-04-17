@@ -113,9 +113,14 @@ export default function KakaoBrandMessageCreate() {
     { id: 2, text: '', image: null },
   ]);
   const [wlBtn1, setWlBtn1] = useState('');
+  const [wlBtn1Link, setWlBtn1Link] = useState('');
   const [wlBtn2, setWlBtn2] = useState('');
+  const [wlBtn2Link, setWlBtn2Link] = useState('');
   const [wlShowBtn2, setWlShowBtn2] = useState(false);
   const [wlCoupon, setWlCoupon] = useState('');
+  // 와이드 이미지 버튼 링크
+  const [button1Link, setButton1Link] = useState('');
+  const [button2Link, setButton2Link] = useState('');
 
   const filteredSellers = SELLER_LIST.filter((s) =>
     s.name.includes(sellerSearch)
@@ -488,19 +493,42 @@ export default function KakaoBrandMessageCreate() {
                 {/* 섹션 6: 버튼 */}
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
                   <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
-                  <div className="space-y-3">
-                    <div className="relative">
-                      <input type="text" value={button1} onChange={(e) => setButton1(e.target.value.slice(0, 8))} placeholder="버튼1 텍스트 입력"
-                        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{button1.length}/8</span>
-                    </div>
-                    {showButton2 ? (
+                  <div className="space-y-4">
+                    {/* 버튼 1 */}
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
+                      <p className="text-xs font-semibold text-gray-500">버튼 1</p>
                       <div className="relative">
-                        <input type="text" value={button2} onChange={(e) => setButton2(e.target.value.slice(0, 8))} placeholder="버튼2 텍스트 입력"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-20 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                          <span className="text-xs tabular-nums text-gray-400">{button2.length}/8</span>
-                          <button onClick={() => { setShowButton2(false); setButton2(''); }} className="text-xs text-gray-400 hover:text-red-500 transition-colors">삭제</button>
+                        <input type="text" value={button1} onChange={(e) => setButton1(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
+                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{button1.length}/8</span>
+                      </div>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+                        </span>
+                        <input type="url" value={button1Link} onChange={(e) => setButton1Link(e.target.value)} placeholder="https://example.com"
+                          className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                      </div>
+                    </div>
+
+                    {/* 버튼 2 */}
+                    {showButton2 ? (
+                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-semibold text-gray-500">버튼 2</p>
+                          <button onClick={() => { setShowButton2(false); setButton2(''); setButton2Link(''); }} className="text-xs text-gray-400 hover:text-red-500 transition-colors">삭제</button>
+                        </div>
+                        <div className="relative">
+                          <input type="text" value={button2} onChange={(e) => setButton2(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
+                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{button2.length}/8</span>
+                        </div>
+                        <div className="relative">
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+                          </span>
+                          <input type="url" value={button2Link} onChange={(e) => setButton2Link(e.target.value)} placeholder="https://example.com"
+                            className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         </div>
                       </div>
                     ) : (
@@ -640,30 +668,49 @@ export default function KakaoBrandMessageCreate() {
                   </div>
                 </section>
 
-                {/* WL-C: 버튼 (최대 2개, 가로 배열) */}
+                {/* WL-C: 버튼 (최대 2개) */}
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <h2 className="mb-1 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
-                  <p className="mb-4 text-xs text-gray-400">띄어쓰기 포함 8자 제한 · 최대 2개 · 가로 배열</p>
-                  <div className="flex gap-3">
-                    <div className="relative flex-1">
-                      <input type="text" value={wlBtn1} onChange={(e) => setWlBtn1(e.target.value.slice(0, 8))}
-                        placeholder="버튼1 텍스트"
-                        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlBtn1.length}/8</span>
+                  <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
+                  <div className="space-y-4">
+                    {/* 버튼 1 */}
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
+                      <p className="text-xs font-semibold text-gray-500">버튼 1</p>
+                      <div className="relative">
+                        <input type="text" value={wlBtn1} onChange={(e) => setWlBtn1(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
+                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlBtn1.length}/8</span>
+                      </div>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+                        </span>
+                        <input type="url" value={wlBtn1Link} onChange={(e) => setWlBtn1Link(e.target.value)} placeholder="https://example.com"
+                          className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                      </div>
                     </div>
+
+                    {/* 버튼 2 */}
                     {wlShowBtn2 ? (
-                      <div className="relative flex-1">
-                        <input type="text" value={wlBtn2} onChange={(e) => setWlBtn2(e.target.value.slice(0, 8))}
-                          placeholder="버튼2 텍스트"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-20 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-                          <span className="text-xs tabular-nums text-gray-400">{wlBtn2.length}/8</span>
-                          <button onClick={() => { setWlShowBtn2(false); setWlBtn2(''); }} className="text-xs text-gray-400 hover:text-red-500 transition-colors">삭제</button>
+                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-semibold text-gray-500">버튼 2</p>
+                          <button onClick={() => { setWlShowBtn2(false); setWlBtn2(''); setWlBtn2Link(''); }} className="text-xs text-gray-400 hover:text-red-500 transition-colors">삭제</button>
+                        </div>
+                        <div className="relative">
+                          <input type="text" value={wlBtn2} onChange={(e) => setWlBtn2(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
+                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlBtn2.length}/8</span>
+                        </div>
+                        <div className="relative">
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+                          </span>
+                          <input type="url" value={wlBtn2Link} onChange={(e) => setWlBtn2Link(e.target.value)} placeholder="https://example.com"
+                            className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         </div>
                       </div>
                     ) : (
-                      <button onClick={() => setWlShowBtn2(true)}
-                        className="flex items-center gap-1 rounded-xl border-2 border-dashed border-gray-200 px-5 text-sm font-medium text-gray-400 hover:border-[#4DB87A] hover:text-[#4DB87A] transition-all">
+                      <button onClick={() => setWlShowBtn2(true)} className="flex items-center gap-1 text-sm font-medium text-[#4DB87A] hover:underline transition-colors">
                         <span className="text-base font-bold">+</span> 버튼 추가
                       </button>
                     )}
