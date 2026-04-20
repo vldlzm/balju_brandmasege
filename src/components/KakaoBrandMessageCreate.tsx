@@ -477,7 +477,7 @@ export default function KakaoBrandMessageCreate() {
                   onClick={() => setShowSellerModal(true)}
                   className="rounded-lg bg-[#4DB87A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#3da869] active:scale-95 transition-all"
                 >
-                  + 셀러 불러오기
+                  + 파트너 불러오기
                 </button>
               </div>
               <div className="min-h-[64px] rounded-xl border border-dashed border-gray-200 bg-gray-50 p-3 transition-all">
@@ -503,7 +503,7 @@ export default function KakaoBrandMessageCreate() {
                   </div>
                 ) : (
                   <p className="py-3 text-center text-xs text-gray-400">
-                    &quot;셀러 불러오기&quot; 버튼을 눌러 수신 셀러를 추가하세요
+                    &quot;파트너 불러오기&quot; 버튼을 눌러 수신 셀러를 추가하세요
                   </p>
                 )}
               </div>
@@ -715,7 +715,7 @@ export default function KakaoBrandMessageCreate() {
                       <div key={item.id} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
                         <div className="mb-3 flex items-center gap-2">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-400 text-[10px] font-bold text-white">{idx + 2}</span>
-                          <span className="text-xs font-semibold text-gray-600">리스트 {idx + 2}</span>
+                          <span className="text-xs font-semibold text-gray-600">리스트 {idx + 2} <span className="text-red-500">*</span></span>
                           <button
                             onClick={() => openProductModal(item.id)}
                             className="ml-auto rounded-lg border border-[#4DB87A] px-3 py-1 text-[10px] font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
