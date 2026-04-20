@@ -215,7 +215,9 @@ export default function KakaoBrandMessageCreate() {
   };
   const updateWlItemProduct = (id: number, product: Product | null) =>
     setWlExtraItems(prev => prev.map(item =>
-      item.id === id ? { ...item, product, text: product ? (item.text || product.name) : item.text } : item
+      item.id === id
+        ? { ...item, product, text: product ? `${product.name}\n${product.price}`.slice(0, 30) : item.text }
+        : item
     ));
 
   const estimatedPoints = selectedSellers.length * 15;
