@@ -117,9 +117,13 @@ export default function KakaoBrandMessageCreate() {
   const [button1, setButton1] = useState('');
   const [button2, setButton2] = useState('');
   const [showButton2, setShowButton2] = useState(false);
-  const [sendType, setSendType] = useState<'immediate' | 'scheduled'>('immediate');
   const [scheduledDate, setScheduledDate] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
+  const tomorrow = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().split('T')[0];
+  })();
 
   // 와이드 리스트 전용 state
   const [wlHeader, setWlHeader] = useState('');
@@ -822,46 +826,27 @@ export default function KakaoBrandMessageCreate() {
             {/* 섹션 7: 발송 설정 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">발송 설정</h2>
-              <div className="space-y-4">
-                <div className="flex gap-5">
-                  {(['immediate', 'scheduled'] as const).map((type) => (
-                    <label key={type} className="flex cursor-pointer items-center gap-2.5 select-none">
-                      <input
-                        type="radio"
-                        name="sendType"
-                        value={type}
-                        checked={sendType === type}
-                        onChange={() => setSendType(type)}
-                        className="h-4 w-4 accent-[#4DB87A]"
-                      />
-                      <span className={`text-sm font-medium ${sendType === type ? 'text-gray-900' : 'text-gray-500'}`}>
-                        {type === 'immediate' ? '즉시 발송' : '예약 발송'}
-                      </span>
-                    </label>
-                  ))}
+              <p className="mb-4 text-xs text-gray-400">오늘 이후 날짜부터 선택 가능합니다.</p>
+              <div className="flex flex-wrap gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-medium text-gray-500">날짜 <span className="text-red-500">*</span></label>
+                  <input
+                    type="date"
+                    value={scheduledDate}
+                    min={tomorrow}
+                    onChange={(e) => setScheduledDate(e.target.value)}
+                    className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
+                  />
                 </div>
-                {sendType === 'scheduled' && (
-                  <div className="flex flex-wrap gap-3 rounded-xl bg-gray-50 p-4">
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-500">날짜</label>
-                      <input
-                        type="date"
-                        value={scheduledDate}
-                        onChange={(e) => setScheduledDate(e.target.value)}
-                        className="rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-500">시간</label>
-                      <input
-                        type="time"
-                        value={scheduledTime}
-                        onChange={(e) => setScheduledTime(e.target.value)}
-                        className="rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
-                      />
-                    </div>
-                  </div>
-                )}
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-medium text-gray-500">시간 <span className="text-red-500">*</span></label>
+                  <input
+                    type="time"
+                    value={scheduledTime}
+                    onChange={(e) => setScheduledTime(e.target.value)}
+                    className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
+                  />
+                </div>
               </div>
             </section>
 
@@ -1147,9 +1132,9 @@ export default function KakaoBrandMessageCreate() {
               )}
 
               {/* 발송 예약 정보 */}
-              {sendType === 'scheduled' && scheduledDate && (
+              {scheduledDate && (
                 <div className="mt-2 rounded-xl bg-amber-50 px-4 py-3 text-center ring-1 ring-amber-200">
-                  <div className="text-[10px] font-medium uppercase tracking-wider text-amber-600">예약 발송</div>
+                  <div className="text-[10px] font-medium uppercase tracking-wider text-amber-600">발송 예정</div>
                   <div className="mt-0.5 text-sm font-semibold text-gray-800">
                     {scheduledDate} {scheduledTime}
                   </div>
