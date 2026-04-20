@@ -33,7 +33,6 @@ interface CarouselItem {
   btn2: string;
   btn2Link: string;
   showBtn2: boolean;
-  coupon: string;
 }
 
 const DEMO_SELLERS = [
@@ -139,10 +138,10 @@ export default function KakaoBrandMessageCreate() {
   })();
 
   // 캐러셀 전용 state
-  const newCarouselItem = (): CarouselItem => ({ id: Date.now(), product: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false, coupon: '' });
+  const newCarouselItem = (): CarouselItem => ({ id: Date.now(), product: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false });
   const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([
-    { id: 1, product: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false, coupon: '' },
-    { id: 2, product: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false, coupon: '' },
+    { id: 1, product: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false },
+    { id: 2, product: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false },
   ]);
   const [carouselActiveIdx, setCarouselActiveIdx] = useState(0);
 
@@ -925,31 +924,34 @@ export default function KakaoBrandMessageCreate() {
                         )}
                       </div>
 
-                      {/* 상품 불러오기 */}
+                      {/* 상품 선택 */}
                       <div>
-                        <p className="mb-1.5 text-xs font-medium text-gray-500">상품 <span className="text-red-500">*</span></p>
+                        <div className="mb-2 flex items-center gap-2">
+                          <p className="text-xs font-medium text-gray-500">상품 <span className="text-red-500">*</span></p>
+                          <button
+                            onClick={() => openProductModal(`carousel-${item.id}`)}
+                            className="ml-auto rounded-lg border border-[#4DB87A] px-3 py-1 text-[10px] font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
+                          >
+                            상품 선택
+                          </button>
+                        </div>
                         {item.product ? (
-                          <div className="flex items-center justify-between rounded-xl border border-[#4DB87A] bg-[#f0f9f4] px-4 py-3">
-                            <div className="flex items-center gap-3 min-w-0">
-                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
-                              </div>
-                              <div className="min-w-0">
-                                <p className="text-sm font-semibold text-gray-900 truncate">{item.product.name}</p>
-                                <p className="text-xs font-bold text-[#4DB87A]">{item.product.price}</p>
-                              </div>
+                          <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-400">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
                             </div>
-                            <div className="flex items-center gap-2 shrink-0 ml-3">
-                              <button onClick={() => openProductModal(`carousel-${item.id}`)} className="text-xs font-medium text-[#4DB87A] hover:underline">변경</button>
-                              <button onClick={() => updateCarousel(item.id, { product: null })} className="text-xs text-gray-400 hover:text-red-500">삭제</button>
+                            <div className="flex-1 min-w-0">
+                              <div className="truncate text-xs font-semibold text-gray-900">{item.product.name}</div>
+                              <div className="text-xs font-bold text-[#4DB87A]">{item.product.price}</div>
                             </div>
+                            <button onClick={() => updateCarousel(item.id, { product: null })} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors">
+                              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-3.5 w-3.5"><path d="M3 3l10 10M13 3L3 13"/></svg>
+                            </button>
                           </div>
                         ) : (
-                          <button onClick={() => openProductModal(`carousel-${item.id}`)}
-                            className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 py-4 text-sm font-medium text-gray-400 transition-colors hover:border-[#4DB87A] hover:text-[#4DB87A]">
-                            <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/></svg>
-                            상품 불러오기
-                          </button>
+                          <div className="rounded-lg border-2 border-dashed border-gray-200 py-5 text-center text-xs text-gray-400">
+                            상품 선택 버튼을 눌러 상품을 추가하세요
+                          </div>
                         )}
                       </div>
 
@@ -1026,23 +1028,6 @@ export default function KakaoBrandMessageCreate() {
                         </div>
                       </div>
 
-                      {/* 쿠폰 강조 버튼 */}
-                      <div>
-                        <p className="mb-1.5 text-xs font-medium text-gray-500">쿠폰 강조 버튼 <span className="text-[10px] text-gray-400">(최대 1개)</span></p>
-                        <div className="relative">
-                          <input type="text" value={item.coupon} onChange={(e) => updateCarousel(item.id, { coupon: e.target.value.slice(0, 20) })} placeholder="쿠폰 버튼 문구 입력 (예: 10% 할인 쿠폰)"
-                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
-                          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.coupon.length}/20</span>
-                        </div>
-                        {item.coupon && (
-                          <div className="mt-2 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
-                            <p className="flex-1 text-sm font-semibold text-gray-800">{item.coupon}</p>
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#fee500]">
-                              <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 text-gray-800"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-                            </div>
-                          </div>
-                        )}
-                      </div>
                     </div>
                   ))}
                 </section>
@@ -1215,74 +1200,77 @@ export default function KakaoBrandMessageCreate() {
                         <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fee500] text-[7px] font-black text-gray-800 shadow-sm">K</div>
 
                         {/* ── 캐러셀 피드 슬라이딩 카드 미리보기 ── */}
-                        {messageType === 'carousel' && (
-                          <div className="flex-1 overflow-hidden">
-                            {/* 슬라이딩 카드 영역 */}
-                            <div className="flex gap-1.5 overflow-hidden">
-                              {carouselItems.map((slide, i) => {
-                                const offset = i - carouselActiveIdx;
-                                if (offset < 0 || offset > 1) return null;
-                                return (
-                                  <div key={slide.id} className="shrink-0 transition-all" style={{ width: offset === 0 ? '84%' : '13%', opacity: offset === 0 ? 1 : 0.55 }}>
-                                    <div className={`overflow-hidden rounded-xl rounded-tl-none bg-white shadow-md ${offset > 0 ? 'rounded-tl-xl' : ''}`}>
-                                      {/* 상품 이미지 영역 */}
-                                      <div className="aspect-[2/1] bg-gray-200 flex items-center justify-center overflow-hidden">
-                                        {slide.product ? (
-                                          <div className="flex flex-col items-center gap-0.5 px-1 text-center">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
-                                            {offset === 0 && <span className="text-[6px] text-gray-400 leading-tight line-clamp-2">{slide.product.name}</span>}
+                        {messageType === 'carousel' && (() => {
+                          const activeSlide = carouselItems[carouselActiveIdx];
+                          const nextSlide = carouselItems[carouselActiveIdx + 1] ?? null;
+                          if (!activeSlide) return null;
+                          return (
+                            <div className="flex-1 min-w-0">
+                              {/* 카드 슬라이더 - overflow-hidden 으로 peek 클리핑 */}
+                              <div className="overflow-hidden">
+                                <div className="flex gap-1.5">
+                                  {/* 활성 카드 */}
+                                  <div className="shrink-0" style={{ width: nextSlide ? 'calc(100% - 22px)' : '100%' }}>
+                                    <div className="overflow-hidden rounded-2xl rounded-tl-none bg-white shadow-md">
+                                      {/* 이미지 */}
+                                      <div className="aspect-[2/1] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                                        {activeSlide.product ? (
+                                          <div className="flex flex-col items-center gap-0.5 px-2 text-center">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-6 w-6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
+                                            <span className="text-[6px] text-gray-400 leading-tight line-clamp-2 mt-0.5">{activeSlide.product.name}</span>
                                           </div>
                                         ) : (
-                                          <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-6 w-6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
+                                          <>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-7 w-7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
+                                          </>
                                         )}
                                       </div>
-                                      {offset === 0 && (
-                                        <>
-                                          {/* 헤더 */}
-                                          {slide.header && (
-                                            <div className="px-2 pt-1.5 pb-0.5">
-                                              <p className="text-[8px] font-bold text-gray-900 leading-tight">{slide.header}</p>
-                                            </div>
-                                          )}
-                                          {/* 내용 */}
-                                          <div className="px-2 py-1">
-                                            <p className="text-[7px] leading-snug text-gray-700 whitespace-pre-wrap break-words line-clamp-4">
-                                              {slide.content || <span className="text-gray-400">내용을 입력하세요</span>}
-                                            </p>
-                                          </div>
-                                          {/* 버튼 */}
-                                          {(slide.btn1 || slide.btn2) && (
-                                            <div className={`flex border-t border-gray-100 ${slide.btn1 && slide.btn2 ? 'divide-x divide-gray-100' : ''}`}>
-                                              {slide.btn1 && <div className="flex-1 bg-[#fee500] py-1.5 text-center text-[7px] font-bold text-gray-800">{slide.btn1}</div>}
-                                              {slide.btn2 && <div className="flex-1 bg-white py-1.5 text-center text-[7px] font-medium text-gray-600">{slide.btn2}</div>}
-                                            </div>
-                                          )}
-                                          {/* 쿠폰 */}
-                                          {slide.coupon && (
-                                            <div className="flex items-center gap-1 border-t border-gray-100 px-2 py-1.5">
-                                              <div className="flex-1 min-w-0">
-                                                <p className="text-[7px] font-bold text-gray-800 truncate">{slide.coupon}</p>
-                                              </div>
-                                              <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-[#fee500]">
-                                                <svg viewBox="0 0 20 20" fill="currentColor" className="h-2.5 w-2.5 text-gray-700"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"/></svg>
-                                              </div>
-                                            </div>
-                                          )}
-                                        </>
+                                      {/* 헤더 */}
+                                      {activeSlide.header && (
+                                        <div className="px-2.5 pt-2 pb-0.5">
+                                          <p className="text-[8px] font-bold text-gray-900 leading-tight">{activeSlide.header}</p>
+                                        </div>
                                       )}
+                                      {/* 내용 */}
+                                      <div className="px-2.5 py-1.5">
+                                        <p className="text-[7px] leading-snug text-gray-700 whitespace-pre-wrap break-words line-clamp-4">
+                                          {activeSlide.content || <span className="text-gray-400">내용을 입력하세요</span>}
+                                        </p>
+                                      </div>
+                                      {/* 버튼 */}
+                                      <div className={`flex border-t border-gray-100 ${activeSlide.btn1 && activeSlide.btn2 ? 'divide-x divide-gray-200' : ''}`}>
+                                        {activeSlide.btn1
+                                          ? <div className="flex-1 py-1.5 text-center text-[7px] font-bold text-gray-700 bg-gray-100">{activeSlide.btn1}</div>
+                                          : <div className="flex-1 py-1.5 text-center text-[7px] text-gray-300">버튼1</div>}
+                                        {activeSlide.btn2
+                                          ? <div className="flex-1 py-1.5 text-center text-[7px] font-bold text-gray-800 bg-[#fee500]">{activeSlide.btn2}</div>
+                                          : (!activeSlide.btn1 && <div className="flex-1 py-1.5 text-center text-[7px] text-gray-300">버튼2</div>)}
+                                      </div>
                                     </div>
                                   </div>
-                                );
-                              })}
+                                  {/* 다음 카드 peek */}
+                                  {nextSlide && (
+                                    <div className="shrink-0 flex-1">
+                                      <div className="overflow-hidden rounded-xl bg-white shadow-md opacity-70">
+                                        <div className="aspect-[2/1] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                                          {nextSlide.product
+                                            ? <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>
+                                            : <svg viewBox="0 0 24 24" fill="none" stroke="#c4c4c4" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              {/* 슬라이드 인디케이터 도트 */}
+                              <div className="flex gap-1 pt-1.5 pl-1">
+                                {carouselItems.map((_, i) => (
+                                  <div key={i} className={`h-1 rounded-full transition-all ${i === carouselActiveIdx ? 'w-3 bg-[#4DB87A]' : 'w-1 bg-gray-400/50'}`} />
+                                ))}
+                              </div>
                             </div>
-                            {/* 슬라이드 인디케이터 도트 */}
-                            <div className="flex justify-start gap-1 pt-1.5 pl-0.5">
-                              {carouselItems.map((_, i) => (
-                                <div key={i} className={`h-1 rounded-full transition-all ${i === carouselActiveIdx ? 'w-3 bg-[#4DB87A]' : 'w-1 bg-gray-400/40'}`} />
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                          );
+                        })()}
 
                         {/* ── 와이드 이미지 / 와이드 리스트 버블 ── */}
                         {messageType !== 'carousel' && (
