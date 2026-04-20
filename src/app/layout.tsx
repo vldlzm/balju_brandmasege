@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import GNB from '@/components/GNB';
 
 export const metadata: Metadata = {
   title: '발주모아 파트너스',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body className="min-h-screen bg-gray-50">
+        <GNB />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
