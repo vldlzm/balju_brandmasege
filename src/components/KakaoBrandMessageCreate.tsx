@@ -1195,85 +1195,77 @@ export default function KakaoBrandMessageCreate() {
                         <div className="mb-1.5 text-[7px] text-[#607d8b]">(광고) 발주모아</div>
                       )}
 
-                      {/* 메시지 버블 */}
-                      <div className="flex items-start gap-1.5">
-                        <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fee500] text-[7px] font-black text-gray-800 shadow-sm">K</div>
-
-                        {/* ── 캐러셀 피드 슬라이딩 카드 미리보기 ── */}
-                        {messageType === 'carousel' && (() => {
-                          const activeSlide = carouselItems[carouselActiveIdx];
-                          const nextSlide = carouselItems[carouselActiveIdx + 1] ?? null;
-                          if (!activeSlide) return null;
-                          return (
-                            <div className="flex-1 min-w-0">
-                              {/* 카드 슬라이더 - overflow-hidden 으로 peek 클리핑 */}
-                              <div className="overflow-hidden">
-                                <div className="flex gap-1.5">
-                                  {/* 활성 카드 */}
-                                  <div className="shrink-0" style={{ width: nextSlide ? 'calc(100% - 22px)' : '100%' }}>
-                                    <div className="overflow-hidden rounded-2xl rounded-tl-none bg-white shadow-md">
-                                      {/* 이미지 */}
-                                      <div className="aspect-[2/1] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                                        {activeSlide.product ? (
-                                          <div className="flex flex-col items-center gap-0.5 px-2 text-center">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-6 w-6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
-                                            <span className="text-[6px] text-gray-400 leading-tight line-clamp-2 mt-0.5">{activeSlide.product.name}</span>
-                                          </div>
-                                        ) : (
-                                          <>
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-7 w-7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
-                                          </>
-                                        )}
+                      {/* ── 캐러셀 피드: 아바타 없이 전체 너비 슬라이더 ── */}
+                      {messageType === 'carousel' && (() => {
+                        const activeSlide = carouselItems[carouselActiveIdx];
+                        const nextSlide = carouselItems[carouselActiveIdx + 1] ?? null;
+                        if (!activeSlide) return null;
+                        return (
+                          <div>
+                            {/* overflow-hidden이 peek을 클리핑 — 전체 채팅 너비 사용 */}
+                            <div className="overflow-hidden rounded-2xl">
+                              <div className="flex gap-2">
+                                {/* 활성 카드: 전체 너비의 82% */}
+                                <div className="shrink-0 overflow-hidden rounded-2xl bg-white shadow-md" style={{ width: '82%' }}>
+                                  {/* 이미지 */}
+                                  <div className="aspect-[2/1] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden">
+                                    {activeSlide.product ? (
+                                      <div className="flex flex-col items-center gap-0.5 px-2 text-center">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-6 w-6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
+                                        <span className="text-[6px] text-gray-400 leading-tight line-clamp-2 mt-0.5">{activeSlide.product.name}</span>
                                       </div>
-                                      {/* 헤더 */}
-                                      {activeSlide.header && (
-                                        <div className="px-2.5 pt-2 pb-0.5">
-                                          <p className="text-[8px] font-bold text-gray-900 leading-tight">{activeSlide.header}</p>
-                                        </div>
-                                      )}
-                                      {/* 내용 */}
-                                      <div className="px-2.5 py-1.5">
-                                        <p className="text-[7px] leading-snug text-gray-700 whitespace-pre-wrap break-words line-clamp-4">
-                                          {activeSlide.content || <span className="text-gray-400">내용을 입력하세요</span>}
-                                        </p>
-                                      </div>
-                                      {/* 버튼 */}
-                                      <div className={`flex border-t border-gray-100 ${activeSlide.btn1 && activeSlide.btn2 ? 'divide-x divide-gray-200' : ''}`}>
-                                        {activeSlide.btn1
-                                          ? <div className="flex-1 py-1.5 text-center text-[7px] font-bold text-gray-700 bg-gray-100">{activeSlide.btn1}</div>
-                                          : <div className="flex-1 py-1.5 text-center text-[7px] text-gray-300">버튼1</div>}
-                                        {activeSlide.btn2
-                                          ? <div className="flex-1 py-1.5 text-center text-[7px] font-bold text-gray-800 bg-[#fee500]">{activeSlide.btn2}</div>
-                                          : (!activeSlide.btn1 && <div className="flex-1 py-1.5 text-center text-[7px] text-gray-300">버튼2</div>)}
-                                      </div>
-                                    </div>
+                                    ) : (
+                                      <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-7 w-7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
+                                    )}
                                   </div>
-                                  {/* 다음 카드 peek */}
-                                  {nextSlide && (
-                                    <div className="shrink-0 flex-1">
-                                      <div className="overflow-hidden rounded-xl bg-white shadow-md opacity-70">
-                                        <div className="aspect-[2/1] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                                          {nextSlide.product
-                                            ? <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>
-                                            : <svg viewBox="0 0 24 24" fill="none" stroke="#c4c4c4" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )}
+                                  {/* 헤더 */}
+                                  {activeSlide.header
+                                    ? <div className="px-2.5 pt-2 pb-0.5"><p className="text-[8px] font-bold text-gray-900 leading-tight">{activeSlide.header}</p></div>
+                                    : <div className="px-2.5 pt-2 pb-0.5"><p className="text-[8px] text-gray-300">헤더 문구</p></div>}
+                                  {/* 내용 */}
+                                  <div className="px-2.5 pb-1.5">
+                                    <p className="text-[7px] leading-snug text-gray-700 whitespace-pre-wrap break-words line-clamp-3">
+                                      {activeSlide.content || <span className="text-gray-300">내용을 입력하세요</span>}
+                                    </p>
+                                  </div>
+                                  {/* 버튼 */}
+                                  <div className={`flex border-t border-gray-100 ${activeSlide.btn1 && activeSlide.btn2 ? 'divide-x divide-gray-100' : ''}`}>
+                                    {activeSlide.btn1
+                                      ? <div className="flex-1 py-1.5 text-center text-[7px] font-semibold text-gray-600">{activeSlide.btn1}</div>
+                                      : <div className="flex-1 py-1.5 text-center text-[7px] text-gray-300">버튼1</div>}
+                                    {activeSlide.btn2 && (
+                                      <div className="flex-1 py-1.5 text-center text-[7px] font-semibold text-gray-600">{activeSlide.btn2}</div>
+                                    )}
+                                  </div>
+                                </div>
+                                {/* 다음 카드 peek: 나머지 너비(약 18%)에 꽉 찬 카드 — overflow-hidden으로 클리핑 */}
+                                <div className="flex-1 shrink-0 overflow-hidden rounded-xl bg-white shadow-sm opacity-75">
+                                  <div className="aspect-[2/1] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                    {nextSlide?.product
+                                      ? <svg viewBox="0 0 24 24" fill="none" stroke="#bbb" strokeWidth={1.5} className="h-4 w-4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>
+                                      : <svg viewBox="0 0 24 24" fill="none" stroke="#bbb" strokeWidth={1.5} className="h-4 w-4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>}
+                                  </div>
+                                  <div className="px-1.5 pt-1.5 pb-1">
+                                    <div className="h-1.5 w-8 rounded bg-gray-200 mb-1" />
+                                    <div className="h-1 w-10 rounded bg-gray-100" />
+                                  </div>
                                 </div>
                               </div>
-                              {/* 슬라이드 인디케이터 도트 */}
-                              <div className="flex gap-1 pt-1.5 pl-1">
-                                {carouselItems.map((_, i) => (
-                                  <div key={i} className={`h-1 rounded-full transition-all ${i === carouselActiveIdx ? 'w-3 bg-[#4DB87A]' : 'w-1 bg-gray-400/50'}`} />
-                                ))}
-                              </div>
                             </div>
-                          );
-                        })()}
+                            {/* 슬라이드 인디케이터 도트 */}
+                            <div className="flex justify-center gap-1 pt-2">
+                              {carouselItems.map((_, i) => (
+                                <div key={i} className={`h-1.5 rounded-full transition-all ${i === carouselActiveIdx ? 'w-4 bg-gray-700' : 'w-1.5 bg-gray-400/50'}`} />
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })()}
 
-                        {/* ── 와이드 이미지 / 와이드 리스트 버블 ── */}
-                        {messageType !== 'carousel' && (
+                      {/* ── 와이드 이미지 / 와이드 리스트: K 아바타 + 버블 ── */}
+                      {messageType !== 'carousel' && (
+                      <div className="flex items-start gap-1.5">
+                        <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#fee500] text-[7px] font-black text-gray-800 shadow-sm">K</div>
                         <div className="flex-1 max-w-[88%]">
                           <div className="overflow-hidden rounded-2xl rounded-tl-none bg-white shadow-md">
 
@@ -1372,9 +1364,9 @@ export default function KakaoBrandMessageCreate() {
 
                           </div>
                         </div>
+                        </div>
                         )}
-                      </div>
-                      {/* 수신거부 / 채널차단 - 채팅 영역 내 메시지 아래 */}
+                      {/* 수신거부 / 채널차단 */}
                       {messageType && (
                         <div className="mt-1.5 flex flex-col gap-0.5 px-0.5">
                           <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
