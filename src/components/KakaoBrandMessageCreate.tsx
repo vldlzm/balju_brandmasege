@@ -208,8 +208,11 @@ export default function KakaoBrandMessageCreate() {
     if (wlExtraItems.length > 2)
       setWlExtraItems(prev => prev.filter(item => item.id !== id));
   };
-  const updateWlItemText = (id: number, text: string) =>
-    setWlExtraItems(prev => prev.map(item => item.id === id ? { ...item, text: text.slice(0, 30) } : item));
+  const updateWlItemText = (id: number, text: string) => {
+    const parts = text.split('\n');
+    const limited = parts.length > 2 ? parts.slice(0, 2).join('\n') : text;
+    setWlExtraItems(prev => prev.map(item => item.id === id ? { ...item, text: limited.slice(0, 30) } : item));
+  };
   const updateWlItemProduct = (id: number, product: Product | null) =>
     setWlExtraItems(prev => prev.map(item =>
       item.id === id ? { ...item, product, text: product ? (item.text || product.name) : item.text } : item
@@ -719,7 +722,7 @@ export default function KakaoBrandMessageCreate() {
                       <div key={item.id} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
                         <div className="mb-3 flex items-center gap-2">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-400 text-[10px] font-bold text-white">{idx + 2}</span>
-                          <span className="text-xs font-semibold text-gray-600">리스트 {idx + 2} <span className="text-red-500">*</span></span>
+                          <span className="text-xs font-semibold text-gray-600">리스트 {idx + 2}{idx < 3 && <span className="text-red-500"> *</span>}</span>
                           <button
                             onClick={() => openProductModal(item.id)}
                             className="ml-auto rounded-lg border border-[#4DB87A] px-3 py-1 text-[10px] font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
@@ -751,12 +754,13 @@ export default function KakaoBrandMessageCreate() {
                             상품 선택 버튼을 눌러 상품을 추가하세요
                           </div>
                         )}
-                        {/* 텍스트 - 30자 */}
+                        {/* 텍스트 - 30자, 줄바꿈 1회 허용 */}
                         <div className="relative">
-                          <input type="text" value={item.text} onChange={(e) => updateWlItemText(item.id, e.target.value)}
-                            placeholder={item.product ? item.product.name : `리스트${idx+2} 문구 입력 (최대 30자)`}
-                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 pr-14 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.text.length}/30</span>
+                          <textarea value={item.text} onChange={(e) => updateWlItemText(item.id, e.target.value)}
+                            placeholder={item.product ? item.product.name : `리스트${idx+2} 문구 입력 (최대 30자, 줄바꿈 1회 가능)`}
+                            rows={2}
+                            className="w-full resize-none rounded-lg border border-gray-200 bg-white px-3 py-2 pb-5 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          <span className="absolute bottom-2 right-3 text-xs tabular-nums text-gray-400">{item.text.length}/30</span>
                         </div>
                       </div>
                     ))}
@@ -1080,7 +1084,7 @@ export default function KakaoBrandMessageCreate() {
                                       <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded bg-gray-200 text-gray-400">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/></svg>
                                       </div>
-                                      <p className="text-[7px] leading-snug text-gray-700 line-clamp-2">
+                                      <p className="text-[7px] leading-snug text-gray-700 line-clamp-2 whitespace-pre-wrap">
                                         {item.text || (item.product ? item.product.name : <span className="text-gray-400">리스트{idx+2} 문구</span>)}
                                       </p>
                                     </div>
