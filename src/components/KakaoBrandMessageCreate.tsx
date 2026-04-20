@@ -23,6 +23,19 @@ interface Product {
   price: string;
 }
 
+interface CarouselItem {
+  id: number;
+  image: string | null;
+  header: string;
+  content: string;
+  btn1: string;
+  btn1Link: string;
+  btn2: string;
+  btn2Link: string;
+  showBtn2: boolean;
+  coupon: string;
+}
+
 const DEMO_SELLERS = [
   '나이키 공식스토어',
   '아디다스 코리아',
@@ -124,6 +137,36 @@ export default function KakaoBrandMessageCreate() {
     d.setDate(d.getDate() + 1);
     return d.toISOString().split('T')[0];
   })();
+
+  // 캐러셀 전용 state
+  const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([
+    { id: 1, image: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false, coupon: '' },
+    { id: 2, image: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false, coupon: '' },
+  ]);
+  const [carouselActiveIdx, setCarouselActiveIdx] = useState(0);
+
+  const addCarouselItem = () => {
+    if (carouselItems.length < 6)
+      setCarouselItems(prev => [...prev, { id: Date.now(), image: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false, coupon: '' }]);
+  };
+  const removeCarouselItem = (id: number) => {
+    if (carouselItems.length > 2) {
+      setCarouselItems(prev => { const next = prev.filter(i => i.id !== id); return next; });
+      setCarouselActiveIdx(prev => Math.max(0, prev - 1));
+    }
+  };
+  const updateCarousel = (id: number, patch: Partial<CarouselItem>) =>
+    setCarouselItems(prev => prev.map(i => i.id === id ? { ...i, ...patch } : i));
+  const handleCarouselImage = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+    const file = e.target.files?.[0];
+    if (file) updateCarousel(id, { image: URL.createObjectURL(file) });
+    e.target.value = '';
+  };
+  const updateCarouselContent = (id: number, text: string) => {
+    const parts = text.split('\n');
+    const limited = parts.length > 11 ? parts.slice(0, 11).join('\n') : text;
+    updateCarousel(id, { content: limited.slice(0, 180) });
+  };
 
   // 와이드 리스트 전용 state
   const [wlHeader, setWlHeader] = useState('');
@@ -232,7 +275,7 @@ export default function KakaoBrandMessageCreate() {
           <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
             <div>
               <h2 className="text-base font-bold text-gray-900">셀러 선택</h2>
-              <p className="mt-0.5 text-xs text-gray-400">발송할 수신 셀러를 선택하세요</p>
+              <p className="mt-0.5 text-xs text-gray-400">발송할 수신 파트너를 선택하세요</p>
             </div>
             <button
               onClick={() => setShowSellerModal(false)}
@@ -476,11 +519,11 @@ export default function KakaoBrandMessageCreate() {
               </div>
             </section>
 
-            {/* 섹션 3: 수신 셀러 */}
+            {/* 섹션 3: 수신 파트너 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
-                  수신 셀러 <span className="text-red-500">*</span>
+                  수신 파트너 <span className="text-red-500">*</span>
                 </h2>
                 <button
                   onClick={() => setShowSellerModal(true)}
@@ -512,7 +555,7 @@ export default function KakaoBrandMessageCreate() {
                   </div>
                 ) : (
                   <p className="py-3 text-center text-xs text-gray-400">
-                    &quot;파트너 불러오기&quot; 버튼을 눌러 수신 셀러를 추가하세요
+                    &quot;파트너 불러오기&quot; 버튼을 눌러 수신 파트너를 추가하세요
                   </p>
                 )}
               </div>
@@ -829,6 +872,174 @@ export default function KakaoBrandMessageCreate() {
               </>
             )}
 
+            {/* ── 캐러셀 피드 전용 섹션 ── */}
+            {messageType === 'carousel' && (
+              <>
+                {/* 슬라이드 탭 */}
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div>
+                      <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
+                        캐러셀 슬라이드 <span className="text-red-500">*</span>
+                      </h2>
+                      <p className="mt-0.5 text-xs text-gray-400">최소 2장 · 최대 6장</p>
+                    </div>
+                    <span className="text-xs font-semibold text-gray-500">
+                      총 <span className="text-[#4DB87A]">{carouselItems.length}</span> / 6장
+                    </span>
+                  </div>
+
+                  {/* 슬라이드 탭 네비게이션 */}
+                  <div className="mb-5 flex gap-2 overflow-x-auto pb-1">
+                    {carouselItems.map((item, idx) => (
+                      <button key={item.id} onClick={() => setCarouselActiveIdx(idx)}
+                        className={`shrink-0 rounded-lg px-4 py-1.5 text-xs font-semibold transition-all ${carouselActiveIdx === idx ? 'bg-[#4DB87A] text-white' : 'border border-gray-200 bg-gray-50 text-gray-500 hover:border-[#4DB87A] hover:text-[#4DB87A]'}`}>
+                        슬라이드 {idx + 1}
+                      </button>
+                    ))}
+                    {carouselItems.length < 6 && (
+                      <button onClick={addCarouselItem}
+                        className="shrink-0 rounded-lg border-2 border-dashed border-gray-200 px-4 py-1.5 text-xs font-medium text-gray-400 hover:border-[#4DB87A] hover:text-[#4DB87A] transition-all">
+                        + 추가
+                      </button>
+                    )}
+                  </div>
+
+                  {/* 활성 슬라이드 편집 */}
+                  {carouselItems.map((item, idx) => idx !== carouselActiveIdx ? null : (
+                    <div key={item.id} className="space-y-5">
+                      {/* 슬라이드 헤더 */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-semibold text-gray-700">슬라이드 {idx + 1}</span>
+                        {carouselItems.length > 2 && (
+                          <button onClick={() => removeCarouselItem(item.id)}
+                            className="text-xs text-gray-400 hover:text-red-500 transition-colors">슬라이드 삭제</button>
+                        )}
+                      </div>
+
+                      {/* 이미지 업로드 */}
+                      <div>
+                        <p className="mb-1.5 text-xs font-medium text-gray-500">이미지 <span className="text-red-500">*</span></p>
+                        <p className="mb-2 text-[10px] text-gray-400">권장 800×600 또는 800×400 · 비율 2:1 이상 3:4 이하 · jpg/png · 최대 5MB</p>
+                        <label className="group relative flex aspect-[2/1] w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-white transition-colors hover:border-[#4DB87A] hover:bg-[#f0f9f4]">
+                          <input type="file" accept="image/jpeg,image/png" className="hidden" onChange={(e) => handleCarouselImage(e, item.id)} />
+                          {item.image ? (
+                            <>
+                              <img src={item.image} alt={`슬라이드${idx+1}`} className="h-full w-full object-cover" />
+                              <button type="button" onClick={(e) => { e.preventDefault(); updateCarousel(item.id, { image: null }); }}
+                                className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70">
+                                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="h-3 w-3"><path d="M2 2l8 8M10 2L2 10"/></svg>
+                              </button>
+                            </>
+                          ) : (
+                            <div className="flex flex-col items-center gap-1.5 text-gray-400 group-hover:text-[#4DB87A]">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8">
+                                <path d="M4 16l4-4 4 4 4-6 4 6" strokeLinecap="round" strokeLinejoin="round"/>
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                              </svg>
+                              <span className="text-xs">클릭하여 이미지 업로드</span>
+                            </div>
+                          )}
+                        </label>
+                      </div>
+
+                      {/* 헤더 */}
+                      <div>
+                        <p className="mb-1.5 text-xs font-medium text-gray-500">헤더 <span className="text-red-500">*</span></p>
+                        <p className="mb-2 text-[10px] text-gray-400">띄어쓰기 포함 20자 제한 · 줄바꿈 불가</p>
+                        <div className="relative">
+                          <input type="text" value={item.header}
+                            onChange={(e) => updateCarousel(item.id, { header: e.target.value.replace(/\n/g, '').slice(0, 20) })}
+                            placeholder="헤더 문구를 입력하세요"
+                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.header.length}/20</span>
+                        </div>
+                      </div>
+
+                      {/* 내용 */}
+                      <div>
+                        <p className="mb-1.5 text-xs font-medium text-gray-500">내용 <span className="text-red-500">*</span></p>
+                        <p className="mb-2 text-[10px] text-gray-400">띄어쓰기 포함 180자 제한 · 줄바꿈 최대 10회</p>
+                        <div className="relative">
+                          <textarea value={item.content} onChange={(e) => updateCarouselContent(item.id, e.target.value)}
+                            placeholder="내용을 입력하세요" rows={5}
+                            className={`w-full resize-none rounded-xl border bg-gray-50 px-4 py-3 pb-8 text-sm text-gray-900 placeholder-gray-400 focus:bg-white focus:outline-none focus:ring-2 transition-all ${item.content.length > 160 ? 'border-red-400 focus:border-red-500 focus:ring-red-200' : 'border-gray-200 focus:border-[#4DB87A] focus:ring-[#4DB87A]/20'}`} />
+                          <span className={`absolute bottom-3 right-4 text-xs tabular-nums ${item.content.length > 160 ? 'text-red-500' : 'text-gray-400'}`}>{item.content.length}/180</span>
+                        </div>
+                      </div>
+
+                      {/* 버튼 */}
+                      <div>
+                        <p className="mb-3 text-xs font-medium text-gray-500">버튼 <span className="text-[10px] text-gray-400">(최소 1개 · 최대 2개 · 가로 배열)</span></p>
+                        <div className="space-y-3">
+                          {/* 버튼 1 */}
+                          <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
+                            <p className="text-xs font-semibold text-gray-500">버튼 1 <span className="text-red-500">*</span></p>
+                            <div className="relative">
+                              <input type="text" value={item.btn1} onChange={(e) => updateCarousel(item.id, { btn1: e.target.value.slice(0, 8) })} placeholder="버튼 텍스트 입력"
+                                className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.btn1.length}/8</span>
+                            </div>
+                            <div className="relative">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+                              </span>
+                              <input type="url" value={item.btn1Link} onChange={(e) => updateCarousel(item.id, { btn1Link: e.target.value })} placeholder="https://example.com"
+                                className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                            </div>
+                          </div>
+                          {/* 버튼 2 */}
+                          {item.showBtn2 ? (
+                            <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
+                              <div className="flex items-center justify-between">
+                                <p className="text-xs font-semibold text-gray-500">버튼 2</p>
+                                <button onClick={() => updateCarousel(item.id, { showBtn2: false, btn2: '', btn2Link: '' })} className="text-xs text-gray-400 hover:text-red-500 transition-colors">삭제</button>
+                              </div>
+                              <div className="relative">
+                                <input type="text" value={item.btn2} onChange={(e) => updateCarousel(item.id, { btn2: e.target.value.slice(0, 8) })} placeholder="버튼 텍스트 입력"
+                                  className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.btn2.length}/8</span>
+                              </div>
+                              <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                  <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+                                </span>
+                                <input type="url" value={item.btn2Link} onChange={(e) => updateCarousel(item.id, { btn2Link: e.target.value })} placeholder="https://example.com"
+                                  className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                              </div>
+                            </div>
+                          ) : (
+                            <button onClick={() => updateCarousel(item.id, { showBtn2: true })} className="flex items-center gap-1 text-sm font-medium text-[#4DB87A] hover:underline transition-colors">
+                              <span className="text-base font-bold">+</span> 버튼 추가
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* 쿠폰 강조 버튼 */}
+                      <div>
+                        <p className="mb-1.5 text-xs font-medium text-gray-500">쿠폰 강조 버튼 <span className="text-[10px] text-gray-400">(최대 1개)</span></p>
+                        <div className="relative">
+                          <input type="text" value={item.coupon} onChange={(e) => updateCarousel(item.id, { coupon: e.target.value.slice(0, 20) })} placeholder="쿠폰 버튼 문구 입력 (예: 10% 할인 쿠폰)"
+                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all" />
+                          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.coupon.length}/20</span>
+                        </div>
+                        {item.coupon && (
+                          <div className="mt-2 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+                            <p className="flex-1 text-sm font-semibold text-gray-800">{item.coupon}</p>
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#fee500]">
+                              <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 text-gray-800"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </section>
+              </>
+            )}
+
             {/* 섹션 7: 발송 설정 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">발송 설정</h2>
@@ -986,7 +1197,7 @@ export default function KakaoBrandMessageCreate() {
                       </div>
 
                       {/* (광고) 발주모아 */}
-                      {(messageType === 'wide-image' || messageType === 'wide-list') && (
+                      {messageType && (
                         <div className="mb-1.5 text-[7px] text-[#607d8b]">(광고) 발주모아</div>
                       )}
 
@@ -1030,14 +1241,18 @@ export default function KakaoBrandMessageCreate() {
                                     </div>
                                   )}
                                   {messageType === 'carousel' && (
-                                    <>
-                                      <div className="flex gap-1">
-                                        {[1,2,3].map(i => (
-                                          <div key={i} className={`h-10 rounded ${i === 2 ? 'w-10 bg-gray-400' : 'w-6 bg-gray-300'}`} />
-                                        ))}
-                                      </div>
-                                      <span className="text-[8px] text-gray-400 mt-1">캐러셀 피드</span>
-                                    </>
+                                    carouselItems[carouselActiveIdx]?.image ? (
+                                      <img src={carouselItems[carouselActiveIdx].image!} alt="" className="h-full w-full object-cover" />
+                                    ) : (
+                                      <>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-6 w-6">
+                                          <rect x="3" y="5" width="18" height="14" rx="2" />
+                                          <path d="M3 15l4-4 4 4 3-3 4 4" />
+                                          <circle cx="8.5" cy="9.5" r="1.5" />
+                                        </svg>
+                                        <span className="text-[7px] text-gray-400 mt-0.5">슬라이드 {carouselActiveIdx + 1} 이미지</span>
+                                      </>
+                                    )
                                   )}
                                 </div>
                               ) : (
@@ -1048,7 +1263,7 @@ export default function KakaoBrandMessageCreate() {
                             </div>
 
                             {/* ── 와이드 이미지 본문 ── */}
-                            {messageType !== 'wide-list' && (
+                            {messageType === 'wide-image' && (
                               <>
                                 {selectedProduct && (
                                   <div className="border-b border-gray-100 px-2.5 py-2">
@@ -1069,6 +1284,45 @@ export default function KakaoBrandMessageCreate() {
                                 )}
                               </>
                             )}
+
+                            {/* ── 캐러셀 피드 본문 ── */}
+                            {messageType === 'carousel' && (() => {
+                              const slide = carouselItems[carouselActiveIdx];
+                              if (!slide) return null;
+                              return (
+                                <>
+                                  {/* 슬라이드 인디케이터 */}
+                                  <div className="flex justify-center gap-1 py-1.5">
+                                    {carouselItems.map((_, i) => (
+                                      <div key={i} className={`h-1 rounded-full transition-all ${i === carouselActiveIdx ? 'w-3 bg-[#4DB87A]' : 'w-1 bg-gray-300'}`} />
+                                    ))}
+                                  </div>
+                                  {/* 헤더 */}
+                                  {slide.header && (
+                                    <div className="px-2.5 pt-1 pb-0.5">
+                                      <p className="text-[8px] font-bold text-gray-900 leading-tight">{slide.header}</p>
+                                    </div>
+                                  )}
+                                  {/* 내용 */}
+                                  <div className="px-2.5 py-1">
+                                    <p className="text-[7px] leading-snug text-gray-700 whitespace-pre-wrap break-words">
+                                      {slide.content || <span className="text-gray-400">슬라이드 내용이 여기에 표시됩니다.</span>}
+                                    </p>
+                                  </div>
+                                  {/* 버튼 */}
+                                  {(slide.btn1 || slide.btn2) && (
+                                    <div className={`flex border-t border-gray-100 ${slide.btn2 ? 'divide-x divide-gray-100' : ''}`}>
+                                      {slide.btn1 && <div className="flex-1 bg-[#fee500] py-1.5 text-center text-[7px] font-bold text-gray-800">{slide.btn1}</div>}
+                                      {slide.btn2 && <div className="flex-1 bg-white py-1.5 text-center text-[7px] font-medium text-gray-600">{slide.btn2}</div>}
+                                    </div>
+                                  )}
+                                  {/* 쿠폰 버튼 */}
+                                  {slide.coupon && (
+                                    <div className="border-t border-gray-100 bg-[#f0f9f4] py-1.5 text-center text-[7px] font-bold text-[#4DB87A]">{slide.coupon}</div>
+                                  )}
+                                </>
+                              );
+                            })()}
 
                             {/* ── 와이드 리스트 본문 ── */}
                             {messageType === 'wide-list' && (
@@ -1106,7 +1360,7 @@ export default function KakaoBrandMessageCreate() {
                         </div>
                       </div>
                       {/* 수신거부 / 채널차단 - 채팅 영역 내 메시지 아래 */}
-                      {(messageType === 'wide-image' || messageType === 'wide-list') && (
+                      {messageType && (
                         <div className="mt-1.5 flex flex-col gap-0.5 px-0.5">
                           <span className="text-[6px] text-[#607d8b]">수신거부 | 홈 &gt; 채널차단</span>
                           <span className="text-[6px] text-[#607d8b]">오전 9:00</span>
