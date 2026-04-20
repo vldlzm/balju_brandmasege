@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-type TabType = '발송 예정' | '발송 완료' | '임시저장';
+type TabType = '발송 예정' | '발송 완료';
 type Category = '신상품' | '이벤트' | '가격할인';
 type FormatType = '와이드 이미지' | '와이드 리스트' | '캐러셀 피드';
 
@@ -178,7 +178,6 @@ const FORMAT_ICON: Record<FormatType, string> = {
 
 export default function KakaoBrandMessageList() {
   const [activeTab, setActiveTab] = useState<TabType>('발송 예정');
-  const [categoryFilter, setCategoryFilter] = useState('전체');
   const [periodFilter, setPeriodFilter] = useState('최근 1개월');
   const [formatFilter, setFormatFilter] = useState('전체');
   const [search, setSearch] = useState('');
@@ -187,7 +186,6 @@ export default function KakaoBrandMessageList() {
   const tabItems: { label: TabType; count: number }[] = [
     { label: '발송 예정', count: SCHEDULED.length },
     { label: '발송 완료', count: 18 },
-    { label: '임시저장', count: DRAFTS.length },
   ];
 
   return (
@@ -197,7 +195,6 @@ export default function KakaoBrandMessageList() {
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4">
           <div>
-            <p className="text-xs text-gray-400">마케팅</p>
             <h1 className="text-lg font-bold text-gray-900">카카오 브랜드메시지</h1>
           </div>
           <Link href="/marketing/brand-message/create">
@@ -232,16 +229,6 @@ export default function KakaoBrandMessageList() {
         {/* ── 필터 ── */}
         <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
           <div className="flex flex-wrap items-center gap-3">
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
-            >
-              <option value="전체">유형 전체</option>
-              <option>신상품</option>
-              <option>이벤트</option>
-              <option>가격할인</option>
-            </select>
             <select
               value={periodFilter}
               onChange={(e) => setPeriodFilter(e.target.value)}
@@ -340,7 +327,7 @@ export default function KakaoBrandMessageList() {
                             <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
                               <path d="M8 8a3 3 0 100-6 3 3 0 000 6zm5 5a5 5 0 00-10 0h10z" />
                             </svg>
-                            수신 대상 <span className="font-semibold text-gray-700">{msg.targetLabel}</span>
+                            수신 대상 <span className="font-semibold text-gray-700">{msg.targetCount.toLocaleString()}명</span>
                           </span>
                           <span className="text-gray-300">|</span>
                           <span className="flex items-center gap-1.5 text-xs text-gray-500">
@@ -358,10 +345,10 @@ export default function KakaoBrandMessageList() {
                       {/* 액션 버튼 */}
                       <div className="flex shrink-0 items-center gap-2">
                         <button className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:border-gray-300 hover:bg-gray-50 transition-colors">
-                          수정
+                          통계
                         </button>
                         <button className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors">
-                          취소
+                          발송취소
                         </button>
                       </div>
                     </div>
@@ -442,12 +429,12 @@ export default function KakaoBrandMessageList() {
 
                       {/* 액션 버튼 */}
                       <div className="flex shrink-0 flex-col items-end gap-2">
+                        <button className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                          통계
+                        </button>
                         <button className="rounded-lg border border-[#4DB87A] px-3.5 py-2 text-xs font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] transition-colors">
                           재발송
                         </button>
-                        <button className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-500 hover:bg-gray-50 transition-colors">
-                          상세보기
-                        </button>
                       </div>
                     </div>
                   </article>
@@ -455,90 +442,13 @@ export default function KakaoBrandMessageList() {
               </>
             )}
 
-            {/* 임시저장 */}
-            {activeTab === '임시저장' && (
-              <>
-                {DRAFTS.map((msg) => (
-                  <article key={msg.id} className="group rounded-xl border border-dashed border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex flex-1 flex-col gap-3">
-                        {/* 상단 메타 */}
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${CATEGORY_STYLE[msg.category]}`}>
-                            {msg.category}
-                          </span>
-                          <span className="flex items-center gap-1 text-xs text-gray-400">
-                            <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5">
-                              <path fillRule="evenodd" d="M10 1.5a.5.5 0 00-.5-.5h-3a.5.5 0 00-.5.5v1H2a1 1 0 00-1 1V13a1 1 0 001 1h12a1 1 0 001-1V3.5a1 1 0 00-1-1h-4v-1zm-5 2.5v-.5h6V4H5zM3 6a.5.5 0 01.5-.5h9a.5.5 0 010 1h-9A.5.5 0 013 6zm0 2.5a.5.5 0 01.5-.5h9a.5.5 0 010 1h-9a.5.5 0 01-.5-.5zm0 2.5a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5z" clipRule="evenodd" />
-                            </svg>
-                            임시저장 · {msg.savedAt}
-                          </span>
-                          <span className="ml-1 rounded-full bg-gray-100 px-2.5 py-0.5 text-[11px] font-semibold text-gray-500">
-                            작성 중
-                          </span>
-                        </div>
-
-                        {/* 제목 */}
-                        <h2 className="text-sm font-bold text-gray-900">{msg.title}</h2>
-
-                        {/* 정보 */}
-                        <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
-                          <span>
-                            수신 대상{' '}
-                            <span className="font-semibold text-gray-700">{msg.targetLabel}</span>
-                          </span>
-                          {msg.formatType && (
-                            <>
-                              <span className="text-gray-300">|</span>
-                              <span>
-                                <span>{FORMAT_ICON[msg.formatType]}</span>{' '}
-                                <span className="font-semibold text-gray-700">{msg.formatType}</span>
-                              </span>
-                            </>
-                          )}
-                        </div>
-
-                        {/* 작성 진행률 */}
-                        <div className="flex items-center gap-3">
-                          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-100">
-                            <div
-                              className="h-full rounded-full bg-[#4DB87A] transition-all"
-                              style={{ width: `${msg.completionPct}%` }}
-                            />
-                          </div>
-                          <span className="shrink-0 text-xs font-semibold text-gray-500">
-                            {msg.completionPct}% 작성됨
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* 액션 버튼 */}
-                      <div className="flex shrink-0 items-center gap-2">
-                        <Link href="/marketing/brand-message/create">
-                          <button className="rounded-lg bg-[#4DB87A] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#3da869] transition-colors">
-                            이어서 작성
-                          </button>
-                        </Link>
-                        <button className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors">
-                          삭제
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </>
-            )}
 
           </div>
 
           {/* ── 페이지네이션 ── */}
           <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4">
             <p className="text-xs text-gray-400">
-              {activeTab === '발송 완료'
-                ? '총 18건'
-                : activeTab === '발송 예정'
-                ? `총 ${SCHEDULED.length}건`
-                : `총 ${DRAFTS.length}건`}
+              {activeTab === '발송 완료' ? '총 18건' : `총 ${SCHEDULED.length}건`}
             </p>
             <div className="flex items-center gap-1">
               <button
