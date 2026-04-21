@@ -67,7 +67,6 @@ export default function LNB() {
                       {active && (
                         <span className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r-full bg-[#4DB87A]" />
                       )}
-                      <span className={active ? 'text-[#4DB87A]' : ''}>{item.icon}</span>
                       <span>{item.label}</span>
                     </Link>
                   </li>
