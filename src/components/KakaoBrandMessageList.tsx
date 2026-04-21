@@ -194,7 +194,7 @@ export default function KakaoBrandMessageList() {
       {/* ── 상단 헤더 ── */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-[1440px] items-center px-6 py-4">
-          <h1 className="text-lg font-bold text-gray-900">카카오 브랜드메시지</h1>
+          <h1 className="text-lg font-bold text-gray-900">브랜드 메시지</h1>
         </div>
       </div>
 
@@ -260,9 +260,6 @@ export default function KakaoBrandMessageList() {
           {/* 탭 헤더 */}
           <div className="flex items-center justify-between border-b border-gray-100 px-6 pt-5">
           <div className="flex items-end gap-1">
-            <p className="mb-3 mr-2 text-xs text-gray-400">
-              {activeTab === '발송 완료' ? '총 18건' : `총 ${SCHEDULED.length}건`}
-            </p>
             {tabItems.map((tab) => {
               const isActive = activeTab === tab.label;
               return (

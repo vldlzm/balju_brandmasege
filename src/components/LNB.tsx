@@ -8,7 +8,7 @@ const LNB_SECTIONS = [
     title: '프로모션',
     items: [
       {
-        label: '브랜드메시지',
+        label: '브랜드 메시지',
         href: '/',
         icon: (
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">

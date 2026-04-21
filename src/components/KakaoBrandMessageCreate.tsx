@@ -459,7 +459,7 @@ export default function KakaoBrandMessageCreate() {
             목록으로
           </Link>
           <div className="h-4 w-px bg-gray-300" />
-          <h1 className="text-lg font-bold text-gray-900">브랜드메시지 등록</h1>
+          <h1 className="text-lg font-bold text-gray-900">브랜드 메시지 등록</h1>
         </div>
       </div>
 
