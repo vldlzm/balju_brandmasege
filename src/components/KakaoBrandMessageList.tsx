@@ -193,18 +193,8 @@ export default function KakaoBrandMessageList() {
 
       {/* ── 상단 헤더 ── */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4">
-          <div>
-            <h1 className="text-lg font-bold text-gray-900">카카오 브랜드메시지</h1>
-          </div>
-          <Link href="/marketing/brand-message/create">
-            <button className="flex items-center gap-1.5 rounded-xl bg-[#4DB87A] px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
-              <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
-                <path d="M8 3a.75.75 0 01.75.75v3.5h3.5a.75.75 0 010 1.5h-3.5v3.5a.75.75 0 01-1.5 0v-3.5H3.75a.75.75 0 010-1.5h3.5V3.75A.75.75 0 018 3z" />
-              </svg>
-              새 메시지 만들기
-            </button>
-          </Link>
+        <div className="mx-auto flex max-w-[1440px] items-center px-6 py-4">
+          <h1 className="text-lg font-bold text-gray-900">카카오 브랜드메시지</h1>
         </div>
       </div>
 
@@ -268,7 +258,11 @@ export default function KakaoBrandMessageList() {
         <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
 
           {/* 탭 헤더 */}
-          <div className="flex gap-1 border-b border-gray-100 px-6 pt-5">
+          <div className="flex items-center justify-between border-b border-gray-100 px-6 pt-5">
+          <div className="flex items-end gap-1">
+            <p className="mb-3 mr-2 text-xs text-gray-400">
+              {activeTab === '발송 완료' ? '총 18건' : `총 ${SCHEDULED.length}건`}
+            </p>
             {tabItems.map((tab) => {
               const isActive = activeTab === tab.label;
               return (
@@ -290,6 +284,15 @@ export default function KakaoBrandMessageList() {
                 </button>
               );
             })}
+          </div>
+            <Link href="/marketing/brand-message/create">
+              <button className="mb-3 flex items-center gap-1.5 rounded-xl bg-[#4DB87A] px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
+                <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
+                  <path d="M8 3a.75.75 0 01.75.75v3.5h3.5a.75.75 0 010 1.5h-3.5v3.5a.75.75 0 01-1.5 0v-3.5H3.75a.75.75 0 010-1.5h3.5V3.75A.75.75 0 018 3z" />
+                </svg>
+                새 메시지 만들기
+              </button>
+            </Link>
           </div>
 
           {/* 목록 */}
@@ -363,9 +366,6 @@ export default function KakaoBrandMessageList() {
                             </svg>
                             {msg.sentAt}
                           </span>
-                          <span className="ml-1 rounded-full bg-[#e8f5ee] px-2.5 py-0.5 text-[11px] font-semibold text-[#2a7a4f]">
-                            발송 완료
-                          </span>
                         </div>
 
                         {/* 제목 */}
@@ -394,7 +394,7 @@ export default function KakaoBrandMessageList() {
                         <div className="flex items-center gap-4 rounded-xl bg-gray-50 px-4 py-3">
                           <div className="flex flex-col items-center gap-0.5">
                             <span className="text-[10px] font-medium text-gray-400">오픈율</span>
-                            <span className={`text-base font-black tabular-nums ${msg.openRate >= 40 ? 'text-[#4DB87A]' : 'text-gray-700'}`}>
+                            <span className="text-base font-black tabular-nums text-gray-700">
                               {msg.openRate}%
                             </span>
                           </div>
@@ -432,9 +432,7 @@ export default function KakaoBrandMessageList() {
 
           {/* ── 페이지네이션 ── */}
           <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4">
-            <p className="text-xs text-gray-400">
-              {activeTab === '발송 완료' ? '총 18건' : `총 ${SCHEDULED.length}건`}
-            </p>
+            <p className="text-xs text-gray-400" />
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
