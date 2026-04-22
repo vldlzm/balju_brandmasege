@@ -205,7 +205,7 @@ export default function ScreenIndex() {
         </div>
         <iframe
           key={selected.href}
-          src={selected.href}
+          src={`${selected.href}?embed=1`}
           className="flex-1 w-full border-none"
           title={selected.name}
         />

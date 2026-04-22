@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 const NAV_ITEMS = [
@@ -102,6 +102,8 @@ const PROMOTION_PATHS = ['/', '/marketing'];
 
 export default function GNB() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  if (searchParams.get('embed') === '1') return null;
 
   const isPromotionActive =
     pathname.startsWith('/marketing') || pathname.startsWith('/promotion');

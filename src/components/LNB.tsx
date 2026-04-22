@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 const LNB_SECTIONS = [
@@ -42,6 +42,8 @@ const LNB_SECTIONS = [
 
 export default function LNB() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  if (searchParams.get('embed') === '1') return null;
 
   const isActive = (href: string) => {
     if (href === '/marketing/brand-message') return pathname.startsWith('/marketing');
