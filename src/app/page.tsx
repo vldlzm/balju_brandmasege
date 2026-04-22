@@ -103,6 +103,7 @@ const SCREEN_GROUPS: ScreenGroup[] = [
         href: '/promotion/settings-complete',
         description: '발신번호 등록 및 카카오톡 채널 연동이 완료된 상태의 기본설정 화면입니다.',
         notes: [
+          '(참조) 플렉스지 내 해당 기능 존재합니다. (/Sms/sms_set_happyTalk)',
           '발신번호 테이블: 등록된 번호와 승인 상태 표시',
           '카카오톡 채널: "등록 완료" 배지로 상태 표현',
           '변경 링크로 채널 수정 가능',
