@@ -207,15 +207,9 @@ export default function ScreenIndex() {
           <p className="mt-0.5 text-[10px] text-gray-400">선택한 화면의 기능 및 정책 안내</p>
         </div>
         <div className="flex-1 overflow-y-auto p-5 space-y-5">
-          {/* 설명 */}
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">개요</p>
-            <p className="text-sm leading-relaxed text-gray-600">{selected.description}</p>
-          </div>
-
           {/* 주요 기능 및 정책 */}
           {selected.notes.length > 0 && (
-            <div className="border-t border-gray-100 pt-5">
+            <div>
               <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-3">주요 기능 및 정책</p>
               <ul className="space-y-2.5">
                 {selected.notes.map((note, i) => (
