@@ -2,7 +2,15 @@
 
 import { useState } from 'react';
 
-const CHARGE_OPTIONS = [10000, 30000, 50000, 100000, 300000, 500000];
+const CHARGE_OPTIONS = [
+  { won: 10000,   points: 10000,   bonus: null },
+  { won: 50000,   points: 50000,   bonus: null },
+  { won: 100000,  points: 100000,  bonus: null },
+  { won: 300000,  points: 330000,  bonus: '10% 추가지급' },
+  { won: 500000,  points: 550000,  bonus: '10% 추가지급' },
+  { won: 700000,  points: 840000,  bonus: '20% 추가지급' },
+  { won: 1000000, points: 1300000, bonus: '30% 추가지급' },
+];
 
 const COMBINED_HISTORY = [
   { id: 'u2', date: '2025.04.20 14:00', type: '사용' as const, description: '5월 황금연휴 특별 기획전 참여 셀러 모집', points: -1440 },
@@ -25,16 +33,16 @@ function Bubble({ n }: { n: number }) {
 }
 
 export default function PointManagement() {
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [selectedWon, setSelectedWon] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState('');
 
   const currentPoints = 45600;
-  const chargeAmount = selectedAmount ?? (customAmount ? parseInt(customAmount.replace(/,/g, ''), 10) || 0 : 0);
+  const chargeAmount = selectedWon ?? (customAmount ? parseInt(customAmount.replace(/,/g, ''), 10) || 0 : 0);
 
   const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/[^0-9]/g, '');
     setCustomAmount(raw ? parseInt(raw).toLocaleString() : '');
-    setSelectedAmount(null);
+    setSelectedWon(null);
   };
 
   return (
@@ -82,17 +90,23 @@ export default function PointManagement() {
             <div>
               <p className="mb-3 text-sm font-semibold text-gray-700">충전 금액 선택</p>
               <div className="grid grid-cols-3 gap-3">
-                {CHARGE_OPTIONS.map((amt) => (
+                {CHARGE_OPTIONS.map((opt) => (
                   <button
-                    key={amt}
-                    onClick={() => { setSelectedAmount(amt); setCustomAmount(''); }}
-                    className={`rounded-xl border-2 py-3 text-sm font-bold transition-all ${
-                      selectedAmount === amt
+                    key={opt.won}
+                    onClick={() => { setSelectedWon(opt.won); setCustomAmount(''); }}
+                    className={`relative rounded-xl border-2 py-3 px-2 text-sm font-bold transition-all flex flex-col items-center gap-0.5 ${
+                      selectedWon === opt.won
                         ? 'border-[#4DB87A] bg-[#f0faf5] text-[#2a7a4f]'
                         : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-gray-300'
                     }`}
                   >
-                    {amt.toLocaleString()}원
+                    <span>{(opt.won / 10000).toLocaleString()}만원</span>
+                    <span className="text-[11px] font-medium text-gray-400">({opt.points.toLocaleString()}P)</span>
+                    {opt.bonus && (
+                      <span className="mt-0.5 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-600">
+                        {opt.bonus}
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
