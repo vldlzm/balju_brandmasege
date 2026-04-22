@@ -133,18 +133,6 @@ export default function KakaoBrandMessageEmpty() {
             </div>
 
             <p className="text-base font-bold text-gray-700">아직 등록된 캠페인이 없습니다.</p>
-            <p className="mt-2 text-center text-sm text-gray-400 leading-relaxed">
-              브랜드 메시지를 만들어 셀러에게 새 상품·이벤트·할인 정보를 전달해 보세요.
-            </p>
-
-            <Link href="/marketing/brand-message/create">
-              <button className="mt-6 flex items-center gap-1.5 rounded-xl bg-[#4DB87A] px-6 py-3 text-sm font-bold text-white shadow-sm shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
-                <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
-                  <path d="M8 3a.75.75 0 01.75.75v3.5h3.5a.75.75 0 010 1.5h-3.5v3.5a.75.75 0 01-1.5 0v-3.5H3.75a.75.75 0 010-1.5h3.5V3.75A.75.75 0 018 3z" />
-                </svg>
-                첫 번째 메시지 만들기
-              </button>
-            </Link>
           </div>
 
           {/* 페이지네이션 자리 */}
