@@ -5,6 +5,7 @@ export default function ScreenIndex() {
       items: [
         { name: '브랜드 메시지 목록', href: '/marketing/brand-message' },
         { name: '브랜드 메시지 등록', href: '/marketing/brand-message/create' },
+        { name: '기본설정', href: '/promotion/settings' },
       ],
     },
   ];
