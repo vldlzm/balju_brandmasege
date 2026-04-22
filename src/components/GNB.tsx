@@ -86,7 +86,7 @@ const NAV_ITEMS = [
   },
   {
     label: '프로모션',
-    href: '/',
+    href: '/marketing/brand-message',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
@@ -104,7 +104,7 @@ export default function GNB() {
   const pathname = usePathname();
 
   const isPromotionActive =
-    pathname === '/' || pathname.startsWith('/marketing');
+    pathname.startsWith('/marketing') || pathname.startsWith('/promotion');
 
   const getItemHref = (item: typeof NAV_ITEMS[0]) => item.href;
 
