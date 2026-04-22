@@ -2,23 +2,18 @@
 
 import { useState } from 'react';
 
-type HistoryTab = '충전' | '사용';
-
 const CHARGE_OPTIONS = [10000, 30000, 50000, 100000, 300000, 500000];
 
-const CHARGE_HISTORY = [
-  { id: 'c1', date: '2025.04.15 14:32', amount: 50000, method: '신용카드', status: '완료' },
-  { id: 'c2', date: '2025.03.28 10:11', amount: 100000, method: '신용카드', status: '완료' },
-  { id: 'c3', date: '2025.03.10 09:45', amount: 30000, method: '계좌이체', status: '완료' },
-  { id: 'c4', date: '2025.02.20 16:00', amount: 50000, method: '신용카드', status: '완료' },
-];
-
-const USAGE_HISTORY = [
-  { id: 'u1', date: '2025.04.18 10:00', campaign: '봄 시즌 신상품 안내 - 유아동 의류 15종 입고', used: 4260, remaining: 45600 },
-  { id: 'u2', date: '2025.04.20 14:00', campaign: '5월 황금연휴 특별 기획전 참여 셀러 모집', used: 1440, remaining: 41340 },
-  { id: 'u3', date: '2025.03.28 10:00', campaign: '3월 봄 맞이 유아동 의류 신규 입고 안내', used: 4260, remaining: 39900 },
-  { id: 'u4', date: '2025.03.20 15:00', campaign: '어버이날 특별 기획전 셀러 모집 안내', used: 2340, remaining: 35640 },
-  { id: 'u5', date: '2025.03.15 11:00', campaign: '가정의 달 5월 전품목 프로모션 사전 안내', used: 4260, remaining: 33300 },
+const COMBINED_HISTORY = [
+  { id: 'u2', date: '2025.04.20 14:00', type: '사용' as const, description: '5월 황금연휴 특별 기획전 참여 셀러 모집', points: -1440 },
+  { id: 'u1', date: '2025.04.18 10:00', type: '사용' as const, description: '봄 시즌 신상품 안내 - 유아동 의류 15종 입고', points: -4260 },
+  { id: 'c1', date: '2025.04.15 14:32', type: '충전' as const, description: '신용카드', points: 50000 },
+  { id: 'u3', date: '2025.03.28 10:00', type: '사용' as const, description: '3월 봄 맞이 유아동 의류 신규 입고 안내', points: -4260 },
+  { id: 'c2', date: '2025.03.28 10:11', type: '충전' as const, description: '신용카드', points: 100000 },
+  { id: 'u4', date: '2025.03.20 15:00', type: '사용' as const, description: '어버이날 특별 기획전 셀러 모집 안내', points: -2340 },
+  { id: 'u5', date: '2025.03.15 11:00', type: '사용' as const, description: '가정의 달 5월 전품목 프로모션 사전 안내', points: -4260 },
+  { id: 'c3', date: '2025.03.10 09:45', type: '충전' as const, description: '계좌이체', points: 30000 },
+  { id: 'c4', date: '2025.02.20 16:00', type: '충전' as const, description: '신용카드', points: 50000 },
 ];
 
 function Bubble({ n }: { n: number }) {
@@ -30,7 +25,6 @@ function Bubble({ n }: { n: number }) {
 }
 
 export default function PointManagement() {
-  const [historyTab, setHistoryTab] = useState<HistoryTab>('충전');
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState('');
 
@@ -155,85 +149,44 @@ export default function PointManagement() {
         {/* ── 3. 포인트 내역 ── */}
         <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
           <Bubble n={4} />
-
-          {/* 탭 */}
-          <div className="flex items-center border-b border-gray-100 px-6 pt-5">
-            {(['충전', '사용'] as HistoryTab[]).map((tab) => {
-              const isActive = historyTab === tab;
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setHistoryTab(tab)}
-                  className={`flex items-center gap-2 px-4 pb-3 pt-1 text-sm font-semibold transition-all ${
-                    isActive
-                      ? 'border-b-2 border-[#4DB87A] text-[#4DB87A]'
-                      : 'text-gray-400 hover:text-gray-600'
-                  }`}
-                >
-                  {tab} 내역
-                </button>
-              );
-            })}
+          <div className="border-b border-gray-100 px-6 py-4">
+            <h2 className="text-base font-bold text-gray-900">포인트 내역</h2>
           </div>
-
-          {/* 충전 내역 */}
-          {historyTab === '충전' && (
-            <div className="overflow-hidden">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-gray-50">
-                    {['일시', '충전 금액', '결제 수단', '상태'].map((col) => (
-                      <th key={col} className="border-b border-gray-100 px-5 py-3 text-left text-xs font-semibold text-gray-500">
-                        {col}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-50">
-                  {CHARGE_HISTORY.map((row) => (
-                    <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-5 py-4 text-gray-500">{row.date}</td>
-                      <td className="px-5 py-4 font-bold text-[#4DB87A]">+{row.amount.toLocaleString()}P</td>
-                      <td className="px-5 py-4 text-gray-600">{row.method}</td>
-                      <td className="px-5 py-4">
-                        <span className="rounded-full bg-[#e8f5ee] px-2.5 py-0.5 text-[11px] font-semibold text-[#2a7a4f]">
-                          {row.status}
-                        </span>
-                      </td>
-                    </tr>
+          <div className="overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50">
+                  {['일시', '구분', '내용', '포인트'].map((col) => (
+                    <th key={col} className="border-b border-gray-100 px-5 py-3 text-left text-xs font-semibold text-gray-500">
+                      {col}
+                    </th>
                   ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {/* 사용 내역 */}
-          {historyTab === '사용' && (
-            <div className="overflow-hidden">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-gray-50">
-                    {['일시', '캠페인명', '사용 포인트', '잔여 포인트'].map((col) => (
-                      <th key={col} className="border-b border-gray-100 px-5 py-3 text-left text-xs font-semibold text-gray-500">
-                        {col}
-                      </th>
-                    ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {COMBINED_HISTORY.map((row) => (
+                  <tr key={row.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-5 py-4 text-gray-500 whitespace-nowrap">{row.date}</td>
+                    <td className="px-5 py-4">
+                      <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                        row.type === '충전'
+                          ? 'bg-[#e8f5ee] text-[#2a7a4f]'
+                          : 'bg-red-50 text-red-500'
+                      }`}>
+                        {row.type}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-gray-700">{row.description}</td>
+                    <td className={`px-5 py-4 font-bold tabular-nums ${
+                      row.type === '충전' ? 'text-[#4DB87A]' : 'text-red-500'
+                    }`}>
+                      {row.type === '충전' ? '+' : ''}{row.points.toLocaleString()}P
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-50">
-                  {USAGE_HISTORY.map((row) => (
-                    <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-5 py-4 text-gray-500 whitespace-nowrap">{row.date}</td>
-                      <td className="px-5 py-4 text-gray-700">{row.campaign}</td>
-                      <td className="px-5 py-4 font-bold text-red-500">-{row.used.toLocaleString()}P</td>
-                      <td className="px-5 py-4 font-semibold text-gray-700">{row.remaining.toLocaleString()}P</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className="border-t border-gray-100 px-6 py-4" />
         </section>
 
