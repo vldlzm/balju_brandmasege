@@ -42,25 +42,19 @@ export default function PromotionSettings() {
 
       <div className="mx-auto max-w-[1440px] space-y-6 p-6">
 
-        {/* ── 발신번호 관리 ── */}
+        {/* ── 1. 발신번호 관리 ── */}
         <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
           <div className="border-b border-gray-100 px-6 py-5">
-            <div className="flex items-center gap-3">
-              <h2 className="text-base font-bold text-gray-900">발신번호 관리</h2>
-              <span className="rounded-full bg-[#e0f5f0] px-3 py-1 text-xs font-semibold text-[#0a7c5c]">
-                SMS 발신번호를 신청하고 메시지를 설정해 주세요!
-              </span>
-            </div>
+            <h2 className="text-base font-bold text-gray-900">발신번호 관리</h2>
             <ul className="mt-3 space-y-1.5">
               {[
-                '고객에게 노출되는 번호로 일반회원가입. 주문/배송조회 시 인증번호 발송용, 알림톡 미발송될 경우 문자발송용으로 사용됩니다.',
                 '승인된 발신번호만 SMS 사용이 가능하며 발신번호 등록은 영업일 기준 약 1일 정도 소요됩니다.',
                 '등록하려는 발신번호의 소유주에 따라 추가 서류가 필요할 수 있으니 신청서 가이드 확인 후 진행해 주세요.',
                 '발신번호 신청 반려 시, 삭제 후 다시 신청으로 진행해 주세요.',
               ].map((text, i) => (
                 <li key={i} className="flex gap-1.5 text-xs text-gray-500">
                   <span className="shrink-0">·</span>
-                  <span>{i === 2
+                  <span>{i === 1
                     ? <>등록하려는 발신번호의 소유주에 따라 추가 서류가 필요할 수 있으니 <span className="cursor-pointer text-[#4DB87A] underline">신청서 가이드</span> 확인 후 진행해 주세요.</>
                     : text}
                   </span>
@@ -70,7 +64,6 @@ export default function PromotionSettings() {
           </div>
 
           <div className="px-6 py-5">
-            {/* 버튼 */}
             <div className="flex justify-end gap-2">
               <button className="rounded-lg bg-[#f97316] px-4 py-2 text-sm font-semibold text-white hover:bg-[#ea6c0c] transition-colors">
                 신청서 가이드
@@ -80,7 +73,6 @@ export default function PromotionSettings() {
               </button>
             </div>
 
-            {/* 발신번호 테이블 */}
             <div className="mt-4 overflow-hidden rounded-xl border border-gray-200">
               <table className="w-full text-sm">
                 <thead>
@@ -120,7 +112,6 @@ export default function PromotionSettings() {
               </table>
             </div>
 
-            {/* 초기화/적용 버튼 */}
             <div className="mt-4 flex justify-center gap-2">
               <button className="rounded-lg bg-[#6b7280] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">
                 초기화
@@ -131,7 +122,6 @@ export default function PromotionSettings() {
             </div>
           </div>
 
-          {/* 발신번호 요청내역 */}
           <div className="border-t border-gray-100 px-6 py-5">
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-bold text-gray-800">발신번호 요청내역</h3>
@@ -181,67 +171,7 @@ export default function PromotionSettings() {
           </div>
         </section>
 
-        {/* ── 대상자·대상 상품 제외 설정 ── */}
-        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
-          <div className="border-b border-gray-100 px-6 py-5">
-            <h2 className="text-base font-bold text-gray-900">대상자·대상 상품 제외 설정</h2>
-            <ul className="mt-3 space-y-1.5">
-              {[
-                '캠페인 생성 전 필수 설정을 모두 완료해 주세요.',
-                '캠페인 대상자 및 상품의 제외 설정은 반영되기까지 하루정도 소요될 수 있습니다.',
-              ].map((text, i) => (
-                <li key={i} className="flex gap-1.5 text-xs text-gray-500">
-                  <span className="shrink-0">·</span>
-                  <span>{text}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="divide-y divide-gray-100 px-6">
-            {/* 대상자 제외 */}
-            <div className="flex items-center gap-6 py-5">
-              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">캠페인 대상자 제외 설정</span>
-              <button className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-                대상자 선택
-                <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
-                  <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <span className="text-sm text-gray-500">
-                제외된 인원 <span className="font-bold text-gray-800">{excludedPersons}명</span>
-              </span>
-              <span className="flex items-start gap-1 text-xs text-gray-400">
-                <svg viewBox="0 0 16 16" fill="currentColor" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-300">
-                  <path fillRule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0-10a.75.75 0 01.75.75v4a.75.75 0 01-1.5 0v-4A.75.75 0 018 5zm0 7.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
-                </svg>
-                알림톡, 브랜드 메시지(친구톡), LMS 캠페인 대상자에서 제외 처리되며, 메시지가 발송되지 않습니다.
-              </span>
-            </div>
-
-            {/* 상품 제외 */}
-            <div className="flex items-center gap-6 py-5">
-              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">캠페인 대상 상품 제외 설정</span>
-              <button className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-                상품 선택
-                <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
-                  <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <span className="text-sm text-gray-500">
-                제외된 상품 <span className="font-bold text-gray-800">{excludedProducts}개</span>
-              </span>
-              <span className="flex items-start gap-1 text-xs text-gray-400">
-                <svg viewBox="0 0 16 16" fill="currentColor" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-300">
-                  <path fillRule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0-10a.75.75 0 01.75.75v4a.75.75 0 01-1.5 0v-4A.75.75 0 018 5zm0 7.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
-                </svg>
-                콘텐츠 팝업, 알림톡, 브랜드 메시지(친구톡), LMS 캠페인 대상 상품에서 제외 처리됩니다.
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 기본 설정 ── */}
+        {/* ── 2. 기본 설정 ── */}
         <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
           <div className="border-b border-gray-100 px-6 py-5">
             <div className="flex items-center gap-3">
@@ -269,7 +199,6 @@ export default function PromotionSettings() {
                   <span className="text-[#4DB87A]">✓</span> 무료 수신거부번호
                 </span>
                 <div className="flex flex-col gap-3">
-                  {/* 라디오 */}
                   <div className="flex items-center gap-5">
                     <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
                       <input
@@ -292,7 +221,15 @@ export default function PromotionSettings() {
                       직접 입력
                     </label>
                   </div>
-                  {/* 입력 + 안내 */}
+
+                  {/* 신규 선택 시 신청 버튼 */}
+                  {rejectType === '신규' && (
+                    <button className="w-fit rounded-lg bg-[#4DB87A] px-5 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">
+                      신청
+                    </button>
+                  )}
+
+                  {/* 직접 입력 선택 시 입력창 + 안내 */}
                   {rejectType === '직접입력' && (
                     <div className="flex flex-wrap items-center gap-3">
                       <input
@@ -302,7 +239,7 @@ export default function PromotionSettings() {
                         className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                       />
                       <p className="text-xs text-red-500 leading-relaxed max-w-md">
-                        ⓘ 직접 입력은 고객의 수신 거부 요청이 CRM시스템과 자동으로 연동되지 않습니다. 수신 거부 대상자는 &apos;캠페인 대상자 제외 설정&apos;을 통해 수동으로 등록해 주세요.
+                        ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 대상자는 &apos;캠페인 대상자 제외 설정&apos;을 통해 수동으로 등록해 주세요.
                       </p>
                     </div>
                   )}
@@ -324,18 +261,75 @@ export default function PromotionSettings() {
                     </svg>
                   </button>
                   <p className="text-xs text-gray-400 leading-relaxed max-w-md">
-                    ⓘ 카카오톡 채널 등록이 완료되면 자동으로 알림톡 템플릿 승인 요청이 진행됩니다. 승인 절차가 완료된 후에 메시지 캠페인을 발행할 수 있습니다. (영업일 기준 최대 3일 소요)
+                    ⓘ 채널 승인이 최대 2일 정도 소용될 수 있습니다.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* 변경사항 적용 버튼 */}
           <div className="flex justify-center border-t border-gray-100 px-6 py-6">
             <button className="rounded-xl bg-[#374151] px-10 py-3 text-sm font-bold text-white hover:bg-[#1f2937] transition-colors">
               변경사항 적용
             </button>
+          </div>
+        </section>
+
+        {/* ── 3. 대상자·대상 상품 제외 설정 ── */}
+        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
+          <div className="border-b border-gray-100 px-6 py-5">
+            <h2 className="text-base font-bold text-gray-900">대상자·대상 상품 제외 설정</h2>
+            <ul className="mt-3 space-y-1.5">
+              {[
+                '캠페인 생성 전 필수 설정을 모두 완료해 주세요.',
+                '캠페인 대상자 및 상품의 제외 설정은 반영되기까지 하루정도 소요될 수 있습니다.',
+              ].map((text, i) => (
+                <li key={i} className="flex gap-1.5 text-xs text-gray-500">
+                  <span className="shrink-0">·</span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="divide-y divide-gray-100 px-6">
+            <div className="flex items-center gap-6 py-5">
+              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">캠페인 대상자 제외 설정</span>
+              <button className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
+                대상자 선택
+                <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
+                  <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+              <span className="text-sm text-gray-500">
+                제외된 인원 <span className="font-bold text-gray-800">{excludedPersons}명</span>
+              </span>
+              <span className="flex items-start gap-1 text-xs text-gray-400">
+                <svg viewBox="0 0 16 16" fill="currentColor" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-300">
+                  <path fillRule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0-10a.75.75 0 01.75.75v4a.75.75 0 01-1.5 0v-4A.75.75 0 018 5zm0 7.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
+                </svg>
+                알림톡, 브랜드 메시지(친구톡), LMS 캠페인 대상자에서 제외 처리되며, 메시지가 발송되지 않습니다.
+              </span>
+            </div>
+
+            <div className="flex items-center gap-6 py-5">
+              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">캠페인 대상 상품 제외 설정</span>
+              <button className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
+                상품 선택
+                <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
+                  <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+              <span className="text-sm text-gray-500">
+                제외된 상품 <span className="font-bold text-gray-800">{excludedProducts}개</span>
+              </span>
+              <span className="flex items-start gap-1 text-xs text-gray-400">
+                <svg viewBox="0 0 16 16" fill="currentColor" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-300">
+                  <path fillRule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0-10a.75.75 0 01.75.75v4a.75.75 0 01-1.5 0v-4A.75.75 0 018 5zm0 7.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
+                </svg>
+                콘텐츠 팝업, 알림톡, 브랜드 메시지(친구톡), LMS 캠페인 대상 상품에서 제외 처리됩니다.
+              </span>
+            </div>
           </div>
         </section>
 
