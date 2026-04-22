@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import StatsPopup from '@/components/StatsPopup';
 
 type TabType = '발송 예정' | '발송 완료';
 type Category = '신상품' | '이벤트' | '가격할인';
@@ -190,6 +191,7 @@ export default function KakaoBrandMessageList() {
   const [formatFilter, setFormatFilter] = useState('전체');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [showStats, setShowStats] = useState(false);
 
   const tabItems: { label: TabType; count: number }[] = [
     { label: '발송 완료', count: 18 },
@@ -429,7 +431,10 @@ export default function KakaoBrandMessageList() {
 
                       {/* 액션 버튼 */}
                       <div className="flex shrink-0 flex-col items-end gap-2">
-                        <button className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:border-gray-300 hover:bg-gray-50 transition-colors">
+                        <button
+                          onClick={() => setShowStats(true)}
+                          className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:border-gray-300 hover:bg-gray-50 transition-colors"
+                        >
                           통계
                         </button>
                       </div>
@@ -480,6 +485,8 @@ export default function KakaoBrandMessageList() {
 
         </section>
       </div>
+
+      {showStats && <StatsPopup onClose={() => setShowStats(false)} />}
     </div>
   );
 }
