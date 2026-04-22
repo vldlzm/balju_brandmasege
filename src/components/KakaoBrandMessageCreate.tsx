@@ -464,14 +464,15 @@ export default function KakaoBrandMessageCreate() {
       </div>
 
       <div className="mx-auto max-w-[1440px] p-6">
-        <div className="grid grid-cols-[1fr_340px] gap-6 items-start">
+        <div className="grid grid-cols-[1fr_300px_260px] gap-6 items-start">
 
           {/* ───── 좌측 폼 영역 ───── */}
           <div className="space-y-5">
 
             {/* 섹션 1: 캠페인명 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">1</span>
                 캠페인명 <span className="text-red-500">*</span>
               </h2>
               <div className="relative">
@@ -490,7 +491,8 @@ export default function KakaoBrandMessageCreate() {
 
             {/* 섹션 2: 메시지 종류 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">2</span>
                 메시지 종류 <span className="text-red-500">*</span>
               </h2>
               <div className="grid grid-cols-3 gap-3">
@@ -529,7 +531,8 @@ export default function KakaoBrandMessageCreate() {
             {/* 섹션 3: 수신 파트너 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
+                <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">3</span>
                   수신 파트너 <span className="text-red-500">*</span>
                 </h2>
                 <button
@@ -581,7 +584,8 @@ export default function KakaoBrandMessageCreate() {
                 {/* 섹션 4: 상품 불러오기 */}
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
                   <div className="mb-4 flex items-center justify-between">
-                    <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
+                    <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">4</span>
                       상품 불러오기 <span className="text-red-500">*</span>
                     </h2>
                     <button
@@ -615,7 +619,8 @@ export default function KakaoBrandMessageCreate() {
 
                 {/* 섹션 5: 내용 */}
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
+                  <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">5</span>
                     내용 <span className="text-red-500">*</span>
                   </h2>
                   <div className="mb-3 flex items-center gap-2">
@@ -649,7 +654,10 @@ export default function KakaoBrandMessageCreate() {
 
                 {/* 섹션 6: 버튼 */}
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
+                  <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">6</span>
+                    버튼
+                  </h2>
                   <div className="space-y-4">
                     {/* 버튼 1 */}
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
@@ -703,7 +711,8 @@ export default function KakaoBrandMessageCreate() {
               <>
                 {/* WL-A: 헤더 */}
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <h2 className="mb-1 text-sm font-bold uppercase tracking-wide text-gray-400">
+                  <h2 className="mb-1 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">4</span>
                     헤더 <span className="text-red-500">*</span>
                   </h2>
                   <p className="mb-3 text-xs text-gray-400">띄어쓰기 포함 20자 제한 · 줄바꿈 불가</p>
@@ -719,7 +728,8 @@ export default function KakaoBrandMessageCreate() {
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
                   <div className="mb-4 flex items-center justify-between">
                     <div>
-                      <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
+                      <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">5</span>
                         리스트 구성 <span className="text-red-500">*</span>
                       </h2>
                       <p className="mt-0.5 text-xs text-gray-400">최소 3개 · 최대 5개 (리스트1 포함)</p>
@@ -829,7 +839,10 @@ export default function KakaoBrandMessageCreate() {
 
                 {/* WL-C: 버튼 (최대 2개) */}
                 <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
+                  <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">6</span>
+                    버튼
+                  </h2>
                   <div className="space-y-4">
                     {/* 버튼 1 */}
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
@@ -1036,7 +1049,10 @@ export default function KakaoBrandMessageCreate() {
 
             {/* 섹션 7: 발송 설정 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">발송 설정</h2>
+              <h2 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-400">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4DB87A] text-[10px] font-black text-white">7</span>
+                발송 설정
+              </h2>
               <p className="mb-4 text-xs text-gray-400">오늘 이후 날짜부터 선택 가능합니다.</p>
               <div className="flex flex-wrap gap-4">
                 <div className="flex flex-col gap-1.5">
@@ -1122,7 +1138,7 @@ export default function KakaoBrandMessageCreate() {
             </div>
           </div>
 
-          {/* ───── 우측 미리보기 ───── */}
+          {/* ───── 중앙 미리보기 ───── */}
           <div className="sticky top-[73px] h-fit">
             <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
               <div className="mb-4 flex items-center justify-center gap-2">
@@ -1407,6 +1423,69 @@ export default function KakaoBrandMessageCreate() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* ───── 우측 설명 패널 ───── */}
+          <div className="sticky top-[73px] h-fit">
+            <div className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100 overflow-hidden">
+              <div className="border-b border-gray-100 px-4 py-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">항목 설명</h3>
+              </div>
+              <div className="divide-y divide-gray-50">
+                {[
+                  {
+                    no: 1,
+                    title: '캠페인명',
+                    desc: '내부 관리 목적으로만 사용됩니다. 수신자에게는 노출되지 않으며 최대 50자까지 입력 가능합니다.',
+                  },
+                  {
+                    no: 2,
+                    title: '메시지 종류',
+                    desc: '와이드 이미지: 대표 이미지+텍스트 조합\n와이드 리스트: 3~5개 상품 목록형\n캐러셀 피드: 슬라이드형 다중 콘텐츠',
+                  },
+                  {
+                    no: 3,
+                    title: '수신 파트너',
+                    desc: '메시지를 받을 셀러를 선택합니다. 복수 선택 가능하며 수신자 1인당 15P(VAT 별도)가 차감됩니다.',
+                  },
+                  {
+                    no: 4,
+                    title: '상품 불러오기 / 헤더',
+                    desc: '와이드 이미지는 대표 상품 1개, 와이드 리스트는 최대 5개까지 선택합니다. 헤더는 최대 20자입니다.',
+                  },
+                  {
+                    no: 5,
+                    title: '내용 / 리스트 구성',
+                    desc: '메시지 본문은 최대 76자입니다. 70자 초과 시 일부 기기에서 내용이 잘릴 수 있습니다.',
+                  },
+                  {
+                    no: 6,
+                    title: '버튼',
+                    desc: '최대 2개까지 추가 가능합니다. 버튼 텍스트는 8자 이내, 연결 URL은 필수 입력 항목입니다.',
+                  },
+                  {
+                    no: 7,
+                    title: '발송 설정',
+                    desc: '당일 발송은 불가하며 익일 이후 날짜만 선택 가능합니다. 예약 후에도 발송 전이라면 취소할 수 있습니다.',
+                  },
+                  {
+                    no: 8,
+                    title: '예상 지출 포인트',
+                    desc: '수신자 수 × 15P로 자동 계산됩니다. 보유 포인트가 부족한 경우 발송이 제한되며 사전 충전이 필요합니다.',
+                  },
+                ].map((item) => (
+                  <div key={item.no} className="flex gap-3 px-4 py-3">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#4DB87A]/10 text-[10px] font-black text-[#4DB87A]">
+                      {item.no}
+                    </span>
+                    <div>
+                      <p className="text-[11px] font-bold text-gray-700">{item.title}</p>
+                      <p className="mt-0.5 text-[11px] leading-relaxed text-gray-400 whitespace-pre-line">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
