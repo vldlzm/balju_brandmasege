@@ -179,15 +179,10 @@ export default function PromotionSettings() {
               <span className="text-xs text-gray-400">✓ 표시 필수항목</span>
             </div>
             <ul className="mt-3 space-y-1.5">
-              {[
-                '기존에 쇼핑몰 운영을 위한 SMS/알림톡 설정을 완료하셨더라도 CRM 기능을 이용하시려면 무료 수신거부번호와 카카오톡 채널을 반드시 등록해 주세요.',
-                '수신거부를 신청한 고객의 휴대폰 번호는 신청 일의 다음 날부터 수신거부 처리가 적용됩니다.',
-              ].map((text, i) => (
-                <li key={i} className="flex gap-1.5 text-xs text-gray-500">
-                  <span className="shrink-0">·</span>
-                  <span>{text}</span>
-                </li>
-              ))}
+              <li className="flex gap-1.5 text-xs text-gray-500">
+                <span className="shrink-0">·</span>
+                <span>수신거부를 신청한 고객의 휴대폰 번호는 신청 일의 다음 날부터 수신거부 처리가 적용됩니다.</span>
+              </li>
             </ul>
           </div>
 
@@ -261,7 +256,7 @@ export default function PromotionSettings() {
                     </svg>
                   </button>
                   <p className="text-xs text-gray-400 leading-relaxed max-w-md">
-                    ⓘ 채널 승인이 최대 2일 정도 소용될 수 있습니다.
+                    ⓘ 카카오톡 채널 승인은 영업일 기준 최대 2일이 소요될 수 있습니다.
                   </p>
                 </div>
               </div>
@@ -280,15 +275,10 @@ export default function PromotionSettings() {
           <div className="border-b border-gray-100 px-6 py-5">
             <h2 className="text-base font-bold text-gray-900">대상자·대상 상품 제외 설정</h2>
             <ul className="mt-3 space-y-1.5">
-              {[
-                '캠페인 생성 전 필수 설정을 모두 완료해 주세요.',
-                '캠페인 대상자 및 상품의 제외 설정은 반영되기까지 하루정도 소요될 수 있습니다.',
-              ].map((text, i) => (
-                <li key={i} className="flex gap-1.5 text-xs text-gray-500">
-                  <span className="shrink-0">·</span>
-                  <span>{text}</span>
-                </li>
-              ))}
+              <li className="flex gap-1.5 text-xs text-gray-500">
+                <span className="shrink-0">·</span>
+                <span>캠페인 대상자 및 상품의 제외 설정은 반영되기까지 하루정도 소요될 수 있습니다.</span>
+              </li>
             </ul>
           </div>
 
@@ -304,12 +294,6 @@ export default function PromotionSettings() {
               <span className="text-sm text-gray-500">
                 제외된 인원 <span className="font-bold text-gray-800">{excludedPersons}명</span>
               </span>
-              <span className="flex items-start gap-1 text-xs text-gray-400">
-                <svg viewBox="0 0 16 16" fill="currentColor" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-300">
-                  <path fillRule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0-10a.75.75 0 01.75.75v4a.75.75 0 01-1.5 0v-4A.75.75 0 018 5zm0 7.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
-                </svg>
-                알림톡, 브랜드 메시지(친구톡), LMS 캠페인 대상자에서 제외 처리되며, 메시지가 발송되지 않습니다.
-              </span>
             </div>
 
             <div className="flex items-center gap-6 py-5">
@@ -322,12 +306,6 @@ export default function PromotionSettings() {
               </button>
               <span className="text-sm text-gray-500">
                 제외된 상품 <span className="font-bold text-gray-800">{excludedProducts}개</span>
-              </span>
-              <span className="flex items-start gap-1 text-xs text-gray-400">
-                <svg viewBox="0 0 16 16" fill="currentColor" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-300">
-                  <path fillRule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0-10a.75.75 0 01.75.75v4a.75.75 0 01-1.5 0v-4A.75.75 0 018 5zm0 7.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
-                </svg>
-                콘텐츠 팝업, 알림톡, 브랜드 메시지(친구톡), LMS 캠페인 대상 상품에서 제외 처리됩니다.
               </span>
             </div>
           </div>
