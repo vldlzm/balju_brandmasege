@@ -61,7 +61,7 @@ export default function StatsPopup({ onClose }: StatsPopupProps) {
           </div>
 
           {/* 핵심 지표 */}
-          <div className="relative overflow-visible mt-5 mx-6 rounded-xl overflow-hidden">
+          <div className="relative mt-5 mx-6 rounded-xl overflow-hidden">
             <Bubble n={1} />
             <div className="grid grid-cols-3 gap-px bg-gray-100">
               {[
