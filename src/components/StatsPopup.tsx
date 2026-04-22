@@ -22,19 +22,10 @@ const STAT_DATA = {
   points: 4260,
 };
 
-function Bubble({ n }: { n: number }) {
-  return (
-    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
-      {n}
-    </div>
-  );
-}
-
 export default function StatsPopup({ onClose }: StatsPopupProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="relative overflow-visible w-full max-w-md rounded-2xl bg-white shadow-2xl max-h-[90vh] flex flex-col">
-        <Bubble n={3} />
+      <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
 
         {/* 헤더 */}
         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 shrink-0">
@@ -61,8 +52,7 @@ export default function StatsPopup({ onClose }: StatsPopupProps) {
           </div>
 
           {/* 핵심 지표 */}
-          <div className="relative mt-5 mx-6 rounded-xl overflow-hidden">
-            <Bubble n={1} />
+          <div className="mt-5 mx-6 rounded-xl overflow-hidden">
             <div className="grid grid-cols-3 gap-px bg-gray-100">
               {[
                 { label: '오픈율', value: `${STAT_DATA.openRate}%` },
@@ -78,8 +68,7 @@ export default function StatsPopup({ onClose }: StatsPopupProps) {
           </div>
 
           {/* 상세 수치 */}
-          <div className="relative overflow-visible mt-4 px-6 pb-2">
-            <Bubble n={2} />
+          <div className="mt-4 px-6 pb-2">
             <div className="divide-y divide-gray-50">
               {[
                 { label: '발송 수',                    value: `${STAT_DATA.targetCount.toLocaleString()}명` },
