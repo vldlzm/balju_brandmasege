@@ -6,8 +6,10 @@ export default function ScreenIndex() {
         { name: '브랜드 메시지 목록', href: '/marketing/brand-message' },
         { name: '브랜드 메시지 목록_캠페인이 등록되지 않은 경우', href: '/marketing/brand-message/empty' },
         { name: '새 메시지 만들기', href: '/marketing/brand-message/create' },
+        { name: '새 메시지 만들기_기본 설정이 안된 경우', href: '/marketing/brand-message/create-no-settings' },
         { name: '통계 팝업', href: '/marketing/brand-message/stats' },
         { name: '기본설정', href: '/promotion/settings' },
+        { name: '기본설정_등록이 완료된 경우', href: '/promotion/settings-complete' },
       ],
     },
   ];
