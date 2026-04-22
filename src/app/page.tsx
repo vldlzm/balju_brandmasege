@@ -4,6 +4,7 @@ export default function ScreenIndex() {
       category: '브랜드 메시지',
       items: [
         { name: '브랜드 메시지 목록', href: '/marketing/brand-message' },
+        { name: '브랜드 메시지 목록_캠페인이 등록되지 않은 경우', href: '/marketing/brand-message/empty' },
         { name: '새 메시지 만들기', href: '/marketing/brand-message/create' },
         { name: '통계 팝업', href: '/marketing/brand-message/stats' },
         { name: '기본설정', href: '/promotion/settings' },
