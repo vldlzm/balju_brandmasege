@@ -49,11 +49,11 @@ const SCREEN_GROUPS: ScreenGroup[] = [
         href: '/marketing/brand-message/create',
         description: '브랜드 메시지 캠페인을 새로 등록하는 화면입니다. 메시지 유형에 따라 입력 폼이 동적으로 구성되며, 우측 미리보기와 항목 설명 패널을 함께 제공합니다.',
         notes: [
-          '① 캠페인명: 내부 관리용, 수신자 미노출, 중복 불가',
-          '② 메시지 종류: 와이드 이미지 / 와이드 리스트 / 캐러셀 피드',
-          '③ 수신 파트너: 복수 선택, 1인당 *P 차감',
-          '④ 버튼: 최대 2개, 텍스트 8자 이내, URL 필수',
-          '⑤ 발송 설정: 예약 일시 설정 (당일 발송 가능 여부 확인 필요)',
+          '캠페인명: 내부 관리용, 수신자 미노출, 중복 불가',
+          '메시지 종류: 와이드 이미지 / 와이드 리스트 / 캐러셀 피드',
+          '수신 파트너: 복수 선택, 1인당 *P 차감',
+          '버튼: 최대 2개, 텍스트 8자 이내, URL 필수',
+          '발송 설정: 예약 일시 설정 (당일 발송 가능 여부 확인 필요)',
           '우측 미리보기: 실시간 메시지 렌더링 확인',
           '우측 설명 패널: 각 항목별 정책 및 제약 사항 안내',
         ],
@@ -230,16 +230,6 @@ export default function ScreenIndex() {
             </div>
           )}
 
-          {/* URL */}
-          <div className="border-t border-gray-100 pt-5">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">경로</p>
-            <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2">
-              <svg viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3 shrink-0 text-gray-400">
-                <path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" />
-              </svg>
-              <code className="text-xs text-gray-500 break-all">{selected.href}</code>
-            </div>
-          </div>
         </div>
       </aside>
 
