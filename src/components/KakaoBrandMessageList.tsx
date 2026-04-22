@@ -176,6 +176,14 @@ const FORMAT_ICON: Record<FormatType, string> = {
 
 // ── 컴포넌트 ─────────────────────────────────────────────────
 
+function Bubble({ n }: { n: number }) {
+  return (
+    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
+      {n}
+    </div>
+  );
+}
+
 export default function KakaoBrandMessageList() {
   const [activeTab, setActiveTab] = useState<TabType>('발송 예정');
   const [periodFilter, setPeriodFilter] = useState('최근 1개월');
@@ -201,7 +209,8 @@ export default function KakaoBrandMessageList() {
       <div className="mx-auto max-w-[1440px] space-y-5 p-6">
 
         {/* ── 요약 통계 ── */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="relative overflow-visible grid grid-cols-4 gap-4">
+          <Bubble n={3} />
           {[
             { label: '이번달 발송 완료', value: '18건', sub: '전월 대비 +3건', color: 'text-[#4DB87A]' },
             { label: '발송 예정', value: '3건', sub: '가장 빠른 발송 2일 후', color: 'text-blue-500' },
@@ -217,7 +226,8 @@ export default function KakaoBrandMessageList() {
         </div>
 
         {/* ── 필터 ── */}
-        <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
+        <section className="relative overflow-visible rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
+          <Bubble n={4} />
           <div className="flex flex-wrap items-center gap-3">
             <select
               value={periodFilter}
@@ -262,16 +272,18 @@ export default function KakaoBrandMessageList() {
           <div className="flex items-end gap-1">
             {tabItems.map((tab) => {
               const isActive = activeTab === tab.label;
+              const tabBadge = tab.label === '발송 예정' ? 1 : 2;
               return (
                 <button
                   key={tab.label}
                   onClick={() => { setActiveTab(tab.label); setCurrentPage(1); }}
-                  className={`flex items-center gap-2 rounded-t-lg px-4 pb-3 pt-1 text-sm font-semibold transition-all ${
+                  className={`relative overflow-visible flex items-center gap-2 rounded-t-lg px-4 pb-3 pt-1 text-sm font-semibold transition-all ${
                     isActive
                       ? 'border-b-2 border-[#4DB87A] text-[#4DB87A]'
                       : 'text-gray-400 hover:text-gray-600'
                   }`}
                 >
+                  <Bubble n={tabBadge} />
                   {tab.label}
                   <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums ${
                     isActive ? 'bg-[#e8f5ee] text-[#2a7a4f]' : 'bg-gray-100 text-gray-500'
@@ -282,6 +294,8 @@ export default function KakaoBrandMessageList() {
               );
             })}
           </div>
+            <div className="relative overflow-visible">
+              <Bubble n={5} />
             <Link href="/marketing/brand-message/create">
               <button className="mb-3 flex items-center gap-1.5 rounded-xl bg-[#4DB87A] px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
@@ -290,6 +304,7 @@ export default function KakaoBrandMessageList() {
                 새 메시지 만들기
               </button>
             </Link>
+            </div>
           </div>
 
           {/* 목록 */}

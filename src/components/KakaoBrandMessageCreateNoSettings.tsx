@@ -2,6 +2,14 @@
 
 import Link from 'next/link';
 
+function Bubble({ n }: { n: number }) {
+  return (
+    <div className="absolute -top-3 -right-3 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
+      {n}
+    </div>
+  );
+}
+
 export default function KakaoBrandMessageCreateNoSettings() {
   return (
     <div className="relative min-h-screen bg-[#f8f8f8]">
@@ -21,7 +29,8 @@ export default function KakaoBrandMessageCreateNoSettings() {
       </div>
 
       {/* 본문 (흐리게) */}
-      <div className="pointer-events-none select-none opacity-30 blur-[2px]">
+      <div className="relative overflow-visible pointer-events-none select-none opacity-30 blur-[2px]">
+        <Bubble n={1} />
         <div className="mx-auto max-w-[1440px] p-6">
           <div className="grid grid-cols-[1fr_340px] gap-6">
             <div className="space-y-5">
@@ -60,7 +69,8 @@ export default function KakaoBrandMessageCreateNoSettings() {
 
       {/* 기본 설정 미완료 안내 모달 */}
       <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
-        <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl text-center">
+        <div className="relative overflow-visible w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl text-center">
+          <Bubble n={2} />
           <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-8 w-8 text-amber-400">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
@@ -71,16 +81,22 @@ export default function KakaoBrandMessageCreateNoSettings() {
             메시지를 발송하려면 무료 수신거부번호와<br />카카오톡 채널 등록이 필요합니다.
           </p>
           <div className="mt-6 flex flex-col gap-2">
-            <Link href="/promotion/settings">
-              <button className="w-full rounded-xl bg-[#4DB87A] py-3 text-sm font-bold text-white hover:bg-[#3da869] transition-colors">
-                기본 설정 바로가기
-              </button>
-            </Link>
-            <Link href="/marketing/brand-message">
-              <button className="w-full rounded-xl bg-gray-100 py-3 text-sm font-semibold text-gray-600 hover:bg-gray-200 transition-colors">
-                목록으로 돌아가기
-              </button>
-            </Link>
+            <div className="relative overflow-visible">
+              <Bubble n={3} />
+              <Link href="/promotion/settings">
+                <button className="w-full rounded-xl bg-[#4DB87A] py-3 text-sm font-bold text-white hover:bg-[#3da869] transition-colors">
+                  기본 설정 바로가기
+                </button>
+              </Link>
+            </div>
+            <div className="relative overflow-visible">
+              <Bubble n={4} />
+              <Link href="/marketing/brand-message">
+                <button className="w-full rounded-xl bg-gray-100 py-3 text-sm font-semibold text-gray-600 hover:bg-gray-200 transition-colors">
+                  목록으로 돌아가기
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

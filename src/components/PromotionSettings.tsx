@@ -22,6 +22,14 @@ interface SenderRequest {
 const DEMO_SENDERS: SenderNumber[] = [];
 const DEMO_REQUESTS: SenderRequest[] = [];
 
+function Bubble({ n }: { n: number }) {
+  return (
+    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
+      {n}
+    </div>
+  );
+}
+
 export default function PromotionSettings() {
   const [senders] = useState<SenderNumber[]>(DEMO_SENDERS);
   const [requests] = useState<SenderRequest[]>(DEMO_REQUESTS);
@@ -43,7 +51,8 @@ export default function PromotionSettings() {
       <div className="mx-auto max-w-[1440px] space-y-6 p-6">
 
         {/* ── 1. 발신번호 관리 ── */}
-        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
+        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
+          <Bubble n={1} />
           <div className="border-b border-gray-100 px-6 py-5">
             <h2 className="text-base font-bold text-gray-900">발신번호 관리</h2>
             <ul className="mt-3 space-y-1.5">
@@ -172,7 +181,8 @@ export default function PromotionSettings() {
         </section>
 
         {/* ── 2. 기본 설정 ── */}
-        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
+        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
+          <Bubble n={2} />
           <div className="border-b border-gray-100 px-6 py-5">
             <div className="flex items-center gap-3">
               <h2 className="text-base font-bold text-gray-900">기본 설정</h2>
@@ -219,9 +229,12 @@ export default function PromotionSettings() {
 
                   {/* 신규 선택 시 신청 버튼 */}
                   {rejectType === '신규' && (
-                    <button className="w-fit rounded-lg bg-[#4DB87A] px-5 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">
-                      신청
-                    </button>
+                    <div className="relative overflow-visible w-fit">
+                      <Bubble n={3} />
+                      <button className="rounded-lg bg-[#4DB87A] px-5 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">
+                        신청
+                      </button>
+                    </div>
                   )}
 
                   {/* 직접 입력 선택 시 입력창 + 안내 */}
@@ -233,9 +246,12 @@ export default function PromotionSettings() {
                         onChange={(e) => setRejectNumber(e.target.value)}
                         className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                       />
-                      <p className="text-xs text-red-500 leading-relaxed max-w-md">
-                        ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 대상자는 &apos;캠페인 대상자 제외 설정&apos;을 통해 수동으로 등록해 주세요.
-                      </p>
+                      <div className="relative overflow-visible">
+                        <Bubble n={4} />
+                        <p className="text-xs text-red-500 leading-relaxed max-w-md">
+                          ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 대상자는 &apos;캠페인 대상자 제외 설정&apos;을 통해 수동으로 등록해 주세요.
+                        </p>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -271,7 +287,8 @@ export default function PromotionSettings() {
         </section>
 
         {/* ── 3. 대상자·대상 상품 제외 설정 ── */}
-        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
+        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
+          <Bubble n={5} />
           <div className="border-b border-gray-100 px-6 py-5">
             <h2 className="text-base font-bold text-gray-900">대상자·대상 상품 제외 설정</h2>
             <ul className="mt-3 space-y-1.5">

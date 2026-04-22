@@ -15,10 +15,19 @@ const STAT_DATA = {
   points: 4260,
 };
 
+function Bubble({ n }: { n: number }) {
+  return (
+    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
+      {n}
+    </div>
+  );
+}
+
 export default function StatsPopup({ onClose }: StatsPopupProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl">
+      <div className="relative overflow-visible w-full max-w-md rounded-2xl bg-white shadow-2xl">
+        <Bubble n={3} />
 
         {/* 헤더 */}
         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
@@ -42,7 +51,8 @@ export default function StatsPopup({ onClose }: StatsPopupProps) {
         </div>
 
         {/* 핵심 지표 */}
-        <div className="mt-5 grid grid-cols-3 gap-px bg-gray-100 mx-6 rounded-xl overflow-hidden">
+        <div className="relative overflow-visible mt-5 grid grid-cols-3 gap-px bg-gray-100 mx-6 rounded-xl overflow-hidden">
+          <Bubble n={1} />
           {[
             { label: '오픈율', value: `${STAT_DATA.openRate}%` },
             { label: '클릭 수', value: STAT_DATA.clickCount.toLocaleString() },
@@ -56,7 +66,8 @@ export default function StatsPopup({ onClose }: StatsPopupProps) {
         </div>
 
         {/* 상세 수치 */}
-        <div className="mt-4 space-y-3 px-6">
+        <div className="relative overflow-visible mt-4 space-y-3 px-6">
+          <Bubble n={2} />
           {[
             { label: '발송 대상', value: `${STAT_DATA.targetCount.toLocaleString()}명` },
             { label: '실제 발송', value: `${STAT_DATA.sentCount.toLocaleString()}명` },

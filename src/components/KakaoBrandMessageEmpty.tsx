@@ -5,6 +5,14 @@ import Link from 'next/link';
 
 type TabType = '발송 예정' | '발송 완료';
 
+function Bubble({ n }: { n: number }) {
+  return (
+    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
+      {n}
+    </div>
+  );
+}
+
 export default function KakaoBrandMessageEmpty() {
   const [activeTab, setActiveTab] = useState<TabType>('발송 예정');
   const [periodFilter, setPeriodFilter] = useState('최근 1개월');
@@ -29,7 +37,8 @@ export default function KakaoBrandMessageEmpty() {
       <div className="mx-auto max-w-[1440px] space-y-5 p-6">
 
         {/* ── 요약 통계 ── */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="relative overflow-visible grid grid-cols-4 gap-4">
+          <Bubble n={1} />
           {[
             { label: '이번달 발송 완료', value: '0건', sub: '전월 대비 0건', color: 'text-[#4DB87A]' },
             { label: '발송 예정', value: '0건', sub: '발송 예정 없음', color: 'text-blue-500' },
@@ -110,6 +119,8 @@ export default function KakaoBrandMessageEmpty() {
                 );
               })}
             </div>
+            <div className="relative overflow-visible">
+              <Bubble n={3} />
             <Link href="/marketing/brand-message/create">
               <button className="mb-3 flex items-center gap-1.5 rounded-xl bg-[#4DB87A] px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
@@ -118,10 +129,12 @@ export default function KakaoBrandMessageEmpty() {
                 새 메시지 만들기
               </button>
             </Link>
+            </div>
           </div>
 
           {/* 빈 상태 */}
-          <div className="flex flex-col items-center justify-center py-20 px-6">
+          <div className="relative overflow-visible flex flex-col items-center justify-center py-20 px-6">
+            <Bubble n={2} />
             {/* 일러스트 */}
             <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gray-50">
               <svg viewBox="0 0 48 48" fill="none" className="h-10 w-10" stroke="currentColor" strokeWidth={1.5}>

@@ -660,7 +660,6 @@ export default function KakaoBrandMessageCreate() {
 
                 {/* 섹션 6: 버튼 */}
                 <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <Bubble n={4} />
                   <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
                   <div className="space-y-4">
                     {/* 버튼 1 */}
@@ -841,7 +840,6 @@ export default function KakaoBrandMessageCreate() {
 
                 {/* WL-C: 버튼 (최대 2개) */}
                 <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-                  <Bubble n={4} />
                   <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
                   <div className="space-y-4">
                     {/* 버튼 1 */}
@@ -1049,7 +1047,7 @@ export default function KakaoBrandMessageCreate() {
 
             {/* 섹션 7: 발송 설정 */}
             <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <Bubble n={5} />
+              <Bubble n={4} />
               <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">발송 설정</h2>
               <p className="mb-4 text-xs text-gray-400">오늘 이후 날짜부터 선택 가능합니다.</p>
               <div className="flex flex-wrap gap-4">
@@ -1138,7 +1136,8 @@ export default function KakaoBrandMessageCreate() {
 
           {/* ───── 중앙 미리보기 ───── */}
           <div className="sticky top-[73px] h-fit">
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
+            <div className="relative overflow-visible rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
+              <Bubble n={5} />
               <div className="mb-4 flex items-center justify-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#4DB87A]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">미리보기</h3>
