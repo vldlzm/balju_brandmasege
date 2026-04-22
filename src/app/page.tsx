@@ -1,51 +1,228 @@
+'use client';
+
+import { useState } from 'react';
+
+interface Screen {
+  id: string;
+  name: string;
+  href: string;
+  description: string;
+  notes: string[];
+}
+
+interface ScreenGroup {
+  category: string;
+  screens: Screen[];
+}
+
+const SCREEN_GROUPS: ScreenGroup[] = [
+  {
+    category: '브랜드 메시지',
+    screens: [
+      {
+        id: 'bm-list',
+        name: '브랜드 메시지 목록',
+        href: '/marketing/brand-message',
+        description: '등록된 브랜드 메시지 캠페인의 전체 목록을 확인하는 화면입니다. 발송 예정·발송 완료 탭으로 구분되며, 각 캠페인의 상태와 주요 지표를 한눈에 파악할 수 있습니다.',
+        notes: [
+          '발송 예정 탭: 예약된 캠페인 목록 및 발송 취소 기능',
+          '발송 완료 탭: 오픈율·클릭 수·발송 성공률 등 성과 지표 제공',
+          '상단 요약 카드: 이번 달 발송 건수, 예정 건수, 수신 인원, 잔여 포인트',
+          '기간·메시지 종류 필터 및 캠페인명 검색 기능 제공',
+          '새 메시지 만들기 버튼으로 등록 화면 진입',
+        ],
+      },
+      {
+        id: 'bm-empty',
+        name: '브랜드 메시지 목록\n(캠페인 미등록)',
+        href: '/marketing/brand-message/empty',
+        description: '캠페인이 1건도 없는 첫 진입 상태의 화면입니다. 데이터가 없을 때 사용자에게 빈 상태를 안내하며, 첫 캠페인 생성을 유도합니다.',
+        notes: [
+          '통계 카드는 모두 0값으로 표시',
+          '리스트 영역에 빈 상태 안내 문구 노출',
+          '새 메시지 만들기 버튼은 동일하게 제공',
+        ],
+      },
+      {
+        id: 'bm-create',
+        name: '새 메시지 만들기',
+        href: '/marketing/brand-message/create',
+        description: '브랜드 메시지 캠페인을 새로 등록하는 화면입니다. 메시지 유형에 따라 입력 폼이 동적으로 구성되며, 우측 미리보기와 항목 설명 패널을 함께 제공합니다.',
+        notes: [
+          '① 캠페인명: 내부 관리용, 수신자 미노출, 중복 불가',
+          '② 메시지 종류: 와이드 이미지 / 와이드 리스트 / 캐러셀 피드',
+          '③ 수신 파트너: 복수 선택, 1인당 *P 차감',
+          '④ 버튼: 최대 2개, 텍스트 8자 이내, URL 필수',
+          '⑤ 발송 설정: 예약 일시 설정 (당일 발송 가능 여부 확인 필요)',
+          '우측 미리보기: 실시간 메시지 렌더링 확인',
+          '우측 설명 패널: 각 항목별 정책 및 제약 사항 안내',
+        ],
+      },
+      {
+        id: 'bm-create-no-settings',
+        name: '새 메시지 만들기\n(기본 설정 미완료)',
+        href: '/marketing/brand-message/create-no-settings',
+        description: '기본 설정(수신거부번호·카카오톡 채널)이 완료되지 않은 상태에서 메시지 만들기 진입 시 표시되는 화면입니다.',
+        notes: [
+          '폼 전체 블러 처리로 접근 불가 상태 표현',
+          '중앙 경고 모달: 기본 설정 필요 안내',
+          '기본 설정 바로가기 버튼 제공',
+          '목록으로 돌아가기 버튼 제공',
+        ],
+      },
+      {
+        id: 'bm-stats',
+        name: '통계 팝업',
+        href: '/marketing/brand-message/stats',
+        description: '발송 완료된 캠페인의 상세 통계를 확인하는 팝업 화면입니다. 목록 화면의 "통계" 버튼 클릭 시 표시됩니다.',
+        notes: [
+          '오픈율·클릭 수·발송 성공률 핵심 지표 표시',
+          '발송 대상·실제 발송·미발송·차감 포인트 상세 수치 제공',
+          '목록 화면 위에 오버레이 형태로 노출',
+        ],
+      },
+    ],
+  },
+  {
+    category: '기본설정',
+    screens: [
+      {
+        id: 'settings',
+        name: '기본설정',
+        href: '/promotion/settings',
+        description: '브랜드 메시지 발송을 위한 기초 환경을 설정하는 화면입니다. 발신번호 관리, 기본 설정(수신거부번호·카카오톡 채널), 캠페인 대상 제외 설정의 3개 섹션으로 구성됩니다.',
+        notes: [
+          '발신번호 관리: 신청·승인 상태 관리, 요청 내역 조회',
+          '기본 설정: 무료 수신거부번호(신규/직접입력), 카카오톡 채널 등록',
+          '수신거부 신규 선택 시 신청 버튼 노출',
+          '직접 입력 시 시스템 자동 연동 불가 안내 표시',
+          '대상자·상품 제외 설정: 캠페인에서 제외할 대상자/상품 지정',
+        ],
+      },
+      {
+        id: 'settings-complete',
+        name: '기본설정\n(등록 완료)',
+        href: '/promotion/settings-complete',
+        description: '발신번호 등록 및 카카오톡 채널 연동이 완료된 상태의 기본설정 화면입니다.',
+        notes: [
+          '발신번호 테이블: 등록된 번호와 승인 상태 표시',
+          '카카오톡 채널: "등록 완료" 배지로 상태 표현',
+          '변경 링크로 채널 수정 가능',
+        ],
+      },
+    ],
+  },
+];
+
+const ALL_SCREENS = SCREEN_GROUPS.flatMap((g) => g.screens);
+
 export default function ScreenIndex() {
-  const screens = [
-    {
-      category: '브랜드 메시지',
-      items: [
-        { name: '브랜드 메시지 목록', href: '/marketing/brand-message' },
-        { name: '브랜드 메시지 목록_캠페인이 등록되지 않은 경우', href: '/marketing/brand-message/empty' },
-        { name: '새 메시지 만들기', href: '/marketing/brand-message/create' },
-        { name: '새 메시지 만들기_기본 설정이 안된 경우', href: '/marketing/brand-message/create-no-settings' },
-        { name: '통계 팝업', href: '/marketing/brand-message/stats' },
-        { name: '기본설정', href: '/promotion/settings' },
-        { name: '기본설정_등록이 완료된 경우', href: '/promotion/settings-complete' },
-      ],
-    },
-  ];
+  const [selectedId, setSelectedId] = useState<string>(ALL_SCREENS[0].id);
+
+  const selected = ALL_SCREENS.find((s) => s.id === selectedId)!;
 
   return (
-    <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center p-8">
-      <div className="w-full max-w-lg">
-        <h1 className="mb-8 text-2xl font-black text-gray-900">화면 목록</h1>
-        <div className="space-y-6">
-          {screens.map((group) => (
-            <div key={group.category} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <p className="mb-4 text-xs font-bold uppercase tracking-widest text-[#4DB87A]">
+    <div className="flex min-h-screen bg-[#f8f8f8]">
+
+      {/* ── 좌측 화면 목록 ── */}
+      <aside className="w-72 shrink-0 border-r border-gray-200 bg-white">
+        <div className="border-b border-gray-100 px-5 py-5">
+          <h1 className="text-sm font-black uppercase tracking-widest text-gray-800">화면 목록</h1>
+          <p className="mt-0.5 text-xs text-gray-400">화면을 선택하면 설명을 확인할 수 있습니다.</p>
+        </div>
+        <nav className="py-3">
+          {SCREEN_GROUPS.map((group) => (
+            <div key={group.category} className="mb-2">
+              <p className="px-5 py-2 text-[10px] font-bold uppercase tracking-widest text-[#4DB87A]">
                 {group.category}
               </p>
-              <ul className="space-y-2">
-                {group.items.map((screen) => (
-                  <li key={screen.name}>
-                    <a
-                      href={screen.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3 text-sm font-semibold text-gray-800 transition-all hover:border-[#4DB87A]/30 hover:bg-[#f0faf5] hover:text-[#2a7a4f]"
-                    >
-                      {screen.name}
-                      <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
-                        <path d="M8.636 3.5a.5.5 0 00-.5-.5H1.5A1.5 1.5 0 000 4.5v10A1.5 1.5 0 001.5 16h10a1.5 1.5 0 001.5-1.5V7.864a.5.5 0 00-1 0V14.5a.5.5 0 01-.5.5h-10a.5.5 0 01-.5-.5v-10a.5.5 0 01.5-.5h6.636a.5.5 0 00.5-.5z" />
-                        <path d="M16 .5a.5.5 0 00-.5-.5h-5a.5.5 0 000 1h3.793L6.146 9.146a.5.5 0 10.708.708L15 1.707V5.5a.5.5 0 001 0v-5z" />
-                      </svg>
-                    </a>
-                  </li>
-                ))}
+              <ul>
+                {group.screens.map((screen) => {
+                  const isActive = screen.id === selectedId;
+                  return (
+                    <li key={screen.id}>
+                      <button
+                        onClick={() => setSelectedId(screen.id)}
+                        className={`relative w-full px-5 py-2.5 text-left text-sm transition-all ${
+                          isActive
+                            ? 'bg-[#f0faf5] font-semibold text-[#2a7a4f]'
+                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                        }`}
+                      >
+                        {isActive && (
+                          <span className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r-full bg-[#4DB87A]" />
+                        )}
+                        <span className="whitespace-pre-line leading-snug">{screen.name}</span>
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
+        </nav>
+      </aside>
+
+      {/* ── 우측 화면 설명 ── */}
+      <main className="flex flex-1 items-start justify-center p-10">
+        <div className="w-full max-w-xl">
+
+          {/* 화면명 + 열기 버튼 */}
+          <div className="mb-6 flex items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#4DB87A]">
+                {SCREEN_GROUPS.find((g) => g.screens.some((s) => s.id === selectedId))?.category}
+              </p>
+              <h2 className="mt-1 text-xl font-black text-gray-900 whitespace-pre-line leading-snug">
+                {selected.name}
+              </h2>
+            </div>
+            <a
+              href={selected.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex shrink-0 items-center gap-1.5 rounded-xl bg-[#4DB87A] px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-[#3da869] active:scale-95 transition-all"
+            >
+              <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5">
+                <path d="M8.636 3.5a.5.5 0 00-.5-.5H1.5A1.5 1.5 0 000 4.5v10A1.5 1.5 0 001.5 16h10a1.5 1.5 0 001.5-1.5V7.864a.5.5 0 00-1 0V14.5a.5.5 0 01-.5.5h-10a.5.5 0 01-.5-.5v-10a.5.5 0 01.5-.5h6.636a.5.5 0 00.5-.5z" />
+                <path d="M16 .5a.5.5 0 00-.5-.5h-5a.5.5 0 000 1h3.793L6.146 9.146a.5.5 0 10.708.708L15 1.707V5.5a.5.5 0 001 0v-5z" />
+              </svg>
+              새 탭에서 열기
+            </a>
+          </div>
+
+          {/* 설명 */}
+          <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+            <p className="text-sm leading-relaxed text-gray-600">{selected.description}</p>
+
+            {selected.notes.length > 0 && (
+              <div className="mt-5 border-t border-gray-100 pt-5">
+                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">주요 기능 및 정책</p>
+                <ul className="space-y-2">
+                  {selected.notes.map((note, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#4DB87A]/10 text-[9px] font-black text-[#4DB87A]">
+                        {i + 1}
+                      </span>
+                      {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* URL 경로 표시 */}
+          <div className="mt-4 flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3">
+            <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 shrink-0 text-gray-400">
+              <path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" />
+            </svg>
+            <code className="text-xs text-gray-500">{selected.href}</code>
+          </div>
+
         </div>
-      </div>
+      </main>
+
     </div>
   );
 }
