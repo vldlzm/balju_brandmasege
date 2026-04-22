@@ -17,6 +17,16 @@ const LNB_SECTIONS = [
         ),
       },
       {
+        label: '포인트 충전/사용',
+        href: '/promotion/points',
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+        ),
+      },
+      {
         label: '기본설정',
         href: '/promotion/settings',
         icon: (
@@ -35,6 +45,7 @@ export default function LNB() {
 
   const isActive = (href: string) => {
     if (href === '/marketing/brand-message') return pathname.startsWith('/marketing');
+    if (href === '/promotion/points') return pathname === '/promotion/points';
     return pathname.startsWith(href);
   };
 
