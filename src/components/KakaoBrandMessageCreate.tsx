@@ -114,11 +114,8 @@ const MESSAGE_TYPE_OPTIONS = [
 
 function Bubble({ n }: { n: number }) {
   return (
-    <div className="absolute -top-4 -right-3 z-10 flex flex-col items-center">
-      <div className="flex min-w-[26px] items-center justify-center rounded-md bg-red-500 px-2 py-1 text-[11px] font-black text-white shadow-md">
-        {n}
-      </div>
-      <div className="h-0 w-0 border-x-[5px] border-t-[6px] border-x-transparent border-t-red-500" />
+    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
+      {n}
     </div>
   );
 }
@@ -475,7 +472,7 @@ export default function KakaoBrandMessageCreate() {
       </div>
 
       <div className="mx-auto max-w-[1440px] p-6">
-        <div className="grid grid-cols-[1fr_300px_260px] gap-6 items-start">
+        <div className="grid grid-cols-[1fr_300px] gap-6 items-start">
 
           {/* ───── 좌측 폼 영역 ───── */}
           <div className="space-y-5">
@@ -1427,61 +1424,6 @@ export default function KakaoBrandMessageCreate() {
             </div>
           </div>
 
-          {/* ───── 우측 설명 패널 ───── */}
-          <div className="sticky top-[73px] h-fit">
-            <div className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100 overflow-hidden">
-              <div className="border-b border-gray-100 px-4 py-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">항목 설명</h3>
-              </div>
-              <div className="divide-y divide-gray-50">
-                {[
-                  {
-                    no: 1,
-                    title: '캠페인명',
-                    desc: '내부 관리 목적으로만 사용됩니다. 수신자에게는 노출되지 않으며 최대 50자까지 입력 가능합니다. 동일한 캠페인명은 사용할 수 없습니다.',
-                  },
-                  {
-                    no: 2,
-                    title: '메시지 종류',
-                    desc: '와이드 이미지: 대표 이미지+텍스트 조합\n와이드 리스트: 3~5개 상품 목록형\n캐러셀 피드: 슬라이드형 다중 콘텐츠',
-                  },
-                  {
-                    no: 3,
-                    title: '수신 파트너',
-                    desc: '메시지를 받을 셀러를 선택합니다. 복수 선택 가능하며 수신자 1인당 *P(VAT 별도)가 차감됩니다.',
-                  },
-                  {
-                    no: 4,
-                    title: '버튼',
-                    desc: '최대 2개까지 추가 가능합니다. 버튼 텍스트는 8자 이내, 연결 URL은 필수 입력 항목입니다.',
-                  },
-                  {
-                    no: 5,
-                    title: '발송 설정',
-                    desc: '발송 예약 일시를 설정합니다. 예약 후에도 발송 전이라면 취소할 수 있습니다. ※ 당일 발송 가능 여부 확인 필요',
-                  },
-                  {
-                    no: 6,
-                    title: '예상 지출 포인트',
-                    desc: '수신자 수 × *P로 자동 계산됩니다. 보유 포인트가 부족한 경우 발송이 제한되며 사전 충전이 필요합니다.',
-                  },
-                ].map((item) => (
-                  <div key={item.no} className="flex gap-3 px-4 py-3">
-                    <div className="mt-0.5 shrink-0 flex flex-col items-center">
-                      <div className="flex min-w-[20px] items-center justify-center rounded bg-red-500 px-1.5 py-0.5 text-[10px] font-black text-white">
-                        {item.no}
-                      </div>
-                      <div className="h-0 w-0 border-x-[4px] border-t-[4px] border-x-transparent border-t-red-500" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-bold text-gray-700">{item.title}</p>
-                      <p className="mt-0.5 text-[11px] leading-relaxed text-gray-400 whitespace-pre-line">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
 
         </div>
       </div>
