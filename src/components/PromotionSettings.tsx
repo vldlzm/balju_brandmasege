@@ -302,7 +302,7 @@ export default function PromotionSettings() {
                         className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                       />
                       <p className="text-xs text-red-500 leading-relaxed max-w-md">
-                        ⓘ 직접 입력은 고객의 수신 거부 요청이 CRM시스템과 자동으로 연동되지 않습니다. 수신 거부 대상자는 '캠페인 대상자 제외 설정'을 통해 수동으로 등록해 주세요.
+                        ⓘ 직접 입력은 고객의 수신 거부 요청이 CRM시스템과 자동으로 연동되지 않습니다. 수신 거부 대상자는 &apos;캠페인 대상자 제외 설정&apos;을 통해 수동으로 등록해 주세요.
                       </p>
                     </div>
                   )}
