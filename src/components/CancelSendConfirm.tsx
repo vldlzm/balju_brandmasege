@@ -40,7 +40,7 @@ export default function CancelSendConfirm({ points, onConfirm, onClose }: Props)
               <p className="text-xs text-gray-500 leading-relaxed">
                 취소 처리 시 차감 예정이었던 포인트{' '}
                 <span className="font-bold text-[#4DB87A]">{points.toLocaleString()}P</span>는
-                즉시 환원되며,<br />이 작업은 되돌릴 수 없습니다.
+                환원되며,<br />이 작업은 되돌릴 수 없습니다.
               </p>
             </div>
           </div>
