@@ -51,7 +51,7 @@ export default function PartnerSelectPopup({ onClose }: Props) {
 
           {/* 검색 필터 */}
           <div className="flex flex-wrap items-center gap-4 rounded-xl bg-gray-50 px-5 py-4">
-            <span className="text-sm font-semibold text-gray-600">대상자</span>
+            <span className="text-sm font-semibold text-gray-600">구분</span>
             <div className="flex items-center gap-3">
               {(['전체', '일반', '제외'] as const).map((t) => (
                 <label key={t} className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-600">
@@ -83,11 +83,11 @@ export default function PartnerSelectPopup({ onClose }: Props) {
           {/* 리스트 헤더 */}
           <div className="flex items-center justify-between">
             <p className="text-sm font-bold text-gray-900">
-              캠페인 대상자 리스트
+              파트너 리스트
               <span className="ml-2 text-xs font-normal text-gray-400">전체 {filtered.length}명 (페이지 1/{Math.max(1, Math.ceil(filtered.length / 100))})</span>
             </p>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500">선택한 캠페인 대상자</span>
+              <span className="text-xs text-gray-500">선택한 파트너</span>
               <button onClick={handleExclude} className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 transition-colors">제외</button>
               <button onClick={handleRestore} className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors">복원</button>
               <select className="rounded-lg border border-gray-300 px-2 py-1.5 text-xs text-gray-600 focus:outline-none">
