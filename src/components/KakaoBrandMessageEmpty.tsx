@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import ChargePopup from './ChargePopup';
 
 type TabType = '발송 예정' | '발송 완료';
 
@@ -15,6 +16,7 @@ function Bubble({ n }: { n: number }) {
 
 export default function KakaoBrandMessageEmpty() {
   const [activeTab, setActiveTab] = useState<TabType>('발송 예정');
+  const [showCharge, setShowCharge] = useState(false);
   const [periodFilter, setPeriodFilter] = useState('최근 1개월');
   const [formatFilter, setFormatFilter] = useState('전체');
   const [search, setSearch] = useState('');
@@ -26,6 +28,7 @@ export default function KakaoBrandMessageEmpty() {
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
+      {showCharge && <ChargePopup onClose={() => setShowCharge(false)} />}
 
       {/* ── 상단 헤더 ── */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -43,10 +46,20 @@ export default function KakaoBrandMessageEmpty() {
             { label: '이번달 발송 완료', value: '0건', sub: '전월 대비 0건', color: 'text-[#4DB87A]' },
             { label: '발송 예정', value: '0건', sub: '발송 예정 없음', color: 'text-blue-500' },
             { label: '이번달 총 수신 인원', value: '0명', sub: '발송 완료 기준', color: 'text-purple-500' },
-            { label: '잔여 포인트', value: '0P', sub: '포인트를 충전해 주세요', color: 'text-amber-500' },
+            { label: '잔여 포인트', value: '0P', sub: '포인트를 충전해 주세요', color: 'text-amber-500', charge: true },
           ].map((stat) => (
             <div key={stat.label} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
-              <p className="text-xs font-medium text-gray-400">{stat.label}</p>
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-medium text-gray-400">{stat.label}</p>
+                {'charge' in stat && stat.charge && (
+                  <button
+                    onClick={() => setShowCharge(true)}
+                    className="rounded-lg bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-900 hover:bg-amber-300 transition-colors"
+                  >
+                    충전하기
+                  </button>
+                )}
+              </div>
               <p className={`mt-1.5 text-2xl font-black tabular-nums ${stat.color}`}>{stat.value}</p>
               <p className="mt-1 text-xs text-gray-400">{stat.sub}</p>
             </div>
