@@ -29,7 +29,7 @@ export default function KakaoBrandMessageCreateNoSettings() {
       </div>
 
       {/* 본문 (흐리게) */}
-      <div className="relative overflow-visible pointer-events-none select-none opacity-30 blur-[2px]">
+      <div className="relative overflow-visible pointer-events-none select-none opacity-60 blur-[1px]">
         <Bubble n={1} />
         <div className="mx-auto max-w-[1440px] p-6">
           <div className="grid grid-cols-[1fr_340px] gap-6">
