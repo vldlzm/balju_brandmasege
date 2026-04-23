@@ -13,7 +13,14 @@ interface Product {
 }
 
 const DEMO_PRODUCTS: Product[] = [
-  { id: 'p1', processedAt: '-', name: '세번째 상품', code: 'SHY54961811', status: '제외' },
+  { id: 'p1',  processedAt: '-',          name: '나이키 에어맥스 270 React',   code: 'NK27001',    status: '일반' },
+  { id: 'p2',  processedAt: '2025.03.10', name: '아디다스 울트라부스트 22',     code: 'AD22002',    status: '제외' },
+  { id: 'p3',  processedAt: '-',          name: '뉴발란스 574 클래식',          code: 'NB57403',    status: '일반' },
+  { id: 'p4',  processedAt: '2025.02.20', name: '컨버스 척테일러 올스타',        code: 'CV01004',    status: '제외' },
+  { id: 'p5',  processedAt: '-',          name: '반스 올드스쿨 스니커즈',        code: 'VN00005',    status: '일반' },
+  { id: 'p6',  processedAt: '-',          name: '살로몬 XT-6 트레일',           code: 'SL00006',    status: '일반' },
+  { id: 'p7',  processedAt: '2025.04.01', name: '호카 클리프턴 9',              code: 'HK00907',    status: '제외' },
+  { id: 'p8',  processedAt: '-',          name: '아식스 젤-카야노 30',           code: 'AS30008',    status: '일반' },
 ];
 
 interface Props {
@@ -95,11 +102,11 @@ export default function ProductSelectPopup({ onClose }: Props) {
           {/* 리스트 헤더 */}
           <div className="flex items-center justify-between">
             <p className="text-sm font-bold text-gray-900">
-              캠페인 대상 상품 리스트
-              <span className="ml-2 text-xs font-normal text-gray-400">전체 {filtered.length}개 (페이지 1/{Math.max(1, Math.ceil(filtered.length / 100))})</span>
+              상품 리스트
+              <span className="ml-2 text-xs font-normal text-gray-400">전체 {filtered.length}개</span>
             </p>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500">선택한 캠페인 대상 상품</span>
+              <span className="text-xs text-gray-500">선택한 상품</span>
               <button onClick={handleExclude} className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 transition-colors">제외</button>
               <button onClick={handleRestore} className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors">복원</button>
               <select className="rounded-lg border border-gray-300 px-2 py-1.5 text-xs text-gray-600 focus:outline-none">
@@ -147,12 +154,21 @@ export default function ProductSelectPopup({ onClose }: Props) {
                       </td>
                       <td className="px-4 py-3 text-center text-gray-500">{p.code}</td>
                       <td className="px-4 py-3 text-center">
-                        <button
-                          onClick={() => setData((prev) => prev.map((x): Product => x.id === p.id ? { ...x, status: x.status === '제외' ? '일반' : '제외' } : x))}
-                          className={`rounded-md px-3 py-1.5 text-xs font-bold text-white transition-colors ${p.status === '제외' ? 'bg-red-500 hover:bg-red-600' : 'bg-[#6b7280] hover:bg-[#4b5563]'}`}
-                        >
-                          {p.status === '제외' ? '제외' : '복원'}
-                        </button>
+                        {p.status === '일반' ? (
+                          <button
+                            onClick={() => setData((prev) => prev.map((x): Product => x.id === p.id ? { ...x, status: '제외' } : x))}
+                            className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 transition-colors"
+                          >
+                            제외
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => setData((prev) => prev.map((x): Product => x.id === p.id ? { ...x, status: '일반' } : x))}
+                            className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors"
+                          >
+                            복원
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))
