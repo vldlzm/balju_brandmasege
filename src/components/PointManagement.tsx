@@ -13,20 +13,20 @@ const CHARGE_OPTIONS = [
   { won: 1000000, points: 1300000, bonus: '30% 추가지급' },
 ];
 const COMBINED_HISTORY = [
-  { id: 'u2',  date: '2025.04.20 14:00', type: '사용' as const, description: '5월 황금연휴 특별 기획전 참여 셀러 모집', points: -1440 },
+  { id: 'u2',  date: '2025.04.20 14:00', type: '사용' as const, description: '5월 황금연휴 특별 기획전 참여 파트너 모집', points: -1440 },
   { id: 'u1',  date: '2025.04.18 10:00', type: '사용' as const, description: '봄 시즌 신상품 안내 - 유아동 의류 15종 입고', points: -4260 },
   { id: 'c1',  date: '2025.04.15 14:32', type: '충전' as const, description: '신용카드', points: 50000 },
   { id: 'u3',  date: '2025.03.28 10:00', type: '사용' as const, description: '3월 봄 맞이 유아동 의류 신규 입고 안내', points: -4260 },
   { id: 'c2',  date: '2025.03.28 10:11', type: '충전' as const, description: '신용카드', points: 100000 },
-  { id: 'u4',  date: '2025.03.20 15:00', type: '사용' as const, description: '어버이날 특별 기획전 셀러 모집 안내', points: -2340 },
+  { id: 'u4',  date: '2025.03.20 15:00', type: '사용' as const, description: '어버이날 특별 기획전 파트너 모집 안내', points: -2340 },
   { id: 'u5',  date: '2025.03.15 11:00', type: '사용' as const, description: '가정의 달 5월 전품목 프로모션 사전 안내', points: -4260 },
   { id: 'c3',  date: '2025.03.10 09:45', type: '충전' as const, description: '계좌이체', points: 30000 },
   { id: 'c4',  date: '2025.02.20 16:00', type: '충전' as const, description: '신용카드', points: 50000 },
-  { id: 'u6',  date: '2025.02.15 09:00', type: '사용' as const, description: '2월 발렌타인 특집 기획전 셀러 모집', points: -1440 },
+  { id: 'u6',  date: '2025.02.15 09:00', type: '사용' as const, description: '2월 발렌타인 특집 기획전 파트너 모집', points: -1440 },
   { id: 'c5',  date: '2025.02.10 11:30', type: '충전' as const, description: '신용카드', points: 300000 },
   { id: 'u7',  date: '2025.01.25 13:00', type: '사용' as const, description: '1월 신학기 준비 유아동 의류 안내', points: -4260 },
   { id: 'c6',  date: '2025.01.20 10:00', type: '충전' as const, description: '계좌이체', points: 100000 },
-  { id: 'u8',  date: '2025.01.10 15:00', type: '사용' as const, description: '설날 선물세트 기획전 셀러 모집 안내', points: -2340 },
+  { id: 'u8',  date: '2025.01.10 15:00', type: '사용' as const, description: '설날 선물세트 기획전 파트너 모집 안내', points: -2340 },
   { id: 'c7',  date: '2024.12.30 09:00', type: '충전' as const, description: '신용카드', points: 50000 },
 ];
 

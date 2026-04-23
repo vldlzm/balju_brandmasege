@@ -78,9 +78,9 @@ export default function StatsPopup({ onClose }: StatsPopupProps) {
                 { label: '오픈율 (%)',                  value: `${STAT_DATA.openRate}%` },
                 { label: '버튼 클릭 수',               value: `${STAT_DATA.btnClickCount.toLocaleString()}회` },
                 { label: '버튼 클릭률 (%)',            value: `${STAT_DATA.btnClickRate}%` },
-                { label: '메시지 클릭 셀러 수 (유니크)', value: `${STAT_DATA.uniqueClickCount.toLocaleString()}명` },
+                { label: '메시지 클릭 파트너 수 (유니크)', value: `${STAT_DATA.uniqueClickCount.toLocaleString()}명` },
                 { label: '상품 상세 페이지 방문 수',   value: `${STAT_DATA.productPageVisit.toLocaleString()}회` },
-                { label: '상품 상세 방문 셀러 수',     value: `${STAT_DATA.productPageSeller.toLocaleString()}명` },
+                { label: '상품 상세 방문 파트너 수',     value: `${STAT_DATA.productPageSeller.toLocaleString()}명` },
                 { label: '이미지 내려받기 클릭 수',    value: `${STAT_DATA.imageDownload.toLocaleString()}회` },
                 { label: '차감 포인트',                value: `${STAT_DATA.points.toLocaleString()}P` },
               ].map((row) => (

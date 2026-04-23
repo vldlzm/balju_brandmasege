@@ -290,14 +290,14 @@ export default function KakaoBrandMessageCreate() {
     {showChargePopup && <ChargePopup onClose={() => setShowChargePopup(false)} />}
     {showTestSendPopup && <TestSendPopup onClose={() => setShowTestSendPopup(false)} />}
 
-    {/* 셀러 선택 모달 */}
+    {/* 파트너 선택 모달 */}
     {showSellerModal && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
         <div className="relative flex w-[680px] max-h-[80vh] flex-col rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200">
           {/* 모달 헤더 */}
           <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
             <div>
-              <h2 className="text-base font-bold text-gray-900">셀러 선택</h2>
+              <h2 className="text-base font-bold text-gray-900">파트너 선택</h2>
               <p className="mt-0.5 text-xs text-gray-400">발송할 수신 파트너를 선택하세요</p>
             </div>
             <div className="flex items-center gap-2">
@@ -332,7 +332,7 @@ export default function KakaoBrandMessageCreate() {
                 type="text"
                 value={sellerSearch}
                 onChange={(e) => setSellerSearch(e.target.value)}
-                placeholder="셀러명 검색"
+                placeholder="파트너명 검색"
                 className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all"
               />
             </div>
@@ -352,7 +352,7 @@ export default function KakaoBrandMessageCreate() {
                     />
                   </th>
                   <th className="w-10 px-3 py-3 text-center text-xs font-semibold text-gray-400">NO</th>
-                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-400">셀러명</th>
+                  <th className="px-3 py-3 text-left text-xs font-semibold text-gray-400">파트너명</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -373,12 +373,12 @@ export default function KakaoBrandMessageCreate() {
                         </div>
                         <div className="space-y-1">
                           <p className="text-sm font-semibold text-gray-500">
-                            {sellerSearch ? '검색 결과가 없습니다.' : '등록된 셀러가 없습니다.'}
+                            {sellerSearch ? '검색 결과가 없습니다.' : '등록된 파트너가 없습니다.'}
                           </p>
                           <p className="text-xs text-gray-400">
                             {sellerSearch
-                              ? `'${sellerSearch}'에 해당하는 셀러를 찾을 수 없습니다.`
-                              : '파트너로 등록된 셀러가 아직 없습니다.'}
+                              ? `'${sellerSearch}'에 해당하는 파트너를 찾을 수 없습니다.`
+                              : '등록된 파트너가 아직 없습니다.'}
                           </p>
                         </div>
                         {sellerSearch && (
