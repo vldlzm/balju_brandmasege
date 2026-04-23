@@ -5,6 +5,7 @@ import Link from 'next/link';
 import StatsPopup from '@/components/StatsPopup';
 import ChargePopup from '@/components/ChargePopup';
 import TestSendPopup from '@/components/TestSendPopup';
+import CampaignDetailPopup from '@/components/CampaignDetailPopup';
 
 type TabType = '발송 예정' | '발송 완료';
 type Category = '신상품' | '이벤트' | '가격할인';
@@ -196,6 +197,8 @@ export default function KakaoBrandMessageList() {
   const [showStats, setShowStats] = useState(false);
   const [showCharge, setShowCharge] = useState(false);
   const [showTestSend, setShowTestSend] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState<ScheduledMessage | null>(null);
+  const [scheduledList, setScheduledList] = useState(SCHEDULED);
 
   const tabItems: { label: TabType; count: number }[] = [
     { label: '발송 완료', count: 18 },
@@ -329,8 +332,12 @@ export default function KakaoBrandMessageList() {
             {/* 발송 예정 */}
             {activeTab === '발송 예정' && (
               <>
-                {SCHEDULED.map((msg) => (
-                  <article key={msg.id} className="group rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+                {scheduledList.map((msg) => (
+                  <article
+                    key={msg.id}
+                    onClick={() => setSelectedCampaign(msg)}
+                    className="group cursor-pointer rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md hover:border-gray-200"
+                  >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex flex-1 flex-col gap-3">
                         {/* 상단 메타 */}
@@ -368,14 +375,17 @@ export default function KakaoBrandMessageList() {
                       </div>
 
                       {/* 액션 버튼 */}
-                      <div className="flex shrink-0 items-center gap-2">
+                      <div className="flex shrink-0 items-center gap-2" onClick={(e) => e.stopPropagation()}>
                         <button
                           onClick={() => setShowTestSend(true)}
                           className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
                         >
                           테스트 발송
                         </button>
-                        <button className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors">
+                        <button
+                          onClick={() => { setSelectedCampaign(msg); }}
+                          className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors"
+                        >
                           발송취소
                         </button>
                       </div>
@@ -509,6 +519,13 @@ export default function KakaoBrandMessageList() {
       {showStats && <StatsPopup onClose={() => setShowStats(false)} />}
       {showCharge && <ChargePopup onClose={() => setShowCharge(false)} />}
       {showTestSend && <TestSendPopup onClose={() => setShowTestSend(false)} />}
+      {selectedCampaign && (
+        <CampaignDetailPopup
+          campaign={selectedCampaign}
+          onClose={() => setSelectedCampaign(null)}
+          onCancel={(id) => setScheduledList((prev) => prev.filter((m) => m.id !== id))}
+        />
+      )}
     </div>
   );
 }
