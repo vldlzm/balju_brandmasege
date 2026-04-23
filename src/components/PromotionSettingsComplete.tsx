@@ -4,6 +4,7 @@ import { useState } from 'react';
 import SenderNumberPopup from './SenderNumberPopup';
 import PartnerSelectPopup from './PartnerSelectPopup';
 import ProductSelectPopup from './ProductSelectPopup';
+import KakaoChannelPopup from './KakaoChannelPopup';
 
 function Bubble({ n }: { n: number }) {
   return (
@@ -21,6 +22,7 @@ export default function PromotionSettingsComplete() {
   const [showSenderPopup, setShowSenderPopup] = useState(false);
   const [showPartnerPopup, setShowPartnerPopup] = useState(false);
   const [showProductPopup, setShowProductPopup] = useState(false);
+  const [showKakaoPopup, setShowKakaoPopup] = useState(false);
 
   const senders = [
     { id: 's1', name: '발주모아 파트너스', number: '010-3327-1103', enabled: true, isRepresentative: true },
@@ -35,6 +37,7 @@ export default function PromotionSettingsComplete() {
       {showSenderPopup && <SenderNumberPopup onClose={() => setShowSenderPopup(false)} />}
       {showPartnerPopup && <PartnerSelectPopup onClose={() => setShowPartnerPopup(false)} />}
       {showProductPopup && <ProductSelectPopup onClose={() => setShowProductPopup(false)} />}
+      {showKakaoPopup && <KakaoChannelPopup onClose={() => setShowKakaoPopup(false)} />}
 
       {/* 페이지 헤더 */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -218,7 +221,7 @@ export default function PromotionSettingsComplete() {
                   </div>
                   <div className="relative overflow-visible">
                     <Bubble n={3} />
-                    <button className="text-xs text-gray-400 underline hover:text-gray-600 transition-colors">변경</button>
+                    <button onClick={() => setShowKakaoPopup(true)} className="text-xs text-gray-400 underline hover:text-gray-600 transition-colors">변경</button>
                   </div>
                 </div>
               </div>

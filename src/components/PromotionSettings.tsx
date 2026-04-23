@@ -4,6 +4,7 @@ import { useState } from 'react';
 import SenderNumberPopup from './SenderNumberPopup';
 import PartnerSelectPopup from './PartnerSelectPopup';
 import ProductSelectPopup from './ProductSelectPopup';
+import KakaoChannelPopup from './KakaoChannelPopup';
 
 interface SenderNumber {
   id: string;
@@ -43,12 +44,14 @@ export default function PromotionSettings() {
   const [showSenderPopup, setShowSenderPopup] = useState(false);
   const [showPartnerPopup, setShowPartnerPopup] = useState(false);
   const [showProductPopup, setShowProductPopup] = useState(false);
+  const [showKakaoPopup, setShowKakaoPopup] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
       {showSenderPopup && <SenderNumberPopup onClose={() => setShowSenderPopup(false)} />}
       {showPartnerPopup && <PartnerSelectPopup onClose={() => setShowPartnerPopup(false)} />}
       {showProductPopup && <ProductSelectPopup onClose={() => setShowProductPopup(false)} />}
+      {showKakaoPopup && <KakaoChannelPopup onClose={() => setShowKakaoPopup(false)} />}
 
       {/* 페이지 헤더 */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -277,7 +280,7 @@ export default function PromotionSettings() {
                   <span className="text-[#4DB87A]">✓</span> 카카오톡 채널
                 </span>
                 <div className="flex flex-wrap items-center gap-3">
-                  <button className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
+                  <button onClick={() => setShowKakaoPopup(true)} className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
                     등록
                     <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
                       <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
