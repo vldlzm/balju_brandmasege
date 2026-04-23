@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import ChargePopup from './ChargePopup';
+import TestSendPopup from './TestSendPopup';
 
 type MessageType = 'wide-image' | 'wide-list' | 'carousel';
 type ContentCategory = '신상품' | '이벤트' | '가격할인';
@@ -131,6 +133,8 @@ export default function KakaoBrandMessageCreate() {
   const [sellerSearch, setSellerSearch] = useState('');
   const [checkedSellers, setCheckedSellers] = useState<number[]>([]);
   const [showProductModal, setShowProductModal] = useState(false);
+  const [showChargePopup, setShowChargePopup] = useState(false);
+  const [showTestSendPopup, setShowTestSendPopup] = useState(false);
   const [productSearch, setProductSearch] = useState('');
   const [checkedProduct, setCheckedProduct] = useState<number | null>(null);
   const [productModalTarget, setProductModalTarget] = useState<string | number>('wide-image');
@@ -282,6 +286,9 @@ export default function KakaoBrandMessageCreate() {
 
   return (
     <>
+    {showChargePopup && <ChargePopup onClose={() => setShowChargePopup(false)} />}
+    {showTestSendPopup && <TestSendPopup onClose={() => setShowTestSendPopup(false)} />}
+
     {/* 셀러 선택 모달 */}
     {showSellerModal && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -1112,7 +1119,10 @@ export default function KakaoBrandMessageCreate() {
                     </p>
                   </div>
                 </div>
-                <button className="shrink-0 rounded-xl border-2 border-[#4DB87A] px-6 py-2.5 text-sm font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all">
+                <button
+                  onClick={() => setShowChargePopup(true)}
+                  className="shrink-0 rounded-xl border-2 border-[#4DB87A] px-6 py-2.5 text-sm font-semibold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
+                >
                   충전하기
                 </button>
               </div>
@@ -1124,7 +1134,10 @@ export default function KakaoBrandMessageCreate() {
                 취소
               </Link>
               <div className="flex items-center gap-3">
-                <button className="rounded-xl border-2 border-[#4DB87A] px-8 py-3.5 text-base font-bold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all">
+                <button
+                  onClick={() => setShowTestSendPopup(true)}
+                  className="rounded-xl border-2 border-[#4DB87A] px-8 py-3.5 text-base font-bold text-[#4DB87A] hover:bg-[#f0f9f4] active:scale-95 transition-all"
+                >
                   테스트 발송
                 </button>
                 <button className="rounded-xl bg-[#4DB87A] px-12 py-3.5 text-base font-bold text-white shadow-md shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
