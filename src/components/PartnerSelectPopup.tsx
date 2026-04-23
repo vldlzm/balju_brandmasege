@@ -15,16 +15,16 @@ interface Partner {
 }
 
 const DEMO_PARTNERS: Partner[] = [
-  { id: 'p1',  processedAt: '-',          name: '김민준', userId: 'minjun_kim',   phone: '010-1234-5678', memo: '', status: '일반' },
-  { id: 'p2',  processedAt: '2025.03.10', name: '이서연', userId: 'seoyeon_lee',  phone: '010-2345-6789', memo: '', status: '제외' },
-  { id: 'p3',  processedAt: '-',          name: '박지호', userId: 'jiho_park',    phone: '010-3456-7890', memo: '', status: '일반' },
-  { id: 'p4',  processedAt: '2025.02.20', name: '최수아', userId: 'sua_choi',     phone: '010-4567-8901', memo: '', status: '제외' },
-  { id: 'p5',  processedAt: '-',          name: '정하준', userId: 'hajun_jung',   phone: '010-5678-9012', memo: '', status: '일반' },
-  { id: 'p6',  processedAt: '-',          name: '강나은', userId: 'naeun_kang',   phone: '010-6789-0123', memo: '', status: '일반' },
-  { id: 'p7',  processedAt: '2025.04.01', name: '윤도현', userId: 'dohyun_yoon',  phone: '010-7890-1234', memo: '', status: '제외' },
-  { id: 'p8',  processedAt: '-',          name: '임소희', userId: 'sohee_lim',    phone: '010-8901-2345', memo: '', status: '일반' },
-  { id: 'p9',  processedAt: '-',          name: '한지우', userId: 'jiwoo_han',    phone: '010-9012-3456', memo: '', status: '일반' },
-  { id: 'p10', processedAt: '2025.01.15', name: '오채원', userId: 'chaewon_oh',   phone: '010-0123-4567', memo: '', status: '제외' },
+  { id: 'p1',  processedAt: '-',          name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '일반' },
+  { id: 'p2',  processedAt: '2025.03.10', name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '제외' },
+  { id: 'p3',  processedAt: '-',          name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '일반' },
+  { id: 'p4',  processedAt: '2025.02.20', name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '제외' },
+  { id: 'p5',  processedAt: '-',          name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '일반' },
+  { id: 'p6',  processedAt: '-',          name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '일반' },
+  { id: 'p7',  processedAt: '2025.04.01', name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '제외' },
+  { id: 'p8',  processedAt: '-',          name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '일반' },
+  { id: 'p9',  processedAt: '-',          name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '일반' },
+  { id: 'p10', processedAt: '2025.01.15', name: '홍길동', userId: 'abc123', phone: '010-1234-1234', memo: '', status: '제외' },
 ];
 
 interface Props {
