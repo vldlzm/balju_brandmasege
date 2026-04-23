@@ -5,7 +5,7 @@ import Link from 'next/link';
 import StatsPopup from '@/components/StatsPopup';
 import ChargePopup from '@/components/ChargePopup';
 import TestSendPopup from '@/components/TestSendPopup';
-import CampaignDetailPopup from '@/components/CampaignDetailPopup';
+import KakaoBrandMessageDetail from '@/components/KakaoBrandMessageDetail';
 
 type TabType = '발송 예정' | '발송 완료';
 type Category = '신상품' | '이벤트' | '가격할인';
@@ -520,7 +520,7 @@ export default function KakaoBrandMessageList() {
       {showCharge && <ChargePopup onClose={() => setShowCharge(false)} />}
       {showTestSend && <TestSendPopup onClose={() => setShowTestSend(false)} />}
       {selectedCampaign && (
-        <CampaignDetailPopup
+        <KakaoBrandMessageDetail
           campaign={selectedCampaign}
           onClose={() => setSelectedCampaign(null)}
           onCancel={(id) => setScheduledList((prev) => prev.filter((m) => m.id !== id))}
