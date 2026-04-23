@@ -20,10 +20,21 @@ interface Props {
   onCancel: (id: string) => void;
 }
 
-const FORMAT_ICON: Record<string, string> = {
+const CarouselSVG = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="inline h-4 w-4">
+    <rect x="1" y="6" width="6" height="12" rx="1.5" strokeOpacity={0.45} />
+    <rect x="8" y="4" width="8" height="16" rx="2" />
+    <line x1="10" y1="9" x2="14" y2="9" />
+    <line x1="10" y1="12" x2="14" y2="12" />
+    <line x1="10" y1="15" x2="14" y2="15" />
+    <rect x="17" y="6" width="6" height="12" rx="1.5" strokeOpacity={0.45} />
+  </svg>
+);
+
+const FORMAT_ICON: Record<string, React.ReactNode> = {
   '와이드 이미지': '🖼',
   '와이드 리스트': '📋',
-  '캐러셀 피드': '🎠',
+  '캐러셀 피드': <CarouselSVG />,
 };
 
 const CATEGORY_STYLE: Record<string, string> = {

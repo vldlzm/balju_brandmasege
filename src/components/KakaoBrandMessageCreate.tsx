@@ -106,9 +106,13 @@ const MESSAGE_TYPE_OPTIONS = [
     label: '캐러셀 피드',
     desc: '슬라이드 형태로 여러 콘텐츠',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" stroke="currentColor" strokeWidth={1.5}>
-        <rect x="5" y="4" width="14" height="16" rx="2" />
-        <path d="M1 8h2M21 8h2M1 16h2M21 16h2" strokeLinecap="round" />
+      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="1" y="6" width="6" height="12" rx="1.5" strokeOpacity={0.45} />
+        <rect x="8" y="4" width="8" height="16" rx="2" />
+        <line x1="10" y1="9" x2="14" y2="9" />
+        <line x1="10" y1="12" x2="14" y2="12" />
+        <line x1="10" y1="15" x2="14" y2="15" />
+        <rect x="17" y="6" width="6" height="12" rx="1.5" strokeOpacity={0.45} />
       </svg>
     ),
   },
