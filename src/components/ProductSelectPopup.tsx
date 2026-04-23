@@ -58,7 +58,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
 
         {/* 헤더 */}
         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 shrink-0">
-          <h2 className="text-base font-bold text-gray-900">상품 선택</h2>
+          <h2 className="text-base font-bold text-gray-900">상품 제외 선택</h2>
           <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100">
             <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
               <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L8 6.586l2.293-2.293a1 1 0 111.414 1.414L9.414 8l2.293 2.293a1 1 0 01-1.414 1.414L8 9.414l-2.293 2.293a1 1 0 01-1.414-1.414L6.586 8 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />

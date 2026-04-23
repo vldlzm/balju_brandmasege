@@ -251,7 +251,7 @@ export default function PromotionSettingsComplete() {
             <div className="flex items-center gap-6 py-5">
               <span className="w-44 shrink-0 text-sm font-medium text-gray-700">파트너 제외 설정</span>
               <button onClick={() => setShowPartnerPopup(true)} className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-                파트너 선택
+                파트너 제외 선택
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
                   <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
@@ -261,7 +261,7 @@ export default function PromotionSettingsComplete() {
             <div className="flex items-center gap-6 py-5">
               <span className="w-44 shrink-0 text-sm font-medium text-gray-700">상품 제외 설정</span>
               <button onClick={() => setShowProductPopup(true)} className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-                상품 선택
+                상품 제외 선택
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
                   <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
