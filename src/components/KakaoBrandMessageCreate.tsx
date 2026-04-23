@@ -132,6 +132,7 @@ export default function KakaoBrandMessageCreate() {
   const [showSellerModal, setShowSellerModal] = useState(false);
   const [sellerSearch, setSellerSearch] = useState('');
   const [checkedSellers, setCheckedSellers] = useState<number[]>([]);
+  const [sellerEmptyDemo, setSellerEmptyDemo] = useState(false);
   const [showProductModal, setShowProductModal] = useState(false);
   const [showChargePopup, setShowChargePopup] = useState(false);
   const [showTestSendPopup, setShowTestSendPopup] = useState(false);
@@ -192,9 +193,9 @@ export default function KakaoBrandMessageCreate() {
   const [button1Link, setButton1Link] = useState('');
   const [button2Link, setButton2Link] = useState('');
 
-  const filteredSellers = SELLER_LIST.filter((s) =>
-    s.name.includes(sellerSearch)
-  );
+  const filteredSellers = sellerEmptyDemo
+    ? []
+    : SELLER_LIST.filter((s) => s.name.includes(sellerSearch));
 
   const toggleSeller = (id: number) => {
     setCheckedSellers((prev) =>
@@ -299,6 +300,17 @@ export default function KakaoBrandMessageCreate() {
               <h2 className="text-base font-bold text-gray-900">셀러 선택</h2>
               <p className="mt-0.5 text-xs text-gray-400">발송할 수신 파트너를 선택하세요</p>
             </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => { setSellerEmptyDemo((v) => !v); setSellerSearch(''); }}
+                className={`rounded-lg border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
+                  sellerEmptyDemo
+                    ? 'border-[#4DB87A] bg-[#f0faf5] text-[#2a7a4f]'
+                    : 'border-gray-200 text-gray-400 hover:bg-gray-50'
+                }`}
+              >
+                {sellerEmptyDemo ? '데이터 있음 보기' : '빈 상태 미리보기'}
+              </button>
             <button
               onClick={() => setShowSellerModal(false)}
               className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
@@ -307,6 +319,7 @@ export default function KakaoBrandMessageCreate() {
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
+            </div>
           </div>
 
           {/* 검색 */}
