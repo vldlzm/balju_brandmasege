@@ -223,20 +223,20 @@ export default function KakaoBrandMessageList() {
             { label: '이번달 총 수신 인원', value: '1,284명', sub: '발송 완료 기준', color: 'text-purple-500' },
             { label: '잔여 포인트', value: '45,600P', sub: '약 3,040명 발송 가능', color: 'text-amber-500', charge: true },
           ].map((stat) => (
-            <div key={stat.label} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100 flex flex-col justify-between">
-              <div>
+            <div key={stat.label} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
+              <div className="flex items-center justify-between">
                 <p className="text-xs font-medium text-gray-400">{stat.label}</p>
-                <p className={`mt-1.5 text-2xl font-black tabular-nums ${stat.color}`}>{stat.value}</p>
-                <p className="mt-1 text-xs text-gray-400">{stat.sub}</p>
+                {'charge' in stat && stat.charge && (
+                  <button
+                    onClick={() => setShowCharge(true)}
+                    className="rounded-lg bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-900 hover:bg-amber-300 transition-colors"
+                  >
+                    충전하기
+                  </button>
+                )}
               </div>
-              {'charge' in stat && stat.charge && (
-                <button
-                  onClick={() => setShowCharge(true)}
-                  className="mt-3 w-full rounded-lg bg-amber-400 py-1.5 text-xs font-bold text-amber-900 hover:bg-amber-300 transition-colors"
-                >
-                  충전하기
-                </button>
-              )}
+              <p className={`mt-1.5 text-2xl font-black tabular-nums ${stat.color}`}>{stat.value}</p>
+              <p className="mt-1 text-xs text-gray-400">{stat.sub}</p>
             </div>
           ))}
         </div>
