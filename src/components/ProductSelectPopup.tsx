@@ -2,8 +2,18 @@
 
 import { useState } from 'react';
 
-const DEMO_PRODUCTS = [
-  { id: 'p1', processedAt: '-', name: '세번째 상품', code: 'SHY54961811', status: '제외' as const },
+type ProductStatus = '일반' | '제외';
+
+interface Product {
+  id: string;
+  processedAt: string;
+  name: string;
+  code: string;
+  status: ProductStatus;
+}
+
+const DEMO_PRODUCTS: Product[] = [
+  { id: 'p1', processedAt: '-', name: '세번째 상품', code: 'SHY54961811', status: '제외' },
 ];
 
 interface Props {
@@ -15,7 +25,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
   const [searchField, setSearchField] = useState('상품명');
   const [searchText, setSearchText] = useState('');
   const [selected, setSelected] = useState<string[]>([]);
-  const [data, setData] = useState(DEMO_PRODUCTS);
+  const [data, setData] = useState<Product[]>(DEMO_PRODUCTS);
 
   const filtered = data.filter((p) => {
     if (filterType !== '전체' && p.status !== filterType) return false;
@@ -31,9 +41,9 @@ export default function ProductSelectPopup({ onClose }: Props) {
   const toggleOne = (id: string) => setSelected((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
 
   const handleExclude = () =>
-    setData((prev) => prev.map((p) => selected.includes(p.id) ? { ...p, status: '제외' as const } : p));
+    setData((prev) => prev.map((p): Product => selected.includes(p.id) ? { ...p, status: '제외' } : p));
   const handleRestore = () =>
-    setData((prev) => prev.map((p) => selected.includes(p.id) ? { ...p, status: '일반' as const } : p));
+    setData((prev) => prev.map((p): Product => selected.includes(p.id) ? { ...p, status: '일반' } : p));
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
@@ -138,7 +148,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
                       <td className="px-4 py-3 text-center text-gray-500">{p.code}</td>
                       <td className="px-4 py-3 text-center">
                         <button
-                          onClick={() => setData((prev) => prev.map((x) => x.id === p.id ? { ...x, status: x.status === '제외' ? '일반' as const : '제외' as const } : x))}
+                          onClick={() => setData((prev) => prev.map((x): Product => x.id === p.id ? { ...x, status: x.status === '제외' ? '일반' : '제외' } : x))}
                           className={`rounded-md px-3 py-1.5 text-xs font-bold text-white transition-colors ${p.status === '제외' ? 'bg-red-500 hover:bg-red-600' : 'bg-[#6b7280] hover:bg-[#4b5563]'}`}
                         >
                           {p.status === '제외' ? '제외' : '복원'}
