@@ -2,7 +2,30 @@
 
 import { useState } from 'react';
 
-const DEMO_PARTNERS: { id: string; processedAt: string; name: string; userId: string; phone: string; memo: string; status: '일반' | '제외' }[] = [];
+type PartnerStatus = '일반' | '제외';
+
+interface Partner {
+  id: string;
+  processedAt: string;
+  name: string;
+  userId: string;
+  phone: string;
+  memo: string;
+  status: PartnerStatus;
+}
+
+const DEMO_PARTNERS: Partner[] = [
+  { id: 'p1',  processedAt: '-',          name: '김민준', userId: 'minjun_kim',   phone: '010-1234-5678', memo: '', status: '일반' },
+  { id: 'p2',  processedAt: '2025.03.10', name: '이서연', userId: 'seoyeon_lee',  phone: '010-2345-6789', memo: '', status: '제외' },
+  { id: 'p3',  processedAt: '-',          name: '박지호', userId: 'jiho_park',    phone: '010-3456-7890', memo: '', status: '일반' },
+  { id: 'p4',  processedAt: '2025.02.20', name: '최수아', userId: 'sua_choi',     phone: '010-4567-8901', memo: '', status: '제외' },
+  { id: 'p5',  processedAt: '-',          name: '정하준', userId: 'hajun_jung',   phone: '010-5678-9012', memo: '', status: '일반' },
+  { id: 'p6',  processedAt: '-',          name: '강나은', userId: 'naeun_kang',   phone: '010-6789-0123', memo: '', status: '일반' },
+  { id: 'p7',  processedAt: '2025.04.01', name: '윤도현', userId: 'dohyun_yoon',  phone: '010-7890-1234', memo: '', status: '제외' },
+  { id: 'p8',  processedAt: '-',          name: '임소희', userId: 'sohee_lim',    phone: '010-8901-2345', memo: '', status: '일반' },
+  { id: 'p9',  processedAt: '-',          name: '한지우', userId: 'jiwoo_han',    phone: '010-9012-3456', memo: '', status: '일반' },
+  { id: 'p10', processedAt: '2025.01.15', name: '오채원', userId: 'chaewon_oh',   phone: '010-0123-4567', memo: '', status: '제외' },
+];
 
 interface Props {
   onClose: () => void;
@@ -13,7 +36,10 @@ export default function PartnerSelectPopup({ onClose }: Props) {
   const [searchField, setSearchField] = useState('이름');
   const [searchText, setSearchText] = useState('');
   const [selected, setSelected] = useState<string[]>([]);
-  const [data, setData] = useState(DEMO_PARTNERS);
+  const [data, setData] = useState<Partner[]>(DEMO_PARTNERS);
+  const [memoInputs, setMemoInputs] = useState<Record<string, string>>(
+    Object.fromEntries(DEMO_PARTNERS.map((p) => [p.id, p.memo]))
+  );
 
   const filtered = data.filter((p) => {
     if (filterType !== '전체' && p.status !== filterType) return false;
@@ -29,13 +55,19 @@ export default function PartnerSelectPopup({ onClose }: Props) {
   const toggleOne = (id: string) => setSelected((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
 
   const handleExclude = () =>
-    setData((prev) => prev.map((p) => selected.includes(p.id) ? { ...p, status: '제외' as const } : p));
+    setData((prev) => prev.map((p): Partner => selected.includes(p.id) ? { ...p, status: '제외' } : p));
   const handleRestore = () =>
-    setData((prev) => prev.map((p) => selected.includes(p.id) ? { ...p, status: '일반' as const } : p));
+    setData((prev) => prev.map((p): Partner => selected.includes(p.id) ? { ...p, status: '일반' } : p));
+
+  const handleToggleStatus = (id: string) =>
+    setData((prev) => prev.map((p): Partner => p.id === id ? { ...p, status: p.status === '제외' ? '일반' : '제외' } : p));
+
+  const handleSaveMemo = (id: string) =>
+    setData((prev) => prev.map((p): Partner => p.id === id ? { ...p, memo: memoInputs[id] ?? '' } : p));
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="flex w-full max-w-4xl flex-col rounded-2xl bg-white shadow-2xl max-h-[85vh] overflow-hidden">
+      <div className="flex w-full max-w-5xl flex-col rounded-2xl bg-white shadow-2xl max-h-[85vh] overflow-hidden">
 
         {/* 헤더 */}
         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 shrink-0">
@@ -84,7 +116,7 @@ export default function PartnerSelectPopup({ onClose }: Props) {
           <div className="flex items-center justify-between">
             <p className="text-sm font-bold text-gray-900">
               파트너 리스트
-              <span className="ml-2 text-xs font-normal text-gray-400">전체 {filtered.length}명 (페이지 1/{Math.max(1, Math.ceil(filtered.length / 100))})</span>
+              <span className="ml-2 text-xs font-normal text-gray-400">전체 {filtered.length}명</span>
             </p>
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-500">선택한 파트너</span>
@@ -121,18 +153,47 @@ export default function PartnerSelectPopup({ onClose }: Props) {
                       <td className="px-4 py-3 text-center">
                         <input type="checkbox" checked={selected.includes(p.id)} onChange={() => toggleOne(p.id)} className="h-4 w-4 accent-[#4DB87A]" />
                       </td>
-                      <td className="px-4 py-3 text-center text-gray-500">{p.processedAt || '-'}</td>
-                      <td className="px-4 py-3 text-center text-gray-700">{p.name}</td>
+                      <td className="px-4 py-3 text-center text-gray-500 whitespace-nowrap">{p.processedAt}</td>
+                      <td className="px-4 py-3 text-center text-gray-700 whitespace-nowrap">{p.name}</td>
                       <td className="px-4 py-3 text-center text-gray-500">{p.userId}</td>
-                      <td className="px-4 py-3 text-center text-gray-500">{p.phone}</td>
-                      <td className="px-4 py-3 text-center text-gray-400">{p.memo || '-'}</td>
+                      <td className="px-4 py-3 text-center text-gray-500 whitespace-nowrap">{p.phone}</td>
+
+                      {/* 관리자 메모: 인풋 + 저장 버튼 */}
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-1.5">
+                          <input
+                            type="text"
+                            value={memoInputs[p.id] ?? ''}
+                            onChange={(e) => setMemoInputs((prev) => ({ ...prev, [p.id]: e.target.value }))}
+                            placeholder="메모 입력"
+                            className="w-28 rounded-lg border border-gray-200 px-2 py-1 text-xs text-gray-700 placeholder-gray-300 focus:border-[#4DB87A] focus:outline-none"
+                          />
+                          <button
+                            onClick={() => handleSaveMemo(p.id)}
+                            className="rounded-md bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-600 hover:bg-gray-200 transition-colors whitespace-nowrap"
+                          >
+                            저장
+                          </button>
+                        </div>
+                      </td>
+
+                      {/* 관리: 상태에 따라 제외/복원 */}
                       <td className="px-4 py-3 text-center">
-                        <button
-                          onClick={() => setData((prev) => prev.map((x) => x.id === p.id ? { ...x, status: x.status === '제외' ? '일반' : '제외' } : x))}
-                          className={`rounded-md px-3 py-1 text-xs font-bold text-white transition-colors ${p.status === '제외' ? 'bg-[#6b7280] hover:bg-[#4b5563]' : 'bg-red-500 hover:bg-red-600'}`}
-                        >
-                          {p.status === '제외' ? '복원' : '제외'}
-                        </button>
+                        {p.status === '제외' ? (
+                          <button
+                            onClick={() => handleToggleStatus(p.id)}
+                            className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors"
+                          >
+                            복원
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleToggleStatus(p.id)}
+                            className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 transition-colors"
+                          >
+                            제외
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))
