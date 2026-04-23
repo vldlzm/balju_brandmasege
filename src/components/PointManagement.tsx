@@ -34,16 +34,9 @@ function Bubble({ n }: { n: number }) {
 
 export default function PointManagement() {
   const [selectedWon, setSelectedWon] = useState<number | null>(null);
-  const [customAmount, setCustomAmount] = useState('');
 
   const currentPoints = 45600;
-  const chargeAmount = selectedWon ?? (customAmount ? parseInt(customAmount.replace(/,/g, ''), 10) || 0 : 0);
-
-  const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/[^0-9]/g, '');
-    setCustomAmount(raw ? parseInt(raw).toLocaleString() : '');
-    setSelectedWon(null);
-  };
+  const chargeAmount = selectedWon ?? 0;
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
@@ -93,7 +86,7 @@ export default function PointManagement() {
                 {CHARGE_OPTIONS.map((opt) => (
                   <button
                     key={opt.won}
-                    onClick={() => { setSelectedWon(opt.won); setCustomAmount(''); }}
+                    onClick={() => setSelectedWon(opt.won)}
                     className={`relative rounded-xl border-2 py-3 px-2 text-sm font-bold transition-all flex flex-col items-center gap-0.5 ${
                       selectedWon === opt.won
                         ? 'border-[#4DB87A] bg-[#f0faf5] text-[#2a7a4f]'
@@ -108,35 +101,6 @@ export default function PointManagement() {
                       </span>
                     )}
                   </button>
-                ))}
-              </div>
-            </div>
-
-            {/* 직접 입력 */}
-            <div>
-              <p className="mb-2 text-sm font-semibold text-gray-700">직접 입력</p>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  value={customAmount}
-                  onChange={handleCustomChange}
-                  placeholder="금액 입력 (최소 10,000원)"
-                  className="w-64 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
-                />
-                <span className="text-sm text-gray-500">원</span>
-              </div>
-            </div>
-
-            {/* 결제 수단 */}
-            <div className="relative overflow-visible">
-              <Bubble n={3} />
-              <p className="mb-3 text-sm font-semibold text-gray-700">결제 수단</p>
-              <div className="flex gap-3">
-                {['신용카드', '계좌이체', '가상계좌'].map((method) => (
-                  <label key={method} className="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm text-gray-600 hover:border-[#4DB87A] hover:bg-[#f0faf5] transition-all">
-                    <input type="radio" name="payMethod" className="h-4 w-4 accent-[#4DB87A]" defaultChecked={method === '신용카드'} />
-                    {method}
-                  </label>
                 ))}
               </div>
             </div>
