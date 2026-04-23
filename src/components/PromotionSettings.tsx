@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import SenderNumberPopup from './SenderNumberPopup';
 
 interface SenderNumber {
   id: string;
@@ -37,9 +38,11 @@ export default function PromotionSettings() {
   const [rejectNumber, setRejectNumber] = useState('010-3327-1103');
   const [excludedPersons] = useState(0);
   const [excludedProducts] = useState(0);
+  const [showSenderPopup, setShowSenderPopup] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
+      {showSenderPopup && <SenderNumberPopup onClose={() => setShowSenderPopup(false)} />}
 
       {/* 페이지 헤더 */}
       <div className="sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -77,7 +80,10 @@ export default function PromotionSettings() {
               <button className="rounded-lg bg-[#f97316] px-4 py-2 text-sm font-semibold text-white hover:bg-[#ea6c0c] transition-colors">
                 신청서 가이드
               </button>
-              <button className="rounded-lg bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors">
+              <button
+                onClick={() => setShowSenderPopup(true)}
+                className="rounded-lg bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors"
+              >
                 발신번호신청 +
               </button>
             </div>
@@ -249,7 +255,7 @@ export default function PromotionSettings() {
                       <div className="relative overflow-visible">
                         <Bubble n={4} />
                         <p className="text-xs text-red-500 leading-relaxed max-w-md">
-                          ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 대상자는 &apos;캠페인 대상자 제외 설정&apos;을 통해 수동으로 등록해 주세요.
+                          ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 파트너는 &apos;파트너 제외 설정&apos;을 통해 수동으로 등록해 주세요.
                         </p>
                       </div>
                     </div>
@@ -286,24 +292,24 @@ export default function PromotionSettings() {
           </div>
         </section>
 
-        {/* ── 3. 대상자·대상 상품 제외 설정 ── */}
+        {/* ── 3. 파트너·상품 제외 설정 ── */}
         <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
           <Bubble n={5} />
           <div className="border-b border-gray-100 px-6 py-5">
-            <h2 className="text-base font-bold text-gray-900">대상자·대상 상품 제외 설정</h2>
+            <h2 className="text-base font-bold text-gray-900">파트너·상품 제외 설정</h2>
             <ul className="mt-3 space-y-1.5">
               <li className="flex gap-1.5 text-xs text-gray-500">
                 <span className="shrink-0">·</span>
-                <span>캠페인 대상자 및 상품의 제외 설정은 반영되기까지 하루정도 소요될 수 있습니다.</span>
+                <span>반영되기까지 하루정도 소요될 수 있습니다.</span>
               </li>
             </ul>
           </div>
 
           <div className="divide-y divide-gray-100 px-6">
             <div className="flex items-center gap-6 py-5">
-              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">캠페인 대상자 제외 설정</span>
+              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">파트너 제외 설정</span>
               <button className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-                대상자 선택
+                파트너 선택
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
                   <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
@@ -314,7 +320,7 @@ export default function PromotionSettings() {
             </div>
 
             <div className="flex items-center gap-6 py-5">
-              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">캠페인 대상 상품 제외 설정</span>
+              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">상품 제외 설정</span>
               <button className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
                 상품 선택
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
