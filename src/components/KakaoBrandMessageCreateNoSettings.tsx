@@ -29,7 +29,7 @@ export default function KakaoBrandMessageCreateNoSettings() {
       </div>
 
       {/* 본문 (흐리게) */}
-      <div className="relative overflow-visible pointer-events-none select-none opacity-60 blur-[1px]">
+      <div className="relative overflow-visible pointer-events-none select-none opacity-80">
         <Bubble n={1} />
         <div className="mx-auto max-w-[1440px] p-6">
           <div className="grid grid-cols-[1fr_340px] gap-6">
@@ -68,7 +68,7 @@ export default function KakaoBrandMessageCreateNoSettings() {
       </div>
 
       {/* 기본 설정 미완료 안내 모달 */}
-      <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
+      <div className="absolute inset-0 z-10 flex items-center justify-center p-4 bg-black/10">
         <div className="relative overflow-visible w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl text-center">
           <Bubble n={2} />
           <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
