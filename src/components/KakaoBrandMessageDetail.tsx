@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import CancelSendConfirm from './CancelSendConfirm';
 
 interface ScheduledMessage {
   id: string;
@@ -44,7 +45,7 @@ function ReadField({ label, children }: { label: string; children: React.ReactNo
 }
 
 export default function KakaoBrandMessageDetail({ campaign, onClose, onCancel }: Props) {
-  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   const handleCancel = () => {
     onCancel(campaign.id);
@@ -53,6 +54,13 @@ export default function KakaoBrandMessageDetail({ campaign, onClose, onCancel }:
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-[#f8f8f8] overflow-hidden">
+      {showCancelConfirm && (
+        <CancelSendConfirm
+          points={campaign.points}
+          onClose={() => setShowCancelConfirm(false)}
+          onConfirm={handleCancel}
+        />
+      )}
 
       {/* 헤더 */}
       <div className="sticky top-0 z-10 border-b border-gray-200 bg-white shrink-0">
@@ -163,30 +171,12 @@ export default function KakaoBrandMessageDetail({ campaign, onClose, onCancel }:
                   닫기
                 </button>
 
-                {!confirmCancel ? (
-                  <button
-                    onClick={() => setConfirmCancel(true)}
-                    className="rounded-xl border-2 border-red-400 bg-red-50 px-10 py-3.5 text-base font-bold text-red-500 hover:bg-red-100 transition-all"
-                  >
-                    발송 취소
-                  </button>
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <p className="text-sm font-semibold text-red-500">정말 취소하시겠습니까?</p>
-                    <button
-                      onClick={() => setConfirmCancel(false)}
-                      className="rounded-xl border-2 border-gray-200 px-5 py-3 text-sm font-bold text-gray-500 hover:bg-gray-50 transition-all"
-                    >
-                      아니요
-                    </button>
-                    <button
-                      onClick={handleCancel}
-                      className="rounded-xl bg-red-500 px-8 py-3 text-sm font-bold text-white hover:bg-red-600 transition-all"
-                    >
-                      네, 취소합니다
-                    </button>
-                  </div>
-                )}
+                <button
+                  onClick={() => setShowCancelConfirm(true)}
+                  className="rounded-xl border-2 border-red-400 bg-red-50 px-10 py-3.5 text-base font-bold text-red-500 hover:bg-red-100 transition-all"
+                >
+                  발송 취소
+                </button>
               </div>
             </div>
 

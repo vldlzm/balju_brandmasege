@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import CancelSendConfirm from './CancelSendConfirm';
 
 interface ScheduledMessage {
   id: string;
@@ -32,7 +33,7 @@ const CATEGORY_STYLE: Record<string, string> = {
 };
 
 export default function CampaignDetailPopup({ campaign, onClose, onCancel }: Props) {
-  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   const handleCancel = () => {
     onCancel(campaign.id);
@@ -119,26 +120,12 @@ export default function CampaignDetailPopup({ campaign, onClose, onCancel }: Pro
             </div>
           </div>
 
-          {/* 발송 취소 확인 */}
-          {confirmCancel && (
-            <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-4 space-y-3">
-              <p className="text-sm font-semibold text-red-600">정말 발송을 취소하시겠습니까?</p>
-              <p className="text-xs text-red-400">취소 후에는 되돌릴 수 없습니다.</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setConfirmCancel(false)}
-                  className="flex-1 rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
-                >
-                  아니요
-                </button>
-                <button
-                  onClick={handleCancel}
-                  className="flex-1 rounded-lg bg-red-500 py-2 text-xs font-bold text-white hover:bg-red-600 transition-colors"
-                >
-                  네, 취소합니다
-                </button>
-              </div>
-            </div>
+          {showCancelConfirm && (
+            <CancelSendConfirm
+              points={campaign.points}
+              onClose={() => setShowCancelConfirm(false)}
+              onConfirm={handleCancel}
+            />
           )}
         </div>
 
@@ -151,7 +138,7 @@ export default function CampaignDetailPopup({ campaign, onClose, onCancel }: Pro
             닫기
           </button>
           <button
-            onClick={() => setConfirmCancel(true)}
+            onClick={() => setShowCancelConfirm(true)}
             className="flex-1 rounded-xl bg-red-500 py-3 text-sm font-bold text-white hover:bg-red-600 transition-colors"
           >
             발송 취소

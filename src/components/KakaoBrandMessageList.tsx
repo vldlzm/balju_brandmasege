@@ -6,6 +6,7 @@ import StatsPopup from '@/components/StatsPopup';
 import ChargePopup from '@/components/ChargePopup';
 import TestSendPopup from '@/components/TestSendPopup';
 import KakaoBrandMessageDetail from '@/components/KakaoBrandMessageDetail';
+import CancelSendConfirm from '@/components/CancelSendConfirm';
 
 type TabType = '발송 예정' | '발송 완료';
 type Category = '신상품' | '이벤트' | '가격할인';
@@ -199,6 +200,7 @@ export default function KakaoBrandMessageList() {
   const [showTestSend, setShowTestSend] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState<ScheduledMessage | null>(null);
   const [scheduledList, setScheduledList] = useState(SCHEDULED);
+  const [cancelTarget, setCancelTarget] = useState<ScheduledMessage | null>(null);
 
   const tabItems: { label: TabType; count: number }[] = [
     { label: '발송 완료', count: 18 },
@@ -383,7 +385,7 @@ export default function KakaoBrandMessageList() {
                           테스트 발송
                         </button>
                         <button
-                          onClick={() => { setSelectedCampaign(msg); }}
+                          onClick={() => setCancelTarget(msg)}
                           className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors"
                         >
                           발송취소
@@ -516,6 +518,16 @@ export default function KakaoBrandMessageList() {
         </section>
       </div>
 
+      {cancelTarget && (
+        <CancelSendConfirm
+          points={cancelTarget.points}
+          onClose={() => setCancelTarget(null)}
+          onConfirm={() => {
+            setScheduledList((prev) => prev.filter((m) => m.id !== cancelTarget.id));
+            setCancelTarget(null);
+          }}
+        />
+      )}
       {showStats && <StatsPopup onClose={() => setShowStats(false)} />}
       {showCharge && <ChargePopup onClose={() => setShowCharge(false)} />}
       {showTestSend && <TestSendPopup onClose={() => setShowTestSend(false)} />}
