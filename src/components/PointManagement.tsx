@@ -47,7 +47,7 @@ function ChargePopup({ selectedWon, onClose }: { selectedWon: number | null; onC
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-sm overflow-hidden rounded-3xl shadow-2xl">
+      <div className="w-full max-w-lg overflow-hidden rounded-3xl shadow-2xl">
 
         {/* 헤더 - 초록 배경 */}
         <div className="relative bg-[#3a9e52] px-7 pb-12 pt-7">
