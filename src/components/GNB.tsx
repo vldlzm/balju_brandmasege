@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 const NAV_ITEMS = [
@@ -97,22 +98,23 @@ const NAV_ITEMS = [
   },
 ];
 
-// 프로모션 화면에 해당하는 경로들
-const PROMOTION_PATHS = ['/', '/marketing'];
-
 export default function GNB() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  if (searchParams.get('embed') === '1') return null;
+  const [hidden, setHidden] = useState(searchParams.get('embed') === '1');
+
+  useEffect(() => {
+    // URL 파라미터 또는 iframe 내부 여부로 숨김 결정
+    setHidden(searchParams.get('embed') === '1' || window.self !== window.top);
+  }, [searchParams]);
+
+  if (hidden) return null;
 
   const isPromotionActive =
     pathname.startsWith('/marketing') || pathname.startsWith('/promotion');
 
-  const getItemHref = (item: typeof NAV_ITEMS[0]) => item.href;
-
   return (
     <header className="w-full bg-[#252d3a] shadow-lg">
-      {/* 최상단 얇은 바 */}
       <div className="border-b border-white/5 px-6 py-1.5 flex items-center justify-between">
         <span className="text-[11px] font-semibold tracking-wider text-[#4DB87A]">발주모아 파트너스</span>
         <div className="flex items-center gap-3">
@@ -129,9 +131,7 @@ export default function GNB() {
         </div>
       </div>
 
-      {/* 메인 내비게이션 바 */}
       <div className="flex items-stretch px-4">
-        {/* 로고 */}
         <div className="flex items-center gap-3 pr-8 py-3 border-r border-white/10 mr-4">
           <div className="flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-[#1a2130]">
             <span className="text-[9px] font-black text-[#4DB87A] leading-none tracking-tight">BX</span>
@@ -140,24 +140,18 @@ export default function GNB() {
           <span className="text-base font-bold text-white tracking-wide">Partners</span>
         </div>
 
-        {/* 내비게이션 아이템들 */}
         <nav className="flex items-stretch flex-1">
           {NAV_ITEMS.map((item) => {
-            const isActive =
-              item.label === '프로모션' ? isPromotionActive : false;
+            const isActive = item.label === '프로모션' ? isPromotionActive : false;
             return (
               <Link
                 key={item.label}
-                href={getItemHref(item)}
+                href={item.href}
                 className={`relative flex flex-col items-center justify-center gap-1 px-5 py-3 text-[11px] font-medium transition-colors min-w-[64px]
-                  ${isActive
-                    ? 'text-white'
-                    : 'text-gray-400 hover:text-gray-200'
-                  }`}
+                  ${isActive ? 'text-white' : 'text-gray-400 hover:text-gray-200'}`}
               >
                 <span className={isActive ? 'text-[#4DB87A]' : ''}>{item.icon}</span>
                 <span>{item.label}</span>
-                {/* 활성 인디케이터 */}
                 {isActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-[3px] rounded-t-full bg-[#4DB87A]" />
                 )}

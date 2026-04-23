@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Screen {
   id: string;
@@ -134,6 +134,14 @@ const ALL_SCREENS = SCREEN_GROUPS.flatMap((g) => g.screens);
 
 export default function ScreenIndex() {
   const [selectedId, setSelectedId] = useState<string>(ALL_SCREENS[0].id);
+  const [inIframe, setInIframe] = useState(false);
+
+  useEffect(() => {
+    // 이 페이지가 iframe 내부에 로드되면 렌더링하지 않음 (패널 중복 방지)
+    if (window.self !== window.top) setInIframe(true);
+  }, []);
+
+  if (inIframe) return null;
 
   const selected = ALL_SCREENS.find((s) => s.id === selectedId)!;
   const selectedCategory = SCREEN_GROUPS.find((g) =>

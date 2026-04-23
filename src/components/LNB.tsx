@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 const LNB_SECTIONS = [
@@ -43,7 +44,14 @@ const LNB_SECTIONS = [
 export default function LNB() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  if (searchParams.get('embed') === '1') return null;
+  const [hidden, setHidden] = useState(searchParams.get('embed') === '1');
+
+  useEffect(() => {
+    // URL 파라미터 또는 iframe 내부 여부로 숨김 결정
+    setHidden(searchParams.get('embed') === '1' || window.self !== window.top);
+  }, [searchParams]);
+
+  if (hidden) return null;
 
   const isActive = (href: string) => {
     if (href === '/marketing/brand-message') return pathname.startsWith('/marketing');
@@ -56,13 +64,11 @@ export default function LNB() {
       <div className="pt-5 pb-3">
         {LNB_SECTIONS.map((section) => (
           <div key={section.title}>
-            {/* 섹션 타이틀 */}
             <div className="px-5 pb-2">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#4DB87A]">
                 {section.title}
               </span>
             </div>
-            {/* 메뉴 아이템 */}
             <ul className="space-y-0.5">
               {section.items.map((item) => {
                 const active = isActive(item.href);
@@ -76,7 +82,6 @@ export default function LNB() {
                           : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
                         }`}
                     >
-                      {/* 활성 인디케이터 */}
                       {active && (
                         <span className="absolute left-0 top-0 bottom-0 w-[3px] rounded-r-full bg-[#4DB87A]" />
                       )}
