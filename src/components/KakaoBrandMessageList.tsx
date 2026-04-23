@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import StatsPopup from '@/components/StatsPopup';
+import ChargePopup from '@/components/ChargePopup';
+import TestSendPopup from '@/components/TestSendPopup';
 
 type TabType = '발송 예정' | '발송 완료';
 type Category = '신상품' | '이벤트' | '가격할인';
@@ -192,6 +194,8 @@ export default function KakaoBrandMessageList() {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showStats, setShowStats] = useState(false);
+  const [showCharge, setShowCharge] = useState(false);
+  const [showTestSend, setShowTestSend] = useState(false);
 
   const tabItems: { label: TabType; count: number }[] = [
     { label: '발송 완료', count: 18 },
@@ -217,12 +221,22 @@ export default function KakaoBrandMessageList() {
             { label: '이번달 발송 완료', value: '18건', sub: '전월 대비 +3건', color: 'text-[#4DB87A]' },
             { label: '발송 예정', value: '3건', sub: '가장 빠른 발송 2일 후', color: 'text-blue-500' },
             { label: '이번달 총 수신 인원', value: '1,284명', sub: '발송 완료 기준', color: 'text-purple-500' },
-            { label: '잔여 포인트', value: '45,600P', sub: '약 3,040명 발송 가능', color: 'text-amber-500' },
+            { label: '잔여 포인트', value: '45,600P', sub: '약 3,040명 발송 가능', color: 'text-amber-500', charge: true },
           ].map((stat) => (
-            <div key={stat.label} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
-              <p className="text-xs font-medium text-gray-400">{stat.label}</p>
-              <p className={`mt-1.5 text-2xl font-black tabular-nums ${stat.color}`}>{stat.value}</p>
-              <p className="mt-1 text-xs text-gray-400">{stat.sub}</p>
+            <div key={stat.label} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100 flex flex-col justify-between">
+              <div>
+                <p className="text-xs font-medium text-gray-400">{stat.label}</p>
+                <p className={`mt-1.5 text-2xl font-black tabular-nums ${stat.color}`}>{stat.value}</p>
+                <p className="mt-1 text-xs text-gray-400">{stat.sub}</p>
+              </div>
+              {'charge' in stat && stat.charge && (
+                <button
+                  onClick={() => setShowCharge(true)}
+                  className="mt-3 w-full rounded-lg bg-amber-400 py-1.5 text-xs font-bold text-amber-900 hover:bg-amber-300 transition-colors"
+                >
+                  충전하기
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -355,6 +369,12 @@ export default function KakaoBrandMessageList() {
 
                       {/* 액션 버튼 */}
                       <div className="flex shrink-0 items-center gap-2">
+                        <button
+                          onClick={() => setShowTestSend(true)}
+                          className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
+                        >
+                          테스트 발송
+                        </button>
                         <button className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors">
                           발송취소
                         </button>
@@ -487,6 +507,8 @@ export default function KakaoBrandMessageList() {
       </div>
 
       {showStats && <StatsPopup onClose={() => setShowStats(false)} />}
+      {showCharge && <ChargePopup onClose={() => setShowCharge(false)} />}
+      {showTestSend && <TestSendPopup onClose={() => setShowTestSend(false)} />}
     </div>
   );
 }
