@@ -109,6 +109,11 @@ const SCREEN_GROUPS: ScreenGroup[] = [
           '변경 링크로 채널 수정 가능',
         ],
       },
+    ],
+  },
+  {
+    category: '포인트 충전/사용',
+    screens: [
       {
         id: 'points',
         name: '포인트 충전/사용',
