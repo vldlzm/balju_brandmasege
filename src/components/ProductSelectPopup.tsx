@@ -94,8 +94,8 @@ export default function ProductSelectPopup({ onClose }: Props) {
                 placeholder="검색 내용 입력"
                 className="w-48 rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none"
               />
-              <button className="rounded-xl bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors">검색</button>
-              <button onClick={() => { setSearchText(''); setFilterType('전체'); }} className="rounded-xl bg-[#6b7280] px-4 py-2 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
+              <button className="rounded-xl bg-[#4DB87A] px-4 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">검색</button>
+              <button onClick={() => { setSearchText(''); setFilterType('전체'); }} className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">초기화</button>
             </div>
           </div>
 
@@ -108,7 +108,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-500">선택한 상품</span>
               <button onClick={handleExclude} className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 transition-colors">제외</button>
-              <button onClick={handleRestore} className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors">복원</button>
+              <button onClick={handleRestore} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-bold text-gray-600 hover:bg-gray-200 transition-colors">복원</button>
               <select className="rounded-xl border border-gray-300 px-2 py-1.5 text-xs text-gray-600 focus:outline-none">
                 <option>100개씩 보기</option>
                 <option>50개씩 보기</option>
@@ -164,7 +164,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
                         ) : (
                           <button
                             onClick={() => setData((prev) => prev.map((x): Product => x.id === p.id ? { ...x, status: '일반' } : x))}
-                            className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors"
+                            className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-bold text-gray-600 hover:bg-gray-200 transition-colors"
                           >
                             복원
                           </button>

@@ -72,12 +72,12 @@ export default function PromotionSettingsComplete() {
 
           <div className="px-6 py-5">
             <div className="flex justify-end gap-2">
-              <button className="rounded-lg bg-[#f97316] px-4 py-2 text-sm font-semibold text-white hover:bg-[#ea6c0c] transition-colors">
+              <button className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
                 신청서 가이드
               </button>
               <button
                 onClick={() => setShowSenderPopup(true)}
-                className="rounded-xl bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors"
+                className="rounded-xl bg-[#4DB87A] px-4 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors"
               >
                 발신번호신청 +
               </button>
@@ -115,8 +115,8 @@ export default function PromotionSettingsComplete() {
             </div>
 
             <div className="mt-4 flex justify-center gap-2">
-              <button className="rounded-xl bg-[#6b7280] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
-              <button className="rounded-xl bg-[#374151] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#1f2937] transition-colors">적용</button>
+              <button className="rounded-xl border border-gray-200 px-6 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">초기화</button>
+              <button className="rounded-xl bg-[#4DB87A] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">적용</button>
             </div>
           </div>
 
@@ -229,7 +229,7 @@ export default function PromotionSettingsComplete() {
           </div>
 
           <div className="flex justify-center border-t border-gray-100 px-6 py-6">
-            <button className="rounded-xl bg-[#374151] px-10 py-3 text-sm font-bold text-white hover:bg-[#1f2937] transition-colors">
+            <button className="rounded-xl bg-[#4DB87A] px-10 py-3 text-sm font-bold text-white hover:bg-[#3da869] transition-colors">
               변경사항 적용
             </button>
           </div>

@@ -92,13 +92,13 @@ export default function SenderNumberPopup({ onClose }: Props) {
                     <div className="flex flex-col gap-2">
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-xs text-gray-500">가입확인서</span>
-                        <button className="rounded-md bg-[#4b5563] px-3 py-1 text-xs font-semibold text-white hover:bg-[#374151] transition-colors">
+                        <button className="rounded-lg border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
                           파일1
                         </button>
                       </div>
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-xs text-gray-500">사업자등록증, 사업자정보</span>
-                        <button className="rounded-md bg-[#4b5563] px-3 py-1 text-xs font-semibold text-white hover:bg-[#374151] transition-colors">
+                        <button className="rounded-lg border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
                           파일3
                         </button>
                       </div>
@@ -110,7 +110,7 @@ export default function SenderNumberPopup({ onClose }: Props) {
 
                   {/* 관리 */}
                   <td className="px-4 py-4 text-center">
-                    <button className="rounded-xl bg-[#374151] px-4 py-2 text-xs font-bold text-white hover:bg-[#1f2937] transition-colors whitespace-nowrap">
+                    <button className="rounded-xl bg-[#4DB87A] px-4 py-2 text-xs font-bold text-white hover:bg-[#3da869] transition-colors whitespace-nowrap">
                       발신번호 신청 요청
                     </button>
                   </td>
