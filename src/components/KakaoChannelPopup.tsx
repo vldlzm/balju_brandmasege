@@ -51,7 +51,7 @@ export default function KakaoChannelPopup({ onClose }: Props) {
                   <p>
                     <span className="text-gray-400">· 제공 받는 자의 이용 목적 : </span>
                     문자메시지 발송,{' '}
-                    <span className="font-semibold text-gray-800">카카오톡 알림톡(정보성 메시지) 및 브랜드메시지(친구톡) 발송 업무</span>
+                    <span className="font-semibold text-gray-800">브랜드메시지 발송 업무</span>
                   </p>
                   <p>
                     <span className="text-gray-400">· 제공하는 항목 : </span>
