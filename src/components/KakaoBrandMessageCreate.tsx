@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ChargePopup from './ChargePopup';
 import TestSendPopup from './TestSendPopup';
+import LmsEditorPopup from './LmsEditorPopup';
 
 type MessageType = 'wide-image' | 'wide-list' | 'carousel';
 type ContentCategory = '신상품' | '이벤트' | '가격할인';
@@ -140,6 +141,9 @@ export default function KakaoBrandMessageCreate() {
   const [showProductModal, setShowProductModal] = useState(false);
   const [showChargePopup, setShowChargePopup] = useState(false);
   const [showTestSendPopup, setShowTestSendPopup] = useState(false);
+  const [lmsEnabled, setLmsEnabled] = useState(false);
+  const [showLmsEditor, setShowLmsEditor] = useState(false);
+  const [lmsData, setLmsData] = useState({ title: '[#{상점명}] #{회원명}님♡', content: '' });
   const [productSearch, setProductSearch] = useState('');
   const [checkedProduct, setCheckedProduct] = useState<number | null>(null);
   const [productModalTarget, setProductModalTarget] = useState<string | number>('wide-image');
@@ -293,6 +297,14 @@ export default function KakaoBrandMessageCreate() {
     <>
     {showChargePopup && <ChargePopup onClose={() => setShowChargePopup(false)} />}
     {showTestSendPopup && <TestSendPopup onClose={() => setShowTestSendPopup(false)} />}
+    {showLmsEditor && (
+      <LmsEditorPopup
+        defaultTitle={lmsData.title}
+        defaultContent={lmsData.content || (content ? content : '[#{상점명}] 안녕하세요, #{회원명}님!\n#{상점명}을 이용해 주셔서 감사합니다.\n#{회원명}님께 감사하는 마음으로 APP에서 사용 가능한 비밀 할인코드를 지급해 드렸습니다.\n\n▶ 할인코드: #{할인코드}\n▶ 할인내용: #{할인금액} 할인\n▶ 만료일: #{만료일}\n\n▶ 할인코드 사용하기\n[무료수신거부]\n#{수신거부번호}')}
+        onClose={() => setShowLmsEditor(false)}
+        onSave={(data) => setLmsData(data)}
+      />
+    )}
 
     {/* 파트너 선택 모달 */}
     {showSellerModal && (
@@ -1127,6 +1139,39 @@ export default function KakaoBrandMessageCreate() {
                   />
                 </div>
               </div>
+            </section>
+
+            {/* 섹션 LMS: 수신차단 시 LMS 자동 발송 */}
+            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+              <label className="flex cursor-pointer items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={lmsEnabled}
+                  onChange={(e) => setLmsEnabled(e.target.checked)}
+                  className="h-4 w-4 accent-[#4DB87A]"
+                />
+                <span className="text-sm font-semibold text-gray-700">
+                  브랜드 메시지 수신차단 시 LMS 자동 발송
+                </span>
+              </label>
+
+              {lmsEnabled && (
+                <div className="mt-4 flex items-start gap-4 rounded-xl bg-gray-50 p-4">
+                  <div className="flex-1 space-y-1">
+                    <p className="text-xs font-semibold text-gray-600">LMS 제목</p>
+                    <p className="text-sm text-gray-700">{lmsData.title}</p>
+                    <p className="mt-1 text-xs text-gray-400">
+                      브랜드 메시지의 텍스트를 기반으로 자동 생성되었습니다. 수정이 필요하면 아래 버튼을 클릭하세요.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowLmsEditor(true)}
+                    className="shrink-0 rounded-xl border border-[#4DB87A] px-4 py-2 text-sm font-semibold text-[#4DB87A] hover:bg-[#f0faf5] transition-colors"
+                  >
+                    LMS 수정
+                  </button>
+                </div>
+              )}
             </section>
 
             {/* 섹션 8: 예상 지출 포인트 */}
