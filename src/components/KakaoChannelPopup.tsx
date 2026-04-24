@@ -55,7 +55,7 @@ export default function KakaoChannelPopup({ onClose }: Props) {
                   </p>
                   <p>
                     <span className="text-gray-400">· 제공하는 항목 : </span>
-                    <span className="font-semibold text-gray-800">회사명, 아이디, 이름, 연락처</span>
+                    <span className="font-semibold text-gray-800">회사명, 아이디, 이름, 연락처, 카테고리</span>
                   </p>
                   <p>
                     <span className="text-gray-400">· 제공받는 자의 보유 및 이용기간 : </span>
