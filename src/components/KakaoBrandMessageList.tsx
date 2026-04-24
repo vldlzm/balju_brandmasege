@@ -212,10 +212,13 @@ export default function KakaoBrandMessageList() {
   const [selectedCampaign, setSelectedCampaign] = useState<ScheduledMessage | null>(null);
   const [scheduledList, setScheduledList] = useState(SCHEDULED);
   const [cancelTarget, setCancelTarget] = useState<ScheduledMessage | null>(null);
+  const [scheduledEmptyDemo, setScheduledEmptyDemo] = useState(false);
+
+  const displayScheduled = scheduledEmptyDemo ? [] : scheduledList;
 
   const tabItems: { label: TabType; count: number }[] = [
     { label: '발송 완료', count: 18 },
-    { label: '발송 예정', count: SCHEDULED.length },
+    { label: '발송 예정', count: displayScheduled.length },
   ];
 
   return (
@@ -345,7 +348,36 @@ export default function KakaoBrandMessageList() {
             {/* 발송 예정 */}
             {activeTab === '발송 예정' && (
               <>
-                {scheduledList.map((msg) => (
+                {/* 데모 토글 */}
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => setScheduledEmptyDemo((v) => !v)}
+                    className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {scheduledEmptyDemo ? '▶ 데이터 있는 경우' : '▶ 빈 목록 보기'}
+                  </button>
+                </div>
+
+                {displayScheduled.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-20 text-center">
+                    <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8 text-gray-400" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                      </svg>
+                    </div>
+                    <p className="text-sm font-semibold text-gray-700">발송 예정인 캠페인이 없습니다</p>
+                    <p className="mt-1.5 text-xs text-gray-400">새 메시지를 만들어 예약 발송을 등록해 보세요</p>
+                    <Link href="/marketing/brand-message/create">
+                      <button className="mt-6 flex items-center gap-1.5 rounded-xl bg-[#4DB87A] px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-[#4DB87A]/30 hover:bg-[#3da869] active:scale-95 transition-all">
+                        <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
+                          <path d="M8 3a.75.75 0 01.75.75v3.5h3.5a.75.75 0 010 1.5h-3.5v3.5a.75.75 0 01-1.5 0v-3.5H3.75a.75.75 0 010-1.5h3.5V3.75A.75.75 0 018 3z" />
+                        </svg>
+                        새 메시지 만들기
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                displayScheduled.map((msg) => (
                   <article
                     key={msg.id}
                     onClick={() => setSelectedCampaign(msg)}
@@ -404,7 +436,8 @@ export default function KakaoBrandMessageList() {
                       </div>
                     </div>
                   </article>
-                ))}
+                ))
+                )}
               </>
             )}
 
