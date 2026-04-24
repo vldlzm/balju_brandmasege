@@ -2,16 +2,50 @@
 
 import { useState } from 'react';
 
-const DIVISION_OPTIONS = ['법인/대표자명의', '재직자', '타사 명의', '대표자의 가족', '재직자의 가족'];
+type Division = '법인/대표자명의' | '재직자' | '타사 명의' | '대표자의 가족' | '재직자의 가족';
+
+const DIVISION_OPTIONS: Division[] = ['법인/대표자명의', '재직자', '타사 명의', '대표자의 가족', '재직자의 가족'];
+
+interface FileItem {
+  label: string;
+  fileNum: number;
+}
+
+const FILES_BY_DIVISION: Record<Division, FileItem[]> = {
+  '법인/대표자명의': [
+    { label: '가입확인서', fileNum: 1 },
+    { label: '사업자등록증, 사업자정보', fileNum: 3 },
+  ],
+  '재직자': [
+    { label: '가입확인서', fileNum: 1 },
+    { label: '재직증명서', fileNum: 2 },
+    { label: '사업자등록증, 사업자정보', fileNum: 3 },
+  ],
+  '타사 명의': [
+    { label: '가입확인서', fileNum: 1 },
+    { label: '사업자등록증, 사업자정보', fileNum: 3 },
+  ],
+  '대표자의 가족': [
+    { label: '가입확인서', fileNum: 1 },
+    { label: '사업자등록증, 사업자정보', fileNum: 3 },
+  ],
+  '재직자의 가족': [
+    { label: '가입확인서', fileNum: 1 },
+    { label: '재직증명서', fileNum: 2 },
+    { label: '사업자등록증, 사업자정보', fileNum: 3 },
+  ],
+};
 
 interface Props {
   onClose: () => void;
 }
 
 export default function SenderNumberPopup({ onClose }: Props) {
-  const [division, setDivision] = useState('법인/대표자명의');
+  const [division, setDivision] = useState<Division>('법인/대표자명의');
   const [senderName, setSenderName] = useState('');
   const [senderNumber, setSenderNumber] = useState('');
+
+  const files = FILES_BY_DIVISION[division];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
@@ -35,7 +69,7 @@ export default function SenderNumberPopup({ onClose }: Props) {
           {/* 구분 */}
           <div className="flex items-center gap-4 rounded-xl border border-gray-200 px-5 py-4">
             <span className="w-12 shrink-0 text-sm font-semibold text-gray-700">구분</span>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-5">
               {DIVISION_OPTIONS.map((opt) => (
                 <label key={opt} className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-600">
                   <input
@@ -66,7 +100,7 @@ export default function SenderNumberPopup({ onClose }: Props) {
               <tbody>
                 <tr>
                   {/* 발신자명 */}
-                  <td className="px-4 py-4 text-center">
+                  <td className="w-[26%] px-4 py-5 align-middle">
                     <input
                       type="text"
                       value={senderName}
@@ -77,7 +111,7 @@ export default function SenderNumberPopup({ onClose }: Props) {
                   </td>
 
                   {/* 발신번호 */}
-                  <td className="px-4 py-4 text-center">
+                  <td className="w-[26%] px-4 py-5 align-middle">
                     <input
                       type="text"
                       value={senderNumber}
@@ -87,30 +121,26 @@ export default function SenderNumberPopup({ onClose }: Props) {
                     />
                   </td>
 
-                  {/* 첨부파일업로드 */}
-                  <td className="px-4 py-4">
+                  {/* 첨부파일업로드 — 구분에 따라 동적 */}
+                  <td className="px-4 py-5 align-middle">
                     <div className="flex flex-col gap-2">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs text-gray-500">가입확인서</span>
-                        <button className="rounded-lg border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
-                          파일1
-                        </button>
-                      </div>
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs text-gray-500">사업자등록증, 사업자정보</span>
-                        <button className="rounded-lg border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
-                          파일3
-                        </button>
-                      </div>
-                      <p className="text-[11px] text-red-500 leading-relaxed">
+                      {files.map((f) => (
+                        <div key={f.fileNum} className="flex items-center justify-between gap-3">
+                          <span className="text-xs text-gray-500 shrink-0">{f.label}</span>
+                          <button className="shrink-0 rounded-lg bg-gray-600 px-3 py-1 text-xs font-semibold text-white hover:bg-gray-700 transition-colors">
+                            파일{f.fileNum}
+                          </button>
+                        </div>
+                      ))}
+                      <p className="mt-1 text-[11px] text-red-500 leading-relaxed">
                         ① 신청서 첨부서류는 신청서 가이드 확인 후 진행해주세요
                       </p>
                     </div>
                   </td>
 
                   {/* 관리 */}
-                  <td className="px-4 py-4 text-center">
-                    <button className="rounded-xl bg-[#4DB87A] px-4 py-2 text-xs font-bold text-white hover:bg-[#3da869] transition-colors whitespace-nowrap">
+                  <td className="w-[18%] px-4 py-5 text-center align-middle">
+                    <button className="rounded-xl bg-gray-700 px-4 py-2.5 text-xs font-bold text-white hover:bg-gray-800 transition-colors whitespace-nowrap">
                       발신번호 신청 요청
                     </button>
                   </td>
