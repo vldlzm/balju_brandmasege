@@ -11,14 +11,7 @@ interface Props {
   onSave: (data: { title: string; content: string }) => void;
 }
 
-const VARIABLES = [
-  { key: '#{상점명}',      desc: '쇼핑몰명' },
-  { key: '#{채널명}',      desc: '쇼핑몰 채널명' },
-  { key: '#{회원명}',      desc: '주문자명' },
-  { key: '#{수신거부번호}', desc: '수신거부번호' },
-];
-
-const DEFAULT_CONTENT = '[#{상점명}] 안녕하세요, #{회원명}님!\n#{상점명}을 이용해 주셔서 감사합니다.\n#{회원명}님께 감사하는 마음으로 APP에서 사용 가능한 비밀 할인코드를 지급해 드렸습니다.\n\n[무료수신거부]\n#{수신거부번호}';
+const DEFAULT_CONTENT = '[#{상점명}] 안녕하세요, #{회원명}님!\n\n#{수신거부번호}';
 
 export default function LmsEditorPopup({
   senderNumber = '0269532203',
@@ -140,17 +133,6 @@ export default function LmsEditorPopup({
               </div>
             </div>
 
-            {/* 치환 변수 */}
-            <div className="space-y-1.5">
-              <p className="text-sm font-semibold text-gray-700">치환</p>
-              <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 space-y-1.5">
-                {VARIABLES.map((v) => (
-                  <p key={v.key} className="text-xs text-gray-500">
-                    <span className="font-medium text-gray-700">{v.key}</span> {v.desc}
-                  </p>
-                ))}
-              </div>
-            </div>
 
           </div>
         </div>

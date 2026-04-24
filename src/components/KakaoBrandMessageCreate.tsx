@@ -300,7 +300,7 @@ export default function KakaoBrandMessageCreate() {
     {showLmsEditor && (
       <LmsEditorPopup
         defaultTitle={lmsData.title}
-        defaultContent={lmsData.content || (content ? content : '[#{상점명}] 안녕하세요, #{회원명}님!\n#{상점명}을 이용해 주셔서 감사합니다.\n#{회원명}님께 감사하는 마음으로 APP에서 사용 가능한 비밀 할인코드를 지급해 드렸습니다.\n\n▶ 할인코드: #{할인코드}\n▶ 할인내용: #{할인금액} 할인\n▶ 만료일: #{만료일}\n\n▶ 할인코드 사용하기\n[무료수신거부]\n#{수신거부번호}')}
+        defaultContent={lmsData.content || '[#{상점명}] 안녕하세요, #{회원명}님!\n\n#{수신거부번호}'}
         onClose={() => setShowLmsEditor(false)}
         onSave={(data) => setLmsData(data)}
       />
