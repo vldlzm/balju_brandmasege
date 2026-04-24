@@ -245,7 +245,7 @@ export default function KakaoBrandMessageList() {
                 {'charge' in stat && stat.charge && (
                   <button
                     onClick={() => setShowCharge(true)}
-                    className="rounded-lg bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-900 hover:bg-amber-300 transition-colors"
+                    className="rounded-xl bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-900 hover:bg-amber-300 transition-colors"
                   >
                     충전하기
                   </button>
@@ -391,13 +391,13 @@ export default function KakaoBrandMessageList() {
                       <div className="flex shrink-0 items-center gap-2" onClick={(e) => e.stopPropagation()}>
                         <button
                           onClick={() => setShowTestSend(true)}
-                          className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
+                          className="rounded-xl border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
                         >
                           테스트 발송
                         </button>
                         <button
                           onClick={() => setCancelTarget(msg)}
-                          className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors"
+                          className="rounded-xl border border-red-200 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 transition-colors"
                         >
                           발송취소
                         </button>
@@ -476,7 +476,7 @@ export default function KakaoBrandMessageList() {
                       <div className="flex shrink-0 flex-col items-end gap-2">
                         <button
                           onClick={() => setShowStats(true)}
-                          className="rounded-lg border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:border-gray-300 hover:bg-gray-50 transition-colors"
+                          className="rounded-xl border border-gray-200 px-3.5 py-2 text-xs font-semibold text-gray-600 hover:border-gray-300 hover:bg-gray-50 transition-colors"
                         >
                           통계
                         </button>

@@ -209,7 +209,7 @@ export default function KakaoBrandMessageDetail({ campaign, onClose, onCancel }:
                           <>
                             <div className="mb-2 h-20 w-full rounded-lg bg-gray-200 flex items-center justify-center text-2xl">🖼</div>
                             <p className="text-[10px] font-bold text-gray-800 leading-tight">{campaign.title}</p>
-                            <div className="mt-2 rounded-lg border border-gray-200 py-1.5 text-center text-[10px] font-semibold text-[#4DB87A]">자세히 보기</div>
+                            <div className="mt-2 rounded-xl border border-gray-200 py-1.5 text-center text-[10px] font-semibold text-[#4DB87A]">자세히 보기</div>
                           </>
                         )}
                         {campaign.formatType === '와이드 리스트' && (

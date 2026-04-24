@@ -349,7 +349,7 @@ export default function KakaoBrandMessageCreate() {
                 value={sellerSearch}
                 onChange={(e) => setSellerSearch(e.target.value)}
                 placeholder="파트너명 검색"
-                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all"
               />
             </div>
           </div>
@@ -400,7 +400,7 @@ export default function KakaoBrandMessageCreate() {
                         {sellerSearch && (
                           <button
                             onClick={() => setSellerSearch('')}
-                            className="mt-1 rounded-lg border border-gray-200 px-4 py-1.5 text-xs font-semibold text-gray-500 hover:bg-gray-50 transition-colors"
+                            className="mt-1 rounded-xl border border-gray-200 px-4 py-1.5 text-xs font-semibold text-gray-500 hover:bg-gray-50 transition-colors"
                           >
                             검색 초기화
                           </button>
@@ -479,7 +479,7 @@ export default function KakaoBrandMessageCreate() {
               </svg>
               <input type="text" value={productSearch} onChange={(e) => setProductSearch(e.target.value)}
                 placeholder="상품명으로 검색"
-                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
             </div>
           </div>
           <div className="flex-1 overflow-y-auto">
@@ -613,7 +613,7 @@ export default function KakaoBrandMessageCreate() {
                 </h2>
                 <button
                   onClick={() => setShowSellerModal(true)}
-                  className="rounded-lg bg-[#4DB87A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#3da869] active:scale-95 transition-all"
+                  className="rounded-xl bg-[#4DB87A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#3da869] active:scale-95 transition-all"
                 >
                   + 파트너 불러오기
                 </button>
@@ -735,7 +735,7 @@ export default function KakaoBrandMessageCreate() {
                       <p className="text-xs font-semibold text-gray-500">버튼 1</p>
                       <div className="relative">
                         <input type="text" value={button1} onChange={(e) => setButton1(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
-                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{button1.length}/8</span>
                       </div>
                       <div className="relative">
@@ -743,7 +743,7 @@ export default function KakaoBrandMessageCreate() {
                           <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
                         </span>
                         <input type="url" value={button1Link} onChange={(e) => setButton1Link(e.target.value)} placeholder="https://example.com"
-                          className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                       </div>
                     </div>
 
@@ -756,7 +756,7 @@ export default function KakaoBrandMessageCreate() {
                         </div>
                         <div className="relative">
                           <input type="text" value={button2} onChange={(e) => setButton2(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
-                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                            className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{button2.length}/8</span>
                         </div>
                         <div className="relative">
@@ -764,7 +764,7 @@ export default function KakaoBrandMessageCreate() {
                             <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
                           </span>
                           <input type="url" value={button2Link} onChange={(e) => setButton2Link(e.target.value)} placeholder="https://example.com"
-                            className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                            className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         </div>
                       </div>
                     ) : (
@@ -822,7 +822,7 @@ export default function KakaoBrandMessageCreate() {
                         </button>
                       </div>
                       {wlList1Product ? (
-                        <div className="mb-3 flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3">
+                        <div className="mb-3 flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3">
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-400">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
                           </div>
@@ -843,7 +843,7 @@ export default function KakaoBrandMessageCreate() {
                       <div className="relative">
                         <input type="text" value={wlList1Text} onChange={(e) => setWlList1Text(e.target.value.slice(0, 25))}
                           placeholder={wlList1Product ? wlList1Product.name : '리스트1 문구 입력 (최대 25자)'}
-                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 pr-14 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 pr-14 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlList1Text.length}/25</span>
                       </div>
                     </div>
@@ -868,7 +868,7 @@ export default function KakaoBrandMessageCreate() {
                           )}
                         </div>
                         {item.product ? (
-                          <div className="mb-3 flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3">
+                          <div className="mb-3 flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3">
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-400">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
                             </div>
@@ -890,7 +890,7 @@ export default function KakaoBrandMessageCreate() {
                           <textarea value={item.text} onChange={(e) => updateWlItemText(item.id, e.target.value)}
                             placeholder={item.product ? item.product.name : `리스트${idx+2} 문구 입력 (최대 30자, 줄바꿈 1회 가능)`}
                             rows={2}
-                            className="w-full resize-none rounded-lg border border-gray-200 bg-white px-3 py-2 pb-5 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                            className="w-full resize-none rounded-xl border border-gray-200 bg-white px-3 py-2 pb-5 text-sm focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                           <span className="absolute bottom-2 right-3 text-xs tabular-nums text-gray-400">{item.text.length}/30</span>
                         </div>
                       </div>
@@ -915,7 +915,7 @@ export default function KakaoBrandMessageCreate() {
                       <p className="text-xs font-semibold text-gray-500">버튼 1</p>
                       <div className="relative">
                         <input type="text" value={wlBtn1} onChange={(e) => setWlBtn1(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
-                          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlBtn1.length}/8</span>
                       </div>
                       <div className="relative">
@@ -923,7 +923,7 @@ export default function KakaoBrandMessageCreate() {
                           <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
                         </span>
                         <input type="url" value={wlBtn1Link} onChange={(e) => setWlBtn1Link(e.target.value)} placeholder="https://example.com"
-                          className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                          className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                       </div>
                     </div>
 
@@ -936,7 +936,7 @@ export default function KakaoBrandMessageCreate() {
                         </div>
                         <div className="relative">
                           <input type="text" value={wlBtn2} onChange={(e) => setWlBtn2(e.target.value.slice(0, 8))} placeholder="버튼 텍스트 입력"
-                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                            className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                           <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{wlBtn2.length}/8</span>
                         </div>
                         <div className="relative">
@@ -944,7 +944,7 @@ export default function KakaoBrandMessageCreate() {
                             <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
                           </span>
                           <input type="url" value={wlBtn2Link} onChange={(e) => setWlBtn2Link(e.target.value)} placeholder="https://example.com"
-                            className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                            className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                         </div>
                       </div>
                     ) : (
@@ -1015,7 +1015,7 @@ export default function KakaoBrandMessageCreate() {
                           </button>
                         </div>
                         {item.product ? (
-                          <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3">
+                          <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3">
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-200 text-gray-400">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l4-4 4 4 3-3 4 4"/><circle cx="8.5" cy="9.5" r="1.5"/></svg>
                             </div>
@@ -1068,7 +1068,7 @@ export default function KakaoBrandMessageCreate() {
                             <p className="text-xs font-semibold text-gray-500">버튼 1 <span className="text-red-500">*</span></p>
                             <div className="relative">
                               <input type="text" value={item.btn1} onChange={(e) => updateCarousel(item.id, { btn1: e.target.value.slice(0, 8) })} placeholder="버튼 텍스트 입력"
-                                className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.btn1.length}/8</span>
                             </div>
                             <div className="relative">
@@ -1076,7 +1076,7 @@ export default function KakaoBrandMessageCreate() {
                                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
                               </span>
                               <input type="url" value={item.btn1Link} onChange={(e) => updateCarousel(item.id, { btn1Link: e.target.value })} placeholder="https://example.com"
-                                className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                                className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                             </div>
                           </div>
                           {/* 버튼 2 */}
@@ -1088,7 +1088,7 @@ export default function KakaoBrandMessageCreate() {
                               </div>
                               <div className="relative">
                                 <input type="text" value={item.btn2} onChange={(e) => updateCarousel(item.id, { btn2: e.target.value.slice(0, 8) })} placeholder="버튼 텍스트 입력"
-                                  className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                                  className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 pr-14 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs tabular-nums text-gray-400">{item.btn2.length}/8</span>
                               </div>
                               <div className="relative">
@@ -1096,7 +1096,7 @@ export default function KakaoBrandMessageCreate() {
                                   <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
                                 </span>
                                 <input type="url" value={item.btn2Link} onChange={(e) => updateCarousel(item.id, { btn2Link: e.target.value })} placeholder="https://example.com"
-                                  className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
+                                  className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-3 text-sm placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none focus:ring-1 focus:ring-[#4DB87A] transition-all" />
                               </div>
                             </div>
                           ) : (

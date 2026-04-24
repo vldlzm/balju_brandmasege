@@ -83,7 +83,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
               <select
                 value={searchField}
                 onChange={(e) => setSearchField(e.target.value)}
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none"
+                className="rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none"
               >
                 {['상품명', '상품코드'].map((f) => <option key={f}>{f}</option>)}
               </select>
@@ -92,10 +92,10 @@ export default function ProductSelectPopup({ onClose }: Props) {
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 placeholder="검색 내용 입력"
-                className="w-48 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none"
+                className="w-48 rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none"
               />
-              <button className="rounded-lg bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors">검색</button>
-              <button onClick={() => { setSearchText(''); setFilterType('전체'); }} className="rounded-lg bg-[#6b7280] px-4 py-2 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
+              <button className="rounded-xl bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors">검색</button>
+              <button onClick={() => { setSearchText(''); setFilterType('전체'); }} className="rounded-xl bg-[#6b7280] px-4 py-2 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
             </div>
           </div>
 
@@ -109,7 +109,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
               <span className="text-xs text-gray-500">선택한 상품</span>
               <button onClick={handleExclude} className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 transition-colors">제외</button>
               <button onClick={handleRestore} className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors">복원</button>
-              <select className="rounded-lg border border-gray-300 px-2 py-1.5 text-xs text-gray-600 focus:outline-none">
+              <select className="rounded-xl border border-gray-300 px-2 py-1.5 text-xs text-gray-600 focus:outline-none">
                 <option>100개씩 보기</option>
                 <option>50개씩 보기</option>
               </select>
@@ -144,7 +144,7 @@ export default function ProductSelectPopup({ onClose }: Props) {
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           {/* 이미지 플레이스홀더 */}
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 border border-gray-200">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 border border-gray-200">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5 text-gray-300" strokeWidth={1.5}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 18h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v10.5a1.5 1.5 0 001.5 1.5z" />
                             </svg>

@@ -77,7 +77,7 @@ export default function PromotionSettingsComplete() {
               </button>
               <button
                 onClick={() => setShowSenderPopup(true)}
-                className="rounded-lg bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors"
+                className="rounded-xl bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors"
               >
                 발신번호신청 +
               </button>
@@ -115,8 +115,8 @@ export default function PromotionSettingsComplete() {
             </div>
 
             <div className="mt-4 flex justify-center gap-2">
-              <button className="rounded-lg bg-[#6b7280] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
-              <button className="rounded-lg bg-[#374151] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#1f2937] transition-colors">적용</button>
+              <button className="rounded-xl bg-[#6b7280] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
+              <button className="rounded-xl bg-[#374151] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#1f2937] transition-colors">적용</button>
             </div>
           </div>
 
@@ -186,7 +186,7 @@ export default function PromotionSettingsComplete() {
                     </label>
                   </div>
                   {rejectType === '신규' && (
-                    <button className="w-fit rounded-lg bg-[#4DB87A] px-5 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">신청</button>
+                    <button className="w-fit rounded-xl bg-[#4DB87A] px-5 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">신청</button>
                   )}
                   {rejectType === '직접입력' && (
                     <div className="flex flex-wrap items-center gap-3">
@@ -194,7 +194,7 @@ export default function PromotionSettingsComplete() {
                         type="text"
                         value={rejectNumber}
                         onChange={(e) => setRejectNumber(e.target.value)}
-                        className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
+                        className="rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                       />
                       <p className="text-xs text-red-500 leading-relaxed max-w-md">
                         ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 파트너는 &apos;파트너 제외 설정&apos;을 통해 수동으로 등록해 주세요.
@@ -250,7 +250,7 @@ export default function PromotionSettingsComplete() {
           <div className="divide-y divide-gray-100 px-6">
             <div className="flex items-center gap-6 py-5">
               <span className="w-44 shrink-0 text-sm font-medium text-gray-700">파트너 제외 설정</span>
-              <button onClick={() => setShowPartnerPopup(true)} className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
+              <button onClick={() => setShowPartnerPopup(true)} className="flex items-center gap-1 rounded-xl border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
                 파트너 제외 선택
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
                   <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -260,7 +260,7 @@ export default function PromotionSettingsComplete() {
             </div>
             <div className="flex items-center gap-6 py-5">
               <span className="w-44 shrink-0 text-sm font-medium text-gray-700">상품 제외 설정</span>
-              <button onClick={() => setShowProductPopup(true)} className="flex items-center gap-1 rounded-lg border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
+              <button onClick={() => setShowProductPopup(true)} className="flex items-center gap-1 rounded-xl border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
                 상품 제외 선택
                 <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
                   <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />

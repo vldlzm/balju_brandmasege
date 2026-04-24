@@ -166,24 +166,24 @@ export default function PointManagement() {
                 type="date"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-600 focus:border-[#4DB87A] focus:outline-none"
+                className="rounded-xl border border-gray-200 px-3 py-1.5 text-xs text-gray-600 focus:border-[#4DB87A] focus:outline-none"
               />
               <span className="text-gray-400 text-xs">~</span>
               <input
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-600 focus:border-[#4DB87A] focus:outline-none"
+                className="rounded-xl border border-gray-200 px-3 py-1.5 text-xs text-gray-600 focus:border-[#4DB87A] focus:outline-none"
               />
               <button
                 onClick={handleSearch}
-                className="rounded-lg bg-[#4DB87A] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#3da869] transition-colors"
+                className="rounded-xl bg-[#4DB87A] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#3da869] transition-colors"
               >
                 조회
               </button>
               <button
                 onClick={handleReset}
-                className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+                className="rounded-xl border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-500 hover:bg-gray-50 transition-colors"
               >
                 초기화
               </button>
@@ -241,7 +241,7 @@ export default function PointManagement() {
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex h-8 w-8 items-center justify-center rounded-xl border border-gray-200 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 ‹
               </button>
@@ -261,7 +261,7 @@ export default function PointManagement() {
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex h-8 w-8 items-center justify-center rounded-xl border border-gray-200 text-xs text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 ›
               </button>

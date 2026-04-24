@@ -72,7 +72,7 @@ export default function SenderNumberPopup({ onClose }: Props) {
                       value={senderName}
                       onChange={(e) => setSenderName(e.target.value)}
                       placeholder="ex) FLEXG"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
+                      className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                     />
                   </td>
 
@@ -83,7 +83,7 @@ export default function SenderNumberPopup({ onClose }: Props) {
                       value={senderNumber}
                       onChange={(e) => setSenderNumber(e.target.value)}
                       placeholder="ex) 070-0000-0000"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
+                      className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                     />
                   </td>
 
@@ -110,7 +110,7 @@ export default function SenderNumberPopup({ onClose }: Props) {
 
                   {/* 관리 */}
                   <td className="px-4 py-4 text-center">
-                    <button className="rounded-lg bg-[#374151] px-4 py-2 text-xs font-bold text-white hover:bg-[#1f2937] transition-colors whitespace-nowrap">
+                    <button className="rounded-xl bg-[#374151] px-4 py-2 text-xs font-bold text-white hover:bg-[#1f2937] transition-colors whitespace-nowrap">
                       발신번호 신청 요청
                     </button>
                   </td>

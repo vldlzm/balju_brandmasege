@@ -54,7 +54,7 @@ export default function KakaoBrandMessageEmpty() {
                 {'charge' in stat && stat.charge && (
                   <button
                     onClick={() => setShowCharge(true)}
-                    className="rounded-lg bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-900 hover:bg-amber-300 transition-colors"
+                    className="rounded-xl bg-amber-400 px-2.5 py-1 text-[11px] font-bold text-amber-900 hover:bg-amber-300 transition-colors"
                   >
                     충전하기
                   </button>

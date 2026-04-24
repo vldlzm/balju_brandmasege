@@ -96,7 +96,7 @@ export default function PartnerSelectPopup({ onClose }: Props) {
               <select
                 value={searchField}
                 onChange={(e) => setSearchField(e.target.value)}
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none"
+                className="rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none"
               >
                 {['이름', '아이디', '휴대폰'].map((f) => <option key={f}>{f}</option>)}
               </select>
@@ -105,10 +105,10 @@ export default function PartnerSelectPopup({ onClose }: Props) {
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 placeholder="검색 내용 입력"
-                className="w-48 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none"
+                className="w-48 rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-[#4DB87A] focus:outline-none"
               />
-              <button className="rounded-lg bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors">검색</button>
-              <button onClick={() => { setSearchText(''); setFilterType('전체'); }} className="rounded-lg bg-[#6b7280] px-4 py-2 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
+              <button className="rounded-xl bg-[#4b5563] px-4 py-2 text-sm font-semibold text-white hover:bg-[#374151] transition-colors">검색</button>
+              <button onClick={() => { setSearchText(''); setFilterType('전체'); }} className="rounded-xl bg-[#6b7280] px-4 py-2 text-sm font-semibold text-white hover:bg-[#4b5563] transition-colors">초기화</button>
             </div>
           </div>
 
@@ -122,7 +122,7 @@ export default function PartnerSelectPopup({ onClose }: Props) {
               <span className="text-xs text-gray-500">선택한 파트너</span>
               <button onClick={handleExclude} className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 transition-colors">제외</button>
               <button onClick={handleRestore} className="rounded-md bg-[#6b7280] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#4b5563] transition-colors">복원</button>
-              <select className="rounded-lg border border-gray-300 px-2 py-1.5 text-xs text-gray-600 focus:outline-none">
+              <select className="rounded-xl border border-gray-300 px-2 py-1.5 text-xs text-gray-600 focus:outline-none">
                 <option>100개씩 보기</option>
                 <option>50개씩 보기</option>
               </select>
@@ -166,7 +166,7 @@ export default function PartnerSelectPopup({ onClose }: Props) {
                             value={memoInputs[p.id] ?? ''}
                             onChange={(e) => setMemoInputs((prev) => ({ ...prev, [p.id]: e.target.value }))}
                             placeholder="메모 입력"
-                            className="w-28 rounded-lg border border-gray-200 px-2 py-1 text-xs text-gray-700 placeholder-gray-300 focus:border-[#4DB87A] focus:outline-none"
+                            className="w-28 rounded-xl border border-gray-200 px-2 py-1 text-xs text-gray-700 placeholder-gray-300 focus:border-[#4DB87A] focus:outline-none"
                           />
                           <button
                             onClick={() => handleSaveMemo(p.id)}
