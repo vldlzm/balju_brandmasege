@@ -129,7 +129,7 @@ function Bubble({ n }: { n: number }) {
 
 export default function KakaoBrandMessageCreate() {
   const [campaignName, setCampaignName] = useState('');
-  const [messageType, setMessageType] = useState<MessageType | null>(null);
+  const [messageType, setMessageType] = useState<MessageType | null>('wide-image');
   const [selectedSellers, setSelectedSellers] = useState<string[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [contentCategory, setContentCategory] = useState<ContentCategory | null>(null);
