@@ -74,7 +74,6 @@ export default function KakaoBrandMessageCreateNoSettings() {
   const [messageType, setMessageType] = useState<MessageType | null>(null);
   const [selectedSellers, setSelectedSellers] = useState<string[]>([]);
   const [showSellerModal, setShowSellerModal] = useState(false);
-  const [sendType, setSendType] = useState<'즉시' | '예약'>('즉시');
   const [scheduledDate, setScheduledDate] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
 
@@ -223,47 +222,27 @@ export default function KakaoBrandMessageCreateNoSettings() {
 
             {/* 섹션 4: 발송 설정 */}
             <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
-                발송 설정 <span className="text-red-500">*</span>
-              </h2>
-              <div className="flex gap-6">
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input
-                    type="radio"
-                    name="sendType"
-                    checked={sendType === '즉시'}
-                    onChange={() => setSendType('즉시')}
-                    className="h-4 w-4 accent-[#4DB87A]"
-                  />
-                  <span className="text-sm text-gray-700">즉시 발송</span>
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input
-                    type="radio"
-                    name="sendType"
-                    checked={sendType === '예약'}
-                    onChange={() => setSendType('예약')}
-                    className="h-4 w-4 accent-[#4DB87A]"
-                  />
-                  <span className="text-sm text-gray-700">예약 발송</span>
-                </label>
-              </div>
-              {sendType === '예약' && (
-                <div className="mt-4 flex items-center gap-3">
+              <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">발송 설정</h2>
+              <div className="flex flex-wrap gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-medium text-gray-500">날짜 <span className="text-red-500">*</span></label>
                   <input
                     type="date"
                     value={scheduledDate}
                     onChange={(e) => setScheduledDate(e.target.value)}
-                    className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
+                    className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                   />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-medium text-gray-500">시간 <span className="text-red-500">*</span></label>
                   <input
                     type="time"
                     value={scheduledTime}
                     onChange={(e) => setScheduledTime(e.target.value)}
-                    className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
+                    className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                   />
                 </div>
-              )}
+              </div>
             </section>
 
             {/* 섹션 5: LMS 자동 발송 (비활성 — 무료 수신거부번호 미등록) */}
