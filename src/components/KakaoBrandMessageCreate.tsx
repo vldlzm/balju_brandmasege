@@ -152,11 +152,6 @@ export default function KakaoBrandMessageCreate() {
   const [showButton2, setShowButton2] = useState(false);
   const [scheduledDate, setScheduledDate] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
-  const tomorrow = (() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    return d.toISOString().split('T')[0];
-  })();
 
   // 캐러셀 전용 state
   const newCarouselItem = (): CarouselItem => ({ id: Date.now(), product: null, header: '', content: '', btn1: '', btn1Link: '', btn2: '', btn2Link: '', showBtn2: false });
@@ -1124,7 +1119,6 @@ export default function KakaoBrandMessageCreate() {
                   <input
                     type="date"
                     value={scheduledDate}
-                    min={tomorrow}
                     onChange={(e) => setScheduledDate(e.target.value)}
                     className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 focus:border-[#4DB87A] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                   />
