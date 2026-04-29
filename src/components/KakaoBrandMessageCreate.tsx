@@ -1112,7 +1112,6 @@ export default function KakaoBrandMessageCreate() {
             <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <Bubble n={4} />
               <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">발송 설정</h2>
-              <p className="mb-4 text-xs text-gray-400">오늘 이후 날짜부터 선택 가능합니다.</p>
               <div className="flex flex-wrap gap-4">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-medium text-gray-500">날짜 <span className="text-red-500">*</span></label>
