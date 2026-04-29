@@ -1394,14 +1394,27 @@ export default function KakaoBrandMessageCreate() {
                               {messageType ? (
                                 <div className="flex h-full flex-col items-center justify-center gap-1 bg-gradient-to-br from-gray-200 to-gray-300">
                                   {messageType === 'wide-image' && (
-                                    <>
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-8 w-8">
-                                        <rect x="3" y="5" width="18" height="14" rx="2" />
-                                        <path d="M3 15l4-4 4 4 3-3 4 4" />
-                                        <circle cx="8.5" cy="9.5" r="1.5" />
-                                      </svg>
-                                      <span className="text-[8px] text-gray-400">와이드 이미지</span>
-                                    </>
+                                    selectedProduct ? (
+                                      <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-gradient-to-br from-[#ddeee5] to-[#c4dfd0]">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="#4DB87A" strokeWidth={1.5} className="h-7 w-7 opacity-70">
+                                          <rect x="3" y="5" width="18" height="14" rx="2" />
+                                          <path d="M3 15l4-4 4 4 3-3 4 4" />
+                                          <circle cx="8.5" cy="9.5" r="1.5" />
+                                        </svg>
+                                        <span className="px-3 text-center text-[7px] font-medium leading-tight text-[#2a7a4f] line-clamp-2">
+                                          {selectedProduct.name}
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={1.5} className="h-8 w-8">
+                                          <rect x="3" y="5" width="18" height="14" rx="2" />
+                                          <path d="M3 15l4-4 4 4 3-3 4 4" />
+                                          <circle cx="8.5" cy="9.5" r="1.5" />
+                                        </svg>
+                                        <span className="text-[8px] text-gray-400">와이드 이미지</span>
+                                      </>
+                                    )
                                   )}
                                   {messageType === 'wide-list' && (
                                     <div className="flex h-full w-full items-center justify-center bg-gray-200">
