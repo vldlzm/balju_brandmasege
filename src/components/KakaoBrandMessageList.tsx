@@ -237,7 +237,7 @@ export default function KakaoBrandMessageList() {
 
         {/* ── 요약 통계 ── */}
         <div className="relative overflow-visible grid grid-cols-4 gap-4">
-          <Bubble n={3} />
+          <Bubble n={1} />
           {[
             { label: '이번달 발송 완료', value: '18건', sub: '전월 대비 +3건', color: 'text-[#4DB87A]' },
             { label: '발송 예정', value: '3건', sub: '가장 빠른 발송 2일 후', color: 'text-blue-500' },
@@ -264,7 +264,7 @@ export default function KakaoBrandMessageList() {
 
         {/* ── 필터 ── */}
         <section className="relative overflow-visible rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
-          <Bubble n={4} />
+          <Bubble n={2} />
           <div className="flex flex-wrap items-center gap-3">
             <select
               value={periodFilter}
@@ -309,7 +309,7 @@ export default function KakaoBrandMessageList() {
           <div className="flex items-end gap-1">
             {tabItems.map((tab) => {
               const isActive = activeTab === tab.label;
-              const tabBadge = tab.label === '발송 예정' ? 1 : 2;
+              const tabBadge = tab.label === '발송 완료' ? 3 : 4;
               return (
                 <button
                   key={tab.label}
