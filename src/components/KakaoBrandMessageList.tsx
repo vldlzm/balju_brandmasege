@@ -213,11 +213,13 @@ export default function KakaoBrandMessageList() {
   const [scheduledList, setScheduledList] = useState(SCHEDULED);
   const [cancelTarget, setCancelTarget] = useState<ScheduledMessage | null>(null);
   const [scheduledEmptyDemo, setScheduledEmptyDemo] = useState(false);
+  const [completedEmptyDemo, setCompletedEmptyDemo] = useState(false);
 
   const displayScheduled = scheduledEmptyDemo ? [] : scheduledList;
+  const displayCompleted = completedEmptyDemo ? [] : COMPLETED;
 
   const tabItems: { label: TabType; count: number }[] = [
-    { label: '발송 완료', count: 18 },
+    { label: '발송 완료', count: completedEmptyDemo ? 0 : 18 },
     { label: '발송 예정', count: displayScheduled.length },
   ];
 
@@ -444,7 +446,28 @@ export default function KakaoBrandMessageList() {
             {/* 발송 완료 */}
             {activeTab === '발송 완료' && (
               <>
-                {COMPLETED.map((msg) => (
+                {/* 데모 토글 */}
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => setCompletedEmptyDemo((v) => !v)}
+                    className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {completedEmptyDemo ? '▶ 데이터 있는 경우' : '▶ 빈 목록 보기'}
+                  </button>
+                </div>
+
+                {displayCompleted.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-20 text-center">
+                    <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8 text-gray-400" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M6 12 3.269 3.125A59.769 59.769 0 0121.485 12 59.768 59.768 0 013.27 20.875L5.999 12zm0 0h7.5" />
+                      </svg>
+                    </div>
+                    <p className="text-sm font-semibold text-gray-700">발송 완료된 캠페인이 없습니다</p>
+                    <p className="mt-1.5 text-xs text-gray-400">메시지를 발송하면 이곳에서 결과를 확인할 수 있습니다</p>
+                  </div>
+                ) : (
+                displayCompleted.map((msg) => (
                   <article key={msg.id} className="group rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex flex-1 flex-col gap-3">
@@ -516,7 +539,8 @@ export default function KakaoBrandMessageList() {
                       </div>
                     </div>
                   </article>
-                ))}
+                ))
+                )}
               </>
             )}
 
