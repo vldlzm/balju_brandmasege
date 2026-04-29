@@ -396,6 +396,13 @@ export default function KakaoBrandMessageCreateNoSettings() {
                 </svg>
               </button>
             </div>
+            {/* 안내 문구 */}
+            <div className="flex items-start gap-2 border-b border-gray-100 bg-blue-50 px-6 py-3">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 h-4 w-4 shrink-0 text-blue-400">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clipRule="evenodd" />
+              </svg>
+              <p className="text-xs text-blue-700">마케팅 수신 동의에 동의한 파트너들로 수신차단한 파트너들이 포함되어 있을 수 있습니다.</p>
+            </div>
             <div className="flex-1 overflow-y-auto p-2">
               {DEMO_SELLERS.map((seller) => (
                 <label key={seller.id} className="flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 hover:bg-gray-50 transition-colors">
