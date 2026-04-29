@@ -24,11 +24,15 @@ interface SenderRequest {
 }
 
 const INITIAL_SENDERS: SenderNumber[] = [
-  { id: 's1', name: '발주모아 파트너스', number: '010-3327-1103', enabled: true, isRepresentative: true },
+  { id: 's1', name: '발주모아 파트너스',   number: '010-3327-1103', enabled: true,  isRepresentative: true  },
+  { id: 's2', name: '발주모아 고객센터',   number: '070-4005-2280', enabled: true,  isRepresentative: false },
+  { id: 's3', name: '발주모아 마케팅팀',   number: '02-555-7890',   enabled: false, isRepresentative: false },
 ];
 
 const REQUESTS: SenderRequest[] = [
   { id: 'r1', number: '010-3327-1103', status: '승인', requestedAt: '2025.03.10', processedAt: '2025.03.11', memo: '' },
+  { id: 'r2', number: '070-4005-2280', status: '승인', requestedAt: '2025.03.18', processedAt: '2025.03.19', memo: '' },
+  { id: 'r3', number: '02-555-7890',   status: '승인', requestedAt: '2025.04.02', processedAt: '2025.04.03', memo: '' },
 ];
 
 function Bubble({ n }: { n: number }) {
