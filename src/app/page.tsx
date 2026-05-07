@@ -95,7 +95,7 @@ const SCREEN_GROUPS: ScreenGroup[] = [
           '기본 설정: 무료 수신거부번호(신규/직접입력), 카카오톡 채널 등록 — /CRM/CRMSetting에 이미 개발 완료',
           '수신거부 신규 선택 시 신청 버튼 노출',
           '직접 입력 시 시스템 자동 연동 불가 안내 표시',
-          '대상자·상품 제외 설정: 캠페인에서 제외할 대상자/상품 지정 — 1차 개발에 적용하지 않음. 2차 개발에 적용(2026.04.29)',
+          '대상자·상품 제외 설정: 캠페인에서 제외할 대상자/상품 지정 — 1차 개발에 적용하지 않음',
         ],
       },
       {
@@ -236,11 +236,8 @@ export default function ScreenIndex() {
               <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-3">주요 기능 및 정책</p>
               <ul className="space-y-2.5">
                 {selected.notes.map((note, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                    <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#4DB87A]/10 text-[9px] font-black text-[#4DB87A]">
-                      {i + 1}
-                    </span>
-                    <span className="leading-relaxed">{note}</span>
+                  <li key={i} className="text-sm text-gray-600 leading-relaxed">
+                    {note}
                   </li>
                 ))}
               </ul>

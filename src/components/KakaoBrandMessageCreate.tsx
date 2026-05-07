@@ -119,13 +119,6 @@ const MESSAGE_TYPE_OPTIONS = [
   },
 ];
 
-function Bubble({ n }: { n: number }) {
-  return (
-    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
-      {n}
-    </div>
-  );
-}
 
 export default function KakaoBrandMessageCreate() {
   const [campaignName, setCampaignName] = useState('');
@@ -541,8 +534,7 @@ export default function KakaoBrandMessageCreate() {
           <div className="space-y-5">
 
             {/* 섹션 1: 캠페인명 */}
-            <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <Bubble n={1} />
+            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
                 캠페인명 <span className="text-red-500">*</span>
               </h2>
@@ -561,8 +553,7 @@ export default function KakaoBrandMessageCreate() {
             </section>
 
             {/* 섹션 2: 메시지 종류 */}
-            <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <Bubble n={2} />
+            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
                 메시지 종류 <span className="text-red-500">*</span>
               </h2>
@@ -600,8 +591,7 @@ export default function KakaoBrandMessageCreate() {
             </section>
 
             {/* 섹션 3: 수신 파트너 */}
-            <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <Bubble n={3} />
+            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
                   수신 파트너 <span className="text-red-500">*</span>
@@ -722,7 +712,7 @@ export default function KakaoBrandMessageCreate() {
                 </section>
 
                 {/* 섹션 6: 버튼 */}
-                <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
                   <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
                   <div className="space-y-4">
                     {/* 버튼 1 */}
@@ -902,7 +892,7 @@ export default function KakaoBrandMessageCreate() {
                 </section>
 
                 {/* WL-C: 버튼 (최대 2개) */}
-                <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
                   <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">버튼</h2>
                   <div className="space-y-4">
                     {/* 버튼 1 */}
@@ -1109,8 +1099,7 @@ export default function KakaoBrandMessageCreate() {
             )}
 
             {/* 섹션 7: 발송 설정 */}
-            <section className="relative overflow-visible rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
-              <Bubble n={4} />
+            <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
               <h2 className="mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">발송 설정</h2>
               <div className="flex flex-wrap gap-4">
                 <div className="flex flex-col gap-1.5">
@@ -1236,8 +1225,7 @@ export default function KakaoBrandMessageCreate() {
 
           {/* ───── 중앙 미리보기 ───── */}
           <div className="sticky top-[73px] h-fit">
-            <div className="relative overflow-visible rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
-              <Bubble n={5} />
+            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
               <div className="mb-4 flex items-center justify-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#4DB87A]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">미리보기</h3>

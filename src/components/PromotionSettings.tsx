@@ -23,13 +23,6 @@ interface SenderRequest {
   memo: string;
 }
 
-function Bubble({ n }: { n: number }) {
-  return (
-    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
-      {n}
-    </div>
-  );
-}
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void }) {
   return (
@@ -49,8 +42,6 @@ export default function PromotionSettings() {
   const [requests] = useState<SenderRequest[]>([]);
   const [rejectType, setRejectType] = useState<'신규' | '직접입력'>('직접입력');
   const [rejectNumber, setRejectNumber] = useState('010-3327-1103');
-  const [excludedPersons] = useState(0);
-  const [excludedProducts] = useState(0);
   const [showSenderPopup, setShowSenderPopup] = useState(false);
   const [showPartnerPopup, setShowPartnerPopup] = useState(false);
   const [showProductPopup, setShowProductPopup] = useState(false);
@@ -85,8 +76,7 @@ export default function PromotionSettings() {
       <div className="mx-auto max-w-[1440px] space-y-6 p-6">
 
         {/* ── 1. 발신번호 관리 ── */}
-        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
-          <Bubble n={1} />
+        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
 
           {/* 섹션 헤더 */}
           <div className="flex items-start justify-between border-b border-gray-100 px-6 py-5">
@@ -228,8 +218,7 @@ export default function PromotionSettings() {
         </section>
 
         {/* ── 2. 기본 설정 ── */}
-        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
-          <Bubble n={2} />
+        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
           <div className="border-b border-gray-100 px-6 py-5">
             <div className="flex items-center gap-3">
               <h2 className="text-base font-bold text-gray-900">기본 설정</h2>
@@ -271,12 +260,9 @@ export default function PromotionSettings() {
                     </label>
                   </div>
                   {rejectType === '신규' && (
-                    <div className="relative overflow-visible w-fit">
-                      <Bubble n={3} />
-                      <button className="rounded-xl bg-[#4DB87A] px-5 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">
-                        신청
-                      </button>
-                    </div>
+                    <button className="rounded-xl bg-[#4DB87A] px-5 py-2 text-sm font-semibold text-white hover:bg-[#3da869] transition-colors">
+                      신청
+                    </button>
                   )}
                   {rejectType === '직접입력' && (
                     <div className="flex flex-wrap items-center gap-3">
@@ -286,12 +272,9 @@ export default function PromotionSettings() {
                         onChange={(e) => setRejectNumber(e.target.value)}
                         className="rounded-xl border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
                       />
-                      <div className="relative overflow-visible">
-                        <Bubble n={4} />
-                        <p className="text-xs text-red-500 leading-relaxed max-w-md">
-                          ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 파트너는 &apos;파트너 제외 설정&apos;을 통해 수동으로 등록해 주세요.
-                        </p>
-                      </div>
+                      <p className="text-xs text-red-500 leading-relaxed max-w-md">
+                        ⓘ 직접 입력은 고객의 수신 거부 요청이 발주모아 파트너스 시스템과 자동으로 연동되지 않습니다. 수신 거부 파트너는 &apos;파트너 제외 설정&apos;을 통해 수동으로 등록해 주세요.
+                      </p>
                     </div>
                   )}
                 </div>
@@ -326,41 +309,6 @@ export default function PromotionSettings() {
           </div>
         </section>
 
-        {/* ── 3. 파트너·상품 제외 설정 ── */}
-        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
-          <Bubble n={5} />
-          <div className="border-b border-gray-100 px-6 py-5">
-            <h2 className="text-base font-bold text-gray-900">파트너·상품 제외 설정</h2>
-            <p className="mt-1.5 text-xs text-gray-400">반영되기까지 하루 정도 소요될 수 있습니다.</p>
-          </div>
-
-          <div className="divide-y divide-gray-100 px-6">
-            <div className="flex items-center gap-6 py-5">
-              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">파트너 제외 설정</span>
-              <button onClick={() => setShowPartnerPopup(true)} className="flex items-center gap-1 rounded-xl border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-                파트너 제외 선택
-                <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
-                  <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <span className="text-sm text-gray-500">
-                제외된 인원 <span className="font-bold text-gray-800">{excludedPersons}명</span>
-              </span>
-            </div>
-            <div className="flex items-center gap-6 py-5">
-              <span className="w-44 shrink-0 text-sm font-medium text-gray-700">상품 제외 설정</span>
-              <button onClick={() => setShowProductPopup(true)} className="flex items-center gap-1 rounded-xl border border-gray-300 bg-gray-50 px-3.5 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-                상품 제외 선택
-                <svg viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5 text-gray-400">
-                  <path fillRule="evenodd" d="M5.293 3.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-              <span className="text-sm text-gray-500">
-                제외된 상품 <span className="font-bold text-gray-800">{excludedProducts}개</span>
-              </span>
-            </div>
-          </div>
-        </section>
 
       </div>
     </div>

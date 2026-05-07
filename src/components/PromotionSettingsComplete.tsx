@@ -35,13 +35,6 @@ const REQUESTS: SenderRequest[] = [
   { id: 'r3', number: '000-000-0000', status: '승인', requestedAt: '2025.04.02', processedAt: '2025.04.03', memo: '' },
 ];
 
-function Bubble({ n }: { n: number }) {
-  return (
-    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
-      {n}
-    </div>
-  );
-}
 
 function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void }) {
   return (
@@ -96,8 +89,7 @@ export default function PromotionSettingsComplete() {
       <div className="mx-auto max-w-[1440px] space-y-6 p-6">
 
         {/* ── 1. 발신번호 관리 ── */}
-        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
-          <Bubble n={1} />
+        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
 
           {/* 섹션 헤더 */}
           <div className="flex items-start justify-between border-b border-gray-100 px-6 py-5">
@@ -313,22 +305,18 @@ export default function PromotionSettingsComplete() {
                   <span className="text-[#4DB87A]">✓</span> 카카오톡 채널
                 </span>
                 <div className="flex items-center gap-3">
-                  <div className="relative overflow-visible flex items-center gap-2 rounded-xl border border-[#4DB87A]/30 bg-[#f0faf5] px-4 py-2.5">
-                    <Bubble n={2} />
+                  <div className="flex items-center gap-2 rounded-xl border border-[#4DB87A]/30 bg-[#f0faf5] px-4 py-2.5">
                     <svg viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 text-[#4DB87A]">
                       <path fillRule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm3.354-9.354a.5.5 0 00-.708 0L7 9.293 5.354 7.646a.5.5 0 10-.708.708l2 2a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" clipRule="evenodd" />
                     </svg>
                     <span className="text-sm font-semibold text-[#2a7a4f]">발주모아 채널 등록 완료</span>
                   </div>
-                  <div className="relative overflow-visible">
-                    <Bubble n={3} />
-                    <button
-                      onClick={() => setShowKakaoPopup(true)}
-                      className="text-xs text-gray-400 underline hover:text-gray-600 transition-colors"
-                    >
-                      변경
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => setShowKakaoPopup(true)}
+                    className="text-xs text-gray-400 underline hover:text-gray-600 transition-colors"
+                  >
+                    변경
+                  </button>
                 </div>
               </div>
             </div>

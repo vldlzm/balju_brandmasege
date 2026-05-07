@@ -32,13 +32,6 @@ const COMBINED_HISTORY = [
 
 const PAGE_SIZE = 5;
 
-function Bubble({ n }: { n: number }) {
-  return (
-    <div className="absolute -top-3 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-[11px] font-black text-white shadow-md">
-      {n}
-    </div>
-  );
-}
 
 
 export default function PointManagement() {
@@ -88,8 +81,7 @@ export default function PointManagement() {
       <div className="mx-auto max-w-[1440px] space-y-6 p-6">
 
         {/* ── 1. 잔여 포인트 요약 ── */}
-        <div className="relative overflow-visible grid grid-cols-3 gap-4">
-          <Bubble n={1} />
+        <div className="grid grid-cols-3 gap-4">
           <div className="col-span-1 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
             <p className="text-xs font-medium text-gray-400">잔여 포인트</p>
             <p className="mt-2 text-3xl font-black tabular-nums text-amber-500">{currentPoints.toLocaleString()}P</p>
@@ -108,8 +100,7 @@ export default function PointManagement() {
         </div>
 
         {/* ── 2. 포인트 충전 ── */}
-        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
-          <Bubble n={2} />
+        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
           <div className="border-b border-gray-100 px-6 py-5">
             <h2 className="text-base font-bold text-gray-900">포인트 충전</h2>
           </div>
@@ -155,8 +146,7 @@ export default function PointManagement() {
         </section>
 
         {/* ── 3. 포인트 내역 ── */}
-        <section className="relative overflow-visible rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
-          <Bubble n={3} />
+        <section className="rounded-2xl bg-white shadow-sm ring-1 ring-gray-100">
 
           {/* 헤더 + 기간 검색 */}
           <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
