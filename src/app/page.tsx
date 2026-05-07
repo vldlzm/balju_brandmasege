@@ -234,9 +234,9 @@ export default function ScreenIndex() {
           {selected.notes.length > 0 && (
             <div>
               <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-3">주요 기능 및 정책</p>
-              <ul className="space-y-2.5">
+              <ul className="divide-y divide-gray-100">
                 {selected.notes.map((note, i) => (
-                  <li key={i} className="text-sm text-gray-600 leading-relaxed">
+                  <li key={i} className="py-3 text-sm text-gray-600 leading-relaxed">
                     {note}
                   </li>
                 ))}
