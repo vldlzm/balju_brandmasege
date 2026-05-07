@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface Props {
   senderNumber?: string;
@@ -11,21 +11,33 @@ interface Props {
   onSave: (data: { title: string; content: string }) => void;
 }
 
-const DEFAULT_CONTENT = '[#{상점명}] 안녕하세요, #{회원명}님!\n\n#{수신거부번호}';
+const FLAGS = ['상점명', '회원명', '수신거부번호'];
 
 export default function LmsEditorPopup({
   senderNumber = '0269532203',
   rejectNumber = '010-1234-1234',
   defaultTitle = '[#{상점명}] #{회원명}님♡',
-  defaultContent = DEFAULT_CONTENT,
+  defaultContent = '',
   onClose,
   onSave,
 }: Props) {
-  const [title, setTitle] = useState(defaultTitle);
   const [content, setContent] = useState(defaultContent);
-
-  const TITLE_MAX = 40;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const CONTENT_MAX = 2000;
+
+  const insertFlag = (flag: string) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = `#{${flag}}`;
+    const newContent = content.slice(0, start) + text + content.slice(end);
+    setContent(newContent.slice(0, CONTENT_MAX));
+    requestAnimationFrame(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + text.length, start + text.length);
+    });
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
@@ -92,16 +104,8 @@ export default function LmsEditorPopup({
               <label className="flex items-center gap-1 text-sm font-semibold text-gray-700">
                 <span className="text-[#4DB87A]">✓</span> 제목
               </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value.slice(0, TITLE_MAX))}
-                  className="w-full rounded-xl border border-gray-200 px-4 py-3 pr-16 text-sm text-gray-700 focus:border-[#4DB87A] focus:outline-none focus:ring-2 focus:ring-[#4DB87A]/20 transition-all"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#4DB87A]">
-                  {title.length}/{TITLE_MAX}
-                </span>
+              <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
+                {defaultTitle}
               </div>
             </div>
 
@@ -110,8 +114,21 @@ export default function LmsEditorPopup({
               <label className="flex items-center gap-1 text-sm font-semibold text-gray-700">
                 <span className="text-[#4DB87A]">✓</span> 메시지 내용
               </label>
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {FLAGS.map((flag) => (
+                  <button
+                    key={flag}
+                    type="button"
+                    onClick={() => insertFlag(flag)}
+                    className="rounded-full border border-[#4DB87A] bg-[#f0faf5] px-3 py-1 text-xs font-semibold text-[#2a7a4f] hover:bg-[#4DB87A] hover:text-white transition-colors"
+                  >
+                    #{flag}
+                  </button>
+                ))}
+              </div>
               <div className="relative">
                 <textarea
+                  ref={textareaRef}
                   value={content}
                   onChange={(e) => setContent(e.target.value.slice(0, CONTENT_MAX))}
                   rows={8}
@@ -146,7 +163,7 @@ export default function LmsEditorPopup({
             취소
           </button>
           <button
-            onClick={() => { onSave({ title, content }); onClose(); }}
+            onClick={() => { onSave({ title: defaultTitle, content }); onClose(); }}
             className="flex-1 rounded-xl bg-[#4DB87A] py-3 text-sm font-bold text-white hover:bg-[#3da869] transition-colors"
           >
             수정
